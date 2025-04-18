@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - College Sports Hub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Navigation */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo img {
+            height: 60px;
+        }
+        .main-nav {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .main-nav a:hover, .main-nav a.active {
+            background-color: #004080;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s;
+        }
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #00274D;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .hamburger-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+        }
+        .hamburger-menu a:hover {
+            background-color: #004080;
+        }
+        .hamburger-menu.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #00274D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .contact-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .contact-card h2 {
+            color: #00274D;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #00274D;
+            padding-bottom: 10px;
+        }
+        .contact-card p {
+            margin: 10px 0;
+        }
+        .contact-card strong {
+            color: #00274D;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 150px;
+        }
+        .btn {
+            padding: 12px 20px;
+            background-color: #00274D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #004080;
+        }
+        #feedbackMessage {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body onload="checkLogin()">
+   <style>
+    /* Navigation Bar */
+    nav {
+        background-color: #00274D;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .logo img {
+        height: 100px;
+    }
+
+    /* Main Navigation Links */
+    .main-nav {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .main-nav a:hover {
+        background-color: darkblue;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        background: white;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: navy;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .hamburger-menu.active {
+        display: block;
+    }
+
+    .hamburger-menu a {
+        display: block;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background: rgb(163, 13, 103);
+    }
+
+    /* Section Styling */
+    .section-container {
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        padding: 40px;
+        margin: 50px auto;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: justify;
+    }
+
+    .section-container h2 {
+        color: blue;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-container img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .section-container p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .main-nav {
+            display: none; /* Hide main nav links on smaller screens */
+        }
+
+        .hamburger-menu {
+            width: 100%;
+            left: 0;
+            top: 60px;
+        }
+    }
+
+    /* Footer */
+    footer {
+        background: navy;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body onload="checkLogin()">
+
+<!-- Navigation Bar -->
+<nav>
+<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+
+<!-- Main navigation links -->
+<ul class="main-nav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="booking.html">Slot Booking</a></li>
+  
+        <a href="contact.html"class="active">Contact Us</a>
+</ul>
+
+<!-- Hamburger icon -->
+<div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- Hidden menu links -->
+<div class="hamburger-menu">
+   
+    <a href="team.html">Find a Team</a>
+    <a href="tournaments.html">Upcoming Tournaments</a>
+    <a href="rules.html">Rules & Regulations</a>
+    <a href="details.html">Your Details</a>
+    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+</div>
+</nav>
+   
+    <!-- Main Content -->
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Contact Us</h1>
+        
+        <div class="contact-info">
+            <div class="contact-card">
+                <h2>Contact Information</h2>
+                <p><strong>Email:</strong> sports.hub@college.edu</p>
+                <p><strong>Phone:</strong> +91 9876543210</p>
+                <p><strong>Address:</strong> Sports Complex, MLRIT College, Hyderabad, Telangana - 500043</p>
+                <p><strong>Office Hours:</strong> Monday to Friday, 9:00 AM to 5:00 PM</p>
+            </div>
+            
+            <div class="contact-card">
+                <h2>Sports Coordinator</h2>
+                <p><strong>Name:</strong> Prof. Ramesh Kumar</p>
+                <p><strong>Email:</strong> sports.coordinator@college.edu</p>
+                <p><strong>Phone:</strong> +91 9876543211</p>
+                <p><strong>Availability:</strong> Tuesday & Thursday, 2:00 PM to 4:00 PM</p>
+            </div>
+        </div>
+        
+        <h2>Send Us a Message</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="contactName">Your Name</label>
+                <input type="text" id="contactName" required>
+            </div>
+            <div class="form-group">
+                <label for="contactEmail">Your Email</label>
+                <input type="email" id="contactEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="contactSubject">Subject</label>
+                <input type="text" id="contactSubject" required>
+            </div>
+            <div class="form-group">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" required></textarea>
+            </div>
+            <button type="button" class="btn" onclick="submitContactForm()">Send Message</button>
+        </form>
+        
+        <div id="feedbackMessage"></div>
+    </div>
+
+    <script>
+        // Check login status
+        function checkLogin() {
+            const user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "block";
+                // Pre-fill name and email if available
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                const currentUser = users.find(u => u.username === user);
+                if (currentUser) {
+                    document.getElementById('contactName').value = currentUser.username;
+                    document.getElementById('contactEmail').value = currentUser.email || '';
+                }
+            }
+        }
+        
+        // Submit contact form
+        function submitContactForm() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            if (!name || !email || !subject || !message) {
+                showFeedback('Please fill in all fields', 'error');
+                return;
+            }
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showFeedback('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // In a real application, you would send this data to a server
+            // For this demo, we'll just store it in localStorage
+            const contacts = JSON.parse(localStorage.getItem("contactMessages")) || [];
+            contacts.push({
+                name,
+                email,
+                subject,
+                message,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem("contactMessages", JSON.stringify(contacts));
+            
+            // Show success message
+            showFeedback('Thank you for your message! We will get back to you soon.', 'success');
+            
+            // Clear form
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('contactSubject').value = '';
+            document.getElementById('contactMessage').value = '';
+        }
+        
+        // Show feedback message
+        function showFeedback(message, type) {
+            const feedbackElement = document.getElementById('feedbackMessage');
+            feedbackElement.textContent = message;
+            feedbackElement.className = type;
+            feedbackElement.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                feedbackElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.querySelector(".hamburger-menu");
+            menu.classList.toggle("active");
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("userType");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

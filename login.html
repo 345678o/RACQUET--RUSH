@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up</title>
+    <style>
+        body {
+            background-color: navy;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .form-box {
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            background-color: #333;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+
+        input[type="submit"] {
+            background-color: #0066cc;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005bb5;
+        }
+
+        .toggle-links {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .toggle-links a {
+            color: #00c3ff;
+            text-decoration: none;
+        }
+
+        .toggle-links a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: lightgreen;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Login Form -->
+    <div class="form-box login active">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="login-username">Username</label>
+            <input type="text" id="login-username" required>
+
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" required>
+
+            <p class="error" id="login-error"></p>
+
+            <input type="submit" value="Login">
+        </form>
+        <div class="toggle-links">
+            <p>Forgot Password? <a href="#" onclick="toggleForms('forgot-password')">Click Here</a></p>
+            <p>Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></p>
+        </div>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div class="form-box signup">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <label for="new-username">Username</label>
+            <input type="text" id="new-username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" pattern="[0-9]{10}" required>
+
+            <label for="rollno">Roll Number</label>
+            <input type="text" id="rollno" required>
+
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" required>
+
+            <label for="student-type">Student Type</label>
+            <select id="student-type" required>
+                <option value="">Select...</option>
+                <option value="BTech">BTech</option>
+                <option value="MBA">MBA</option>
+                <option value="Medical">Medical</option>
+            </select>
+
+            <label for="new-password">Password</label>
+            <input type="password" id="new-password" required>
+
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" required>
+
+            <p class="error" id="signup-error"></p>
+            <p class="success" id="signup-success"></p>
+
+            <input type="submit" value="Sign Up">
+        </form>
+        <div class="toggle-links">
+            <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="form-box forgot-password">
+        <h2>Forgot Password</h2>
+        <form id="forgotPasswordForm">
+            <label for="forgot-email">Email Address</label>
+            <input type="email" id="forgot-email" required>
+            
+            <p class="error" id="forgot-error"></p>
+            <p class="success" id="forgot-success"></p>
+            
+            <input type="submit" value="Send Reset Link">
+        </form>
+        <div class="toggle-links">
+            <p>Remember your password? <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Reset Password Form -->
+    <div class="form-box reset-password">
+        <h2>Reset Password</h2>
+        <form id="resetPasswordForm">
+            <label for="reset-username">Username</label>
+            <input type="text" id="reset-username" required>
+            
+            <label for="reset-code">Verification Code</label>
+            <input type="text" id="reset-code" required>
+            
+            <label for="reset-new-password">New Password</label>
+            <input type="password" id="reset-new-password" required>
+            
+            <label for="reset-confirm-password">Confirm New Password</label>
+            <input type="password" id="reset-confirm-password" required>
+            
+            <p class="error" id="reset-error"></p>
+            <p class="success" id="reset-success"></p>
+            
+            <input type="submit" value="Reset Password">
+        </form>
+        <div class="toggle-links">
+            <p>Back to <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Redirect if already logged in
+        if (localStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html";
+        }
+
+        // Check if we're coming from a password reset link
+        const urlParams = new URLSearchParams(window.location.search);
+        const resetToken = urlParams.get('resetToken');
+        const resetUser = urlParams.get('user');
+        
+        if (resetToken && resetUser) {
+            toggleForms('reset-password');
+            document.getElementById('reset-username').value = resetUser;
+            document.getElementById('reset-code').value = resetToken;
+        }
+    });
+
+    function toggleForms(formType) {
+        document.querySelectorAll('.form-box').forEach(box => box.classList.remove('active'));
+        document.querySelector(`.${formType}`).classList.add('active');
+        
+        // Clear all messages when switching forms
+        document.querySelectorAll('.error, .success').forEach(el => el.textContent = '');
+    }
+
+    function getUsers() {
+        return JSON.parse(localStorage.getItem("users")) || {};
+    }
+
+    function saveUsers(users) {
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    function getResetTokens() {
+        return JSON.parse(localStorage.getItem("resetTokens")) || {};
+    }
+
+    function saveResetTokens(tokens) {
+        localStorage.setItem("resetTokens", JSON.stringify(tokens));
+    }
+
+    // Sign Up Form
+    document.getElementById("signupForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("new-username").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let rollno = document.getElementById("rollno").value.trim();
+        let fullname = document.getElementById("fullname").value.trim();
+        let studentType = document.getElementById("student-type").value;
+        let password = document.getElementById("new-password").value;
+        let confirmPassword = document.getElementById("confirm-password").value;
+        let users = getUsers();
+        let errorElement = document.getElementById("signup-error");
+        let successElement = document.getElementById("signup-success");
+
+        errorElement.textContent = "";
+        successElement.textContent = "";
+
+        if (!username || !email || !phone || !rollno || !fullname || !studentType || !password || !confirmPassword) {
+            errorElement.textContent = "All fields are required!";
+            return;
+        }
+
+        if (users[username]) {
+            errorElement.textContent = "Username already exists!";
+            return;
+        }
+
+        for (let user in users) {
+            if (users[user].email === email) {
+                errorElement.textContent = "Email already registered!";
+                return;
+            }
+            if (users[user].phone === phone) {
+                errorElement.textContent = "Phone number already registered!";
+                return;
+            }
+            if (users[user].rollno === rollno) {
+                errorElement.textContent = "Roll number already registered!";
+                return;
+            }
+        }
+
+        if (password !== confirmPassword) {
+            errorElement.textContent = "Passwords do not match!";
+            return;
+        }
+
+        users[username] = { 
+            email, 
+            phone, 
+            rollno,
+            fullname,
+            studentType,
+            password 
+        };
+        saveUsers(users);
+        successElement.textContent = "Account created successfully! Please log in.";
+        document.getElementById("signupForm").reset();
+    });
+
+    // Login Form
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("login-username").value.trim();
+        let password = document.getElementById("login-password").value;
+        let users = getUsers();
+        let errorElement = document.getElementById("login-error");
+
+        errorElement.textContent = "";
+
+        if (users[username] && users[username].password === password) {
+            localStorage.setItem("loggedInUser", username);
+            window.location.href = "index.html";
+        } else {
+            errorElement.textContent = "Invalid username or password!";
+        }
+    });
+
+    // Forgot Password Form
+    document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let email = document.getElementById("forgot-email").value.trim();
+        let users = getUsers();
+        let errorElement = document.getElementById("forgot-error");
+        let successElement = document.getElementById("forgot-success");
+
+        errorElement.textContent = "";
+        successElement.textContent = "";
+
+        // Find user by email
+        let foundUser = null;
+        for (let username in users) {
+            if (users[username].email === email) {
+                foundUser = username;
+                break;
+            }
+        }
+
+        if (!foundUser) {
+            errorElement.textContent = "No account found with that email address!";
+            return;
+        }
+
+        // Generate a simple reset token (in real app, use a more secure method)
+        const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        
+        // Save the reset token
+        let resetTokens = getResetTokens();
+        resetTokens[foundUser] = resetToken;
+        saveResetTokens(resetTokens);
+
+        // In a real application, you would send an email with this link
+        const resetLink = `${window.location.origin}${window.location.pathname}?resetToken=${resetToken}&user=${foundUser}`;
+        
+        successElement.textContent = `Password reset link generated! In a real app, this would be sent to your email. For demo: ${resetLink}`;
+        console.log("Reset link:", resetLink); // For demo purposes
+    });
+
+    // Reset Password Form
+    document.getElementById("resetPasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("reset-username").value.trim();
+        let code = document.getElementById("reset-code").value.trim();
+        let newPassword = document.getElementById("reset-new-password").value;
+        let confirmPassword = document.getElementById("reset-confirm-password").value;
+        let users = getUsers();
+        let resetTokens = getResetTokens();
+        let errorElement = document.getElementById("reset-error");
+        let successElement = document.getElementById("reset-success");
+
+        errorElement.textContent = "";
+        successElement.textContent = "";
+
+        if (!users[username]) {
+            errorElement.textContent = "Invalid username!";
+            return;
+        }
+
+        if (resetTokens[username] !== code) {
+            errorElement.textContent = "Invalid verification code!";
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            errorElement.textContent = "Passwords do not match!";
+            return;
+        }
+
+        // Update password
+        users[username].password = newPassword;
+        saveUsers(users);
+
+        // Remove used token
+        delete resetTokens[username];
+        saveResetTokens(resetTokens);
+
+        successElement.textContent = "Password reset successfully! You can now login with your new password.";
+        document.getElementById("resetPasswordForm").reset();
+        
+        // Auto-redirect to login after 3 seconds
+        setTimeout(() => {
+            toggleForms('login');
+        }, 3000);
+    });
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

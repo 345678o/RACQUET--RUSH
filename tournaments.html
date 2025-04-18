@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Tournaments</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Navigation */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo img {
+            height: 60px;
+        }
+        .main-nav {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .main-nav a:hover, .main-nav a.active {
+            background-color: #004080;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s;
+        }
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #00274D;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .hamburger-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+        }
+        .hamburger-menu a:hover {
+            background-color: #004080;
+        }
+        .hamburger-menu.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #00274D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .tournament-list {
+            margin: 30px 0;
+        }
+        .tournament-card {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            border-left: 5px solid #00274D;
+        }
+        .tournament-card h3 {
+            color: #00274D;
+            margin-bottom: 10px;
+        }
+        .tournament-card p {
+            margin: 5px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #00274D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #004080;
+        }
+        .admin-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff8e1;
+            border-radius: 8px;
+            border-left: 5px solid #ffc107;
+        }
+        .admin-panel h3 {
+            color: #d32f2f;
+        }
+        .admin-btn {
+            background-color: #d32f2f;
+            margin-top: 10px;
+        }
+        .admin-btn:hover {
+            background-color: #b71c1c;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body onload="loadTournaments()">
+    <style>
+   
+    /* Navigation Bar */
+    nav {
+        background-color: #00274D;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .logo img {
+        height: 100px;
+    }
+
+    /* Main Navigation Links */
+    .main-nav {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .main-nav a:hover {
+        background-color: darkblue;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        background: white;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: navy;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .hamburger-menu.active {
+        display: block;
+    }
+
+    .hamburger-menu a {
+        display: block;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background: rgb(163, 13, 103);
+    }
+
+    /* Section Styling */
+    .section-container {
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        padding: 40px;
+        margin: 50px auto;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: justify;
+    }
+
+    .section-container h2 {
+        color: blue;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-container img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .section-container p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .main-nav {
+            display: none; /* Hide main nav links on smaller screens */
+        }
+
+        .hamburger-menu {
+            width: 100%;
+            left: 0;
+            top: 60px;
+        }
+    }
+
+    /* Footer */
+    footer {
+        background: navy;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body onload="checkLogin()">
+
+<!-- Navigation Bar -->
+<nav>
+<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+
+<!-- Main navigation links -->
+<ul class="main-nav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="booking.html">Slot Booking</a></li>
+   
+        <a href="tournaments.html" class="active" >Upcoming Tournaments</a>
+</ul>
+
+<!-- Hamburger icon -->
+<div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- Hidden menu links -->
+<div class="hamburger-menu">
+   
+    <a href="team.html">Find a Team</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="rules.html">Rules & Regulations</a>
+    <a href="details.html">Your Details</a>
+    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+</div>
+</nav>
+   
+    <!-- Main Content -->
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Upcoming Tournaments</h1>
+        
+        <div class="tournament-list" id="tournamentList">
+            <!-- Tournaments will be loaded here -->
+        </div>
+        
+        <h2>Suggest a Tournament</h2>
+        <form id="suggestionForm">
+            <div class="form-group">
+                <label for="tournamentName">Tournament Name</label>
+                <input type="text" id="tournamentName" required>
+            </div>
+            <div class="form-group">
+                <label for="tournamentDate">Date</label>
+                <input type="date" id="tournamentDate" required>
+            </div>
+            <div class="form-group">
+                <label for="tournamentLocation">Location</label>
+                <input type="text" id="tournamentLocation" required>
+            </div>
+            <div class="form-group">
+                <label for="tournamentDescription">Description (Optional)</label>
+                <textarea id="tournamentDescription" rows="3"></textarea>
+            </div>
+            <button type="button" class="btn" onclick="submitSuggestion()">Submit Suggestion</button>
+        </form>
+        
+        <div class="admin-panel" id="adminPanel" style="display: none;">
+            <h3>Admin Panel</h3>
+            <button class="btn admin-btn" onclick="addTournament()">Add Tournament</button>
+            <button class="btn admin-btn" onclick="removeTournament()">Remove Tournament</button>
+            <button class="btn admin-btn" onclick="viewSuggestions()">View Suggestions</button>
+            <button class="btn admin-btn" onclick="hideAdminPanel()">Hide Admin Panel</button>
+        </div>
+        
+        <button class="btn" id="adminAccessBtn" onclick="showAdminPanel()" style="margin-top: 20px;">Admin Access</button>
+    </div>
+
+    <script>
+        // Load tournaments
+        function loadTournaments() {
+            checkLogin();
+            
+            const tournaments = JSON.parse(localStorage.getItem("tournaments")) || [];
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Filter out past tournaments
+            const upcomingTournaments = tournaments.filter(tournament => tournament.date >= today);
+            
+            // Sort by date
+            upcomingTournaments.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Save filtered tournaments
+            localStorage.setItem("tournaments", JSON.stringify(upcomingTournaments));
+            
+            const tournamentList = document.getElementById('tournamentList');
+            
+            if (upcomingTournaments.length === 0) {
+                tournamentList.innerHTML = '<p>No upcoming tournaments scheduled.</p>';
+                return;
+            }
+            
+            tournamentList.innerHTML = '';
+            
+            upcomingTournaments.forEach(tournament => {
+                const tournamentCard = document.createElement('div');
+                tournamentCard.className = 'tournament-card';
+                tournamentCard.innerHTML = `
+                    <h3>${tournament.name}</h3>
+                    <p><strong>Date:</strong> ${tournament.date}</p>
+                    <p><strong>Location:</strong> ${tournament.location}</p>
+                    ${tournament.description ? `<p><strong>Description:</strong> ${tournament.description}</p>` : ''}
+                `;
+                tournamentList.appendChild(tournamentCard);
+            });
+        }
+        
+        // Submit tournament suggestion
+        function submitSuggestion() {
+            const name = document.getElementById('tournamentName').value;
+            const date = document.getElementById('tournamentDate').value;
+            const location = document.getElementById('tournamentLocation').value;
+            const description = document.getElementById('tournamentDescription').value;
+            
+            if (!name || !date || !location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const suggestions = JSON.parse(localStorage.getItem("tournamentSuggestions")) || [];
+            
+            suggestions.push({
+                name,
+                date,
+                location,
+                description,
+                suggestedBy: localStorage.getItem("loggedInUser"),
+                timestamp: new Date().toISOString()
+            });
+            
+            localStorage.setItem("tournamentSuggestions", JSON.stringify(suggestions));
+            
+            alert('Thank you for your suggestion! It has been submitted for review.');
+            
+            // Clear form
+            document.getElementById('tournamentName').value = '';
+            document.getElementById('tournamentDate').value = '';
+            document.getElementById('tournamentLocation').value = '';
+            document.getElementById('tournamentDescription').value = '';
+        }
+        
+        // Admin functions
+        function showAdminPanel() {
+            const password = prompt('Enter admin password:');
+            if (password === 'admin123') {
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('adminAccessBtn').style.display = 'none';
+            } else {
+                alert('Incorrect password');
+            }
+        }
+        
+        function hideAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('adminAccessBtn').style.display = 'block';
+        }
+        
+        function addTournament() {
+            const name = prompt('Enter tournament name:');
+            if (!name) return;
+            
+            const date = prompt('Enter tournament date (YYYY-MM-DD):');
+            if (!date) return;
+            
+            const location = prompt('Enter tournament location:');
+            if (!location) return;
+            
+            const description = prompt('Enter tournament description (optional):', '');
+            
+            const tournaments = JSON.parse(localStorage.getItem("tournaments")) || [];
+            
+            tournaments.push({
+                name,
+                date,
+                location,
+                description
+            });
+            
+            localStorage.setItem("tournaments", JSON.stringify(tournaments));
+            
+            alert('Tournament added successfully!');
+            loadTournaments();
+        }
+        
+        function removeTournament() {
+            const tournaments = JSON.parse(localStorage.getItem("tournaments")) || [];
+            
+            if (tournaments.length === 0) {
+                alert('No tournaments to remove');
+                return;
+            }
+            
+            let tournamentList = 'Select a tournament to remove:\n';
+            tournaments.forEach((tournament, index) => {
+                tournamentList += `${index + 1}. ${tournament.name} (${tournament.date})\n`;
+            });
+            
+            const choice = prompt(tournamentList);
+            if (!choice) return;
+            
+            const index = parseInt(choice) - 1;
+            if (isNaN(index) || index < 0 || index >= tournaments.length) {
+                alert('Invalid selection');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to remove "${tournaments[index].name}"?`)) {
+                tournaments.splice(index, 1);
+                localStorage.setItem("tournaments", JSON.stringify(tournaments));
+                alert('Tournament removed successfully!');
+                loadTournaments();
+            }
+        }
+        
+        function viewSuggestions() {
+            const suggestions = JSON.parse(localStorage.getItem("tournamentSuggestions")) || [];
+            
+            if (suggestions.length === 0) {
+                alert('No suggestions available');
+                return;
+            }
+            
+            let suggestionList = 'Tournament Suggestions:\n\n';
+            suggestions.forEach((suggestion, index) => {
+                suggestionList += `Suggestion ${index + 1}:\n`;
+                suggestionList += `Name: ${suggestion.name}\n`;
+                suggestionList += `Date: ${suggestion.date}\n`;
+                suggestionList += `Location: ${suggestion.location}\n`;
+                if (suggestion.description) {
+                    suggestionList += `Description: ${suggestion.description}\n`;
+                }
+                suggestionList += `Suggested by: ${suggestion.suggestedBy}\n`;
+                suggestionList += `Submitted on: ${new Date(suggestion.timestamp).toLocaleString()}\n\n`;
+            });
+            
+            alert(suggestionList);
+        }
+        
+        // Check login status
+        function checkLogin() {
+            const user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "block";
+            }
+        }
+        
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.querySelector(".hamburger-menu");
+            menu.classList.toggle("active");
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("userType");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
+
+
+
+

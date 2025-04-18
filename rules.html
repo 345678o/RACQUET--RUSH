@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules & Regulations</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('images/background.jpg') no-repeat center center/cover;
+            text-align: center;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: navy; /* Blue */
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .nav-links li {
+            margin-right: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        .nav-links a:hover {
+            background-color: #0056b3; /* Darker Blue */
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px navy;
+            text-align: left;
+        }
+
+        h1 {
+            color: navy;
+            text-align: center;
+        }
+
+        h2 {
+            color: darkblue;
+        }
+
+        ul {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: navy;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+
+  <style>
+    /* Navigation Bar */
+    nav {
+        background-color: #00274D;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .logo img {
+        height: 100px;
+    }
+
+    /* Main Navigation Links */
+    .main-nav {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .main-nav a:hover {
+        background-color: darkblue;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        background: white;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: navy;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .hamburger-menu.active {
+        display: block;
+    }
+
+    .hamburger-menu a {
+        display: block;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background: rgb(163, 13, 103);
+    }
+
+    /* Section Styling */
+    .section-container {
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        padding: 40px;
+        margin: 50px auto;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: justify;
+    }
+
+    .section-container h2 {
+        color: blue;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-container img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .section-container p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .main-nav {
+            display: none; /* Hide main nav links on smaller screens */
+        }
+
+        .hamburger-menu {
+            width: 100%;
+            left: 0;
+            top: 60px;
+        }
+    }
+
+    /* Footer */
+    footer {
+        background: rgb(212, 8, 8);
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+
+</head>
+<body onload="checkLogin()">
+    <script >
+         function toggleMenu() {
+            const menu = document.querySelector('.hamburger-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+
+<!-- Navigation Bar -->
+<nav>
+<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+
+<!-- Main navigation links -->
+<ul class="main-nav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="booking.html">Slot Booking</a></li>
+   <li><a href="rules.html" class="active">Rules & Regulations</a></li>
+</ul>
+
+<!-- Hamburger icon -->
+<div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- Hidden menu links -->
+<div class="hamburger-menu">
+   
+    <a href="team.html">Find a Team</a>
+    <a href="tournaments.html">Upcoming Tournaments</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="details.html">Your Details</a>
+    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+</div>
+</nav>
+    <!-- Rules & Regulations Section -->
+    <div class="container">
+        <h1>Rules & Regulations</h1>
+        
+        <h2>1. General Court Rules</h2>
+        <ul>
+            <li>Only registered users are allowed to book a court.</li>
+            <li>Players must wear proper sports attire and  enter the court bare foot.</li>
+            <li>Food and drinks (except water) are not allowed inside the court.</li>
+            <li>Respect other players and avoid unnecessary disruptions.</li>
+        </ul>
+
+        <h2>2. Booking & Cancellation</h2>
+        <ul>
+            <li>Each player can book a maximum of one slot per day.</li>
+            <li>Bookings must be made at least 10 minutes before the slot starts.</li>
+            <li>If you cannot attend, cancel your booking at least 30 minutes before.</li>
+            <li>Repeated no-shows may lead to temporary suspension.</li>
+        </ul>
+
+        <h2>3. Gameplay Etiquette</h2>
+        <ul>
+            <li>Each match is limited to 60 minutes.</li>
+            <li>Follow fair play rules and resolve disputes amicably.</li>
+            <li>Bring your personal shuttles; it won't be provided.</li>
+        </ul>
+
+        <h2>4. Code of Conduct</h2>
+        <ul>
+            <li>Any kind of misconduct, violence, or disrespect  will result in an immediate ban.</li>
+            <li>Maintain a friendly sportsmanship spirit.</li>
+            <li>Follow the guidance of the court staff at all times.</li>
+            <li> DO not use Cell phone </li>
+            <li> You are under CC TV surveillance </li>
+        <li> No shouting </li>
+            <li>  No Group sitting and disturbing </li>
+               <li> No Bettings
+                </li>
+        </ul>
+
+        <a href="index.html" class="btn">Back to Home</a>
+    </div>
+
+    <script>
+        function checkLogin() {
+            let user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                alert("You are not logged in. Redirecting to login page.");
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "inline";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have successfully logged out.");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
+

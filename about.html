@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - College Sports Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function checkLogin() {
+            let user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                alert("You are not logged in. Redirecting to login page.");
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "inline";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have successfully logged out.");
+            window.location.href = "login.html";
+        }
+
+        function toggleMenu() {
+            const menu = document.querySelector('.hamburger-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('images/background.jpg') no-repeat center center/cover;
+            text-align: center;
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 100px;
+        }
+
+        /* Main Navigation Links */
+        .main-nav {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .main-nav a:hover {
+            background-color: darkblue;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 4px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: navy;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 999;
+            padding-bottom: 20px;
+        }
+
+        .hamburger-menu.active {
+            display: block;
+        }
+
+        .hamburger-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu a:hover {
+            background: rgb(163, 13, 103);
+        }
+
+        /* Section Styling */
+        .section-container {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            padding: 40px;
+            margin: 50px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: justify;
+        }
+
+        .section-container h2 {
+            color: blue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .section-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none; /* Hide main nav links on smaller screens */
+            }
+
+            .hamburger-menu {
+                width: 100%;
+                left: 0;
+                top: 60px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: navy;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body onload="checkLogin()">
+
+<!-- Navigation Bar -->
+<nav>
+    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+    
+    <!-- Main navigation links -->
+    <ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" >About</a></li>
+        <li><a href="booking.html"class="active">Slot Booking</a></li>
+    </ul>
+
+    <!-- Hamburger icon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Hidden menu links -->
+    <div class="hamburger-menu">
+       
+        <a href="team.html">Find a Team</a>
+        <a href="tournaments.html">Upcoming Tournaments</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="rules.html">Rules & Regulations</a>
+        <a href="details.html">Your Details</a>
+        <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+    </div>
+</nav>
+
+<!-- About Us Section -->
+<div class="section-container">
+    <h2>About College Sports Hub</h2>
+    <p>
+        MLRIT college is founded in 2005, since the inception college has been actively involved in sports and has been undisputed champions in games like Volleyball, Badminton, Kabaddi, Basketball and cricket.
+        MLR Institute of Technology is known for its integrated curriculum with equal importance to academics, employable skills & sports. MLR Institute of Technology (MLRIT) is located at Dundigal, Hyderabad, Telangana, India. The institution was started in 2005 by the KMR Education Trust, headed by Mr. Marri Laxman Reddy. The Institute has Nine UG courses along with Five PG Courses. The Institute is affiliated with Jawaharlal Nehru Technological University, Hyderabad (JNTUH). It was granted Autonomous status by University Grants Commission (India) in the year 2015.
+        Sports play an important role in shaping up the personality and fitness of a person and to give a truly global experience to all the students of MLRIT.
+         Sports environments matching global standards are provided at the college.
+         <img src="WhatsApp Image 2025-04-04 at 20.58.51_f4ff9cde.jpg" alt="College Indoor Stadium">
+        College has a World class Indoor Stadium built up in an area of more than 26000 sqft with 2 floors both the sides with a beautiful gallery & stadium can accommodate a seating capacity of 1000 people, and equipped with 10 Badminton Courts and Table Tennis Hall which accommodates 20 TT tables.
+        <img src="Screenshot 2025-03-25 192633.png" alt="tt & badminton stadium">
+       
+         Indoor stadium also has a Gym with latest updated and world class Gym equipment’s.
+         <img src="gym.jpg" alt="gym">
+
+        This stadium has a vast hall which not only accommodates 4 Snooker Tables but also it can accommodate a space of more than 6 carom Boards. This stadium has a space even for squash court. At 2nd floor a massive hall which is dedicated to the sport fencing where champions are made.
+        <img src="pool.jpg" alt="snooker table">
+        
+        Indoor stadium also has a space for Zumba hall and a Meditation hall.
+        
+        The best part of the stadium is that it can also provide accommodation with 32 rooms.
+        
+        College has a outdoor games facility with games like, Volley ball (2 courts) , Throwball (1 court) , Basketball (1 court) Kabaddi 2 (Courts) Kho kho field, Football field, Athletic Track.
+        <img src="Screenshot 2025-03-25 185747.png" alt="outdoor">
+        
+        MLRIT College also has a Cricket Ground with world class facilities; This ground is equipped with 4 Flood lights which provides a wonderful lighting capacity of 77 Thousand watts to play a Night match also.
+        <img src="cricket-img.jpg" alt="cricket">
+        
+    </p>
+
+    <p>
+        Our platform provides students with a seamless system to book sports equipment 
+        and reserve college sports areas. We aim to make sports more accessible and organized for everyone.
+    </p>
+</div>
+
+<footer>
+    <p>&copy; 2025 College Sports Hub. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+
+
+
+

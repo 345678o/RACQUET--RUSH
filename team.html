@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Team - College Sports Hub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Navigation */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .logo img {
+            height: 60px;
+        }
+        .main-nav {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .main-nav a:hover, .main-nav a.active {
+            background-color: #004080;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: all 0.3s;
+        }
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #00274D;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .hamburger-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+        }
+        .hamburger-menu a:hover {
+            background-color: #004080;
+        }
+        .hamburger-menu.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #00274D;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        textarea {
+            height: 100px;
+        }
+        .btn {
+            padding: 12px 20px;
+            background-color: #00274D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #004080;
+        }
+        .players-list {
+            margin-top: 30px;
+        }
+        .player-card {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            border-left: 5px solid #00274D;
+        }
+        .player-card h3 {
+            color: #00274D;
+            margin-bottom: 10px;
+        }
+        .player-card p {
+            margin: 5px 0;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body onload="loadPlayers()">
+    <style>
+
+    /* Navigation Bar */
+    nav {
+        background-color: #00274D;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .logo img {
+        height: 100px;
+    }
+
+    /* Main Navigation Links */
+    .main-nav {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+    }
+
+    .main-nav a {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .main-nav a:hover {
+        background-color: darkblue;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .hamburger div {
+        width: 30px;
+        height: 4px;
+        background: white;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: navy;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 999;
+    }
+
+    .hamburger-menu.active {
+        display: block;
+    }
+
+    .hamburger-menu a {
+        display: block;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .hamburger-menu a:hover {
+        background: rgb(163, 13, 103);
+    }
+
+    /* Section Styling */
+    .section-container {
+        background: rgba(255, 255, 255, 0.9);
+        color: black;
+        padding: 40px;
+        margin: 50px auto;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: justify;
+    }
+
+    .section-container h2 {
+        color: blue;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .section-container img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .section-container p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .main-nav {
+            display: none; /* Hide main nav links on smaller screens */
+        }
+
+        .hamburger-menu {
+            width: 100%;
+            left: 0;
+            top: 60px;
+        }
+    }
+
+    /* Footer */
+    footer {
+        background: navy;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+</head>
+<body onload="checkLogin()">
+
+<!-- Navigation Bar -->
+<nav>
+<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+
+<!-- Main navigation links -->
+<ul class="main-nav">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" >About</a></li>
+    <li><a href="booking.html">Slot Booking</a></li>
+   
+        <a href="team.html"class="active">Find a Team</a>
+</ul>
+
+<!-- Hamburger icon -->
+<div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- Hidden menu links -->
+<div class="hamburger-menu">
+   
+    <a href="team.html">Find a Team</a>
+    <a href="tournaments.html">Upcoming Tournaments</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="rules.html">Rules & Regulations</a>
+    <a href="details.html">Your Details</a>
+    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+</div>
+</nav>
+   
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Find a Badminton Partner</h1>
+        
+        <form id="playerForm">
+            <div class="form-group">
+                <label for="playerName">Your Name</label>
+                <input type="text" id="playerName" required>
+            </div>
+            <div class="form-group">
+                <label for="playerEmail">Your Email</label>
+                <input type="email" id="playerEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="playerPhone">Your Phone Number</label>
+                <input type="tel" id="playerPhone" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="playerSkill">Your Skill Level</label>
+                <select id="playerSkill" required>
+                    <option value="">-- Select Skill Level --</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="playerAvailability">Preferred Playing Time</label>
+                <select id="playerAvailability" required>
+                    <option value="">-- Select Availability --</option>
+                    <option value="Morning">Morning (7AM-12PM)</option>
+                    <option value="Afternoon">Afternoon (12PM-5PM)</option>
+                    <option value="Evening">Evening (5PM-10PM)</option>
+                    <option value="Weekends">Weekends</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="playerMessage">Additional Message (Optional)</label>
+                <textarea id="playerMessage"></textarea>
+            </div>
+            <button type="button" class="btn" onclick="addPlayer()">Find Partners</button>
+        </form>
+        
+        <div class="players-list" id="playersList">
+            <!-- Players will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Load players looking for partners
+        function loadPlayers() {
+            checkLogin();
+            
+            const players = JSON.parse(localStorage.getItem("badmintonPlayers")) || [];
+            const playersList = document.getElementById('playersList');
+            
+            if (players.length === 0) {
+                playersList.innerHTML = '<p>No players currently looking for partners. Be the first to add yourself!</p>';
+                return;
+            }
+            
+            playersList.innerHTML = '';
+            
+            players.forEach(player => {
+                const playerCard = document.createElement('div');
+                playerCard.className = 'player-card';
+                playerCard.innerHTML = `
+                    <h3>${player.name}</h3>
+                    <p><strong>Skill Level:</strong> ${player.skill}</p>
+                    <p><strong>Availability:</strong> ${player.availability}</p>
+                    ${player.message ? `<p><strong>Message:</strong> ${player.message}</p>` : ''}
+                    <p><strong>Contact:</strong> ${player.email} | ${player.phone}</p>
+                `;
+                playersList.appendChild(playerCard);
+            });
+        }
+        
+        // Add player to the list
+        function addPlayer() {
+            const name = document.getElementById('playerName').value;
+            const email = document.getElementById('playerEmail').value;
+            const phone = document.getElementById('playerPhone').value;
+            const skill = document.getElementById('playerSkill').value;
+            const availability = document.getElementById('playerAvailability').value;
+            const message = document.getElementById('playerMessage').value;
+            
+            if (!name || !email || !phone || !skill || !availability) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (!/^\d{10}$/.test(phone)) {
+                alert('Please enter a valid 10-digit phone number');
+                return;
+            }
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            const players = JSON.parse(localStorage.getItem("badmintonPlayers")) || [];
+            
+            // Check if player already exists
+            const existingPlayer = players.find(p => p.email === email || p.phone === phone);
+            if (existingPlayer) {
+                if (confirm('You already have a listing. Update your information?')) {
+                    // Update existing player
+                    existingPlayer.name = name;
+                    existingPlayer.phone = phone;
+                    existingPlayer.skill = skill;
+                    existingPlayer.availability = availability;
+                    existingPlayer.message = message;
+                } else {
+                    return;
+                }
+            } else {
+                // Add new player
+                players.push({
+                    name,
+                    email,
+                    phone,
+                    skill,
+                    availability,
+                    message,
+                    timestamp: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem("badmintonPlayers", JSON.stringify(players));
+            
+            alert('Your information has been added to the players list!');
+            loadPlayers();
+            
+            // Clear form
+            document.getElementById('playerName').value = '';
+            document.getElementById('playerEmail').value = '';
+            document.getElementById('playerPhone').value = '';
+            document.getElementById('playerSkill').value = '';
+            document.getElementById('playerAvailability').value = '';
+            document.getElementById('playerMessage').value = '';
+        }
+        
+        // Check login status
+        function checkLogin() {
+            const user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "block";
+                // Pre-fill name and email if available
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                const currentUser = users.find(u => u.username === user);
+                if (currentUser) {
+                    document.getElementById('playerName').value = currentUser.username;
+                    document.getElementById('playerEmail').value = currentUser.email || '';
+                    document.getElementById('playerPhone').value = currentUser.phone || '';
+                }
+            }
+        }
+        
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.querySelector(".hamburger-menu");
+            menu.classList.toggle("active");
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("userType");
+            window.location.href = "login.html";
+        }
+    </script>
+    
+</body>
+</html>

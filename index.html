@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Booking System</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Scripts for login and logout -->
+    <script>
+        function checkLogin() {
+            let user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                alert("You are not logged in. Redirecting to login page.");
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "inline";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have successfully logged out.");
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <!-- Script for Hamburger Menu -->
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.hamburger-menu');
+            menu.classList.toggle('active');
+        }
+    
+  
+   
+ 
+</script>
+
+    <!-- Styles -->
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .logo img {
+            height: 100px;
+        }
+        /* Navigation Bar */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1000;
+        }
+        
+
+        .logo img {
+            height: 80px;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .main-nav a:hover {
+            background-color: #004080;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 4px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #00274D;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 999;
+        }
+
+        .hamburger-menu.active {
+            display: block;
+        }
+
+        .hamburger-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu a:hover {
+            background: #00509E;
+        }
+
+        /* Form Styling */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .container h2, h3 {
+            color: #00274D;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #00274D;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #004080;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #00274D;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .cancelled {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                width: 100%;
+                left: 0;
+                top: 60px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #00274D;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Background Image */
+        body {
+            background: url('c:\Users\shrut\OneDrive\Pictures\Screenshots\Screenshot 2025-04-04 211035.png') no-repeat center center/cover;
+        }
+
+        .home h1, .home p {
+            color: rgb(233, 233, 240);
+        }
+    </style>
+    <style>
+    /* Home Section */
+    .home {
+        padding: 40px;
+    }
+
+    .home h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    /* Section Styling */
+    .section-container {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        width: 80%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-container img {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+    }
+
+    .section-container p {
+        font-size: 18px;
+        margin: 15px 0;
+    }
+
+    .section-container .btn {
+        background-color: navy;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .section-container .btn:hover {
+        background-color: darkblue;
+    }
+
+    @media (max-width: 600px) {
+        .section-container {
+            width: 90%;
+        }
+    }
+</style>
+</head>
+
+<body onload="checkLogin()">
+
+<!-- Navigation Section -->
+<nav>
+    <div class="logo">
+        <img src="Screenshot 2025-03-26 222326.png" alt="College Sports Hub Logo">
+    </div>
+
+    <ul class="main-nav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+       
+    </ul>
+
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="hamburger-menu">
+        <a href="team.html">Find a Team</a>
+        <a href="tournaments.html">Upcoming Tournaments</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="rules.html">Rules & Regulations</a>
+        <li><a href="details.html" >Your Details</a></li>
+        <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+    </div>
+</nav>
+
+    <!-- Home Section -->
+    <section class="home">
+        <h1>Welcome to the  badminton Booking System</h1>
+        <p>Select a feature below to learn more.</p>
+    </section>
+
+    <!-- About Us Section -->
+    <div class="section-container">
+        <h2>About Us</h2>
+        <img src="WhatsApp Image 2025-04-04 at 20.58.39_28008160.jpg" alt="About Us">
+        <p>     Learn about our mission to provide seamless sports booking experiences for students and sports enthusiasts.</p>
+        <a href="about.html" class="btn">Learn More</a>
+    </div>
+ 
+    <!-- Slot Booking Section -->
+    <div class="section-container">
+        <h2>Slot Booking</h2>
+        <img src="OIP.jpg" alt="Slot Booking">
+        <p>Reserve your badminton court in advance and secure your game time without any hassle.</p>
+        <a href="booking.html" class="btn">Book Now</a>
+    </div>
+c:\Users\shrut\Downloads\OIP.jpeg
+    <!-- Find a Team Section -->
+    <div class="section-container">
+        <h2>Find a Team</h2>
+        <img src="OIP (1).jpeg" alt="Find a Team">
+        <p>Looking for a badminton partner? Connect with other players and form your perfect team.</p>
+        <a href="team.html" class="btn">Find Players</a>
+    </div>
+  
+    <!-- Upcoming Tournaments Section -->
+    <div class="section-container">
+        <h2>Upcoming Tournaments</h2>
+        <img src="OIP (2).jpeg" alt="Upcoming Tournaments">
+        <p>Stay updated on college and external badminton tournaments. Participate and showcase your skills!</p>
+        <a href="tournaments.html" class="btn">View Tournaments</a>
+    </div>
+      <!-- rules and regulation-->
+      <div class="section-container">
+        <h2>Rules and Regulation</h2>
+        <img src="Screenshot 2025-04-18 124310.png" alt="rules">
+        <p>Follow the Rules and Regulation of the  badminton court.Click on view rules to know the rules.</p>
+        <a href="rules.html" class="btn">View Rules</a>
+    </div>
+
+    <body style="background: url('https://5.imimg.com/data5/QO/DN/MY-2658927/synthetic-badminton-court-flooring-1000x1000.jpg') no-repeat center center/cover;">
+    
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: url('c:\Users\shrut\OneDrive\Pictures\Screenshots\Screenshot 2025-04-04 211035.png') no-repeat center center/cover;
+                text-align: center;
+            }
+        </style>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('images/background.jpg') no-repeat center center/cover;
+        text-align: center;
+    }
+
+    /* Home Section Text Styling */
+    .home h1, .home p {
+        color: rgb(233, 233, 240); /* Makes the text white */
+    }
+</style>        
+
+    <script src="script.js"></script>
+    <div id="menu-bar"></div>
+
+
+
+</body>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 College Sports Hub. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<div id="menu-bar"></div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Hub with Sophia AI</title>
+    <style>
+        /* Sophia Styles - Consistent across all pages */
+        #sophia-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        
+        #sophia-button {
+            background-color: navy;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 15px;
+            cursor: pointer;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        #sophia-button:hover {
+            background-color: #001f3f;
+            transform: translateY(-3px);
+        }
+        
+        #sophia-button img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        #sophia-window {
+            display: none;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        #sophia-header {
+            background: linear-gradient(135deg, navy, #001f3f);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sophia-avatar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sophia-avatar img {
+            border-radius: 50%;
+        }
+        
+        #sophia-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #sophia-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #f9f9f9;
+        }
+        
+        .sophia-message {
+            max-width: 85%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: navy;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .sophia-message {
+            align-self: flex-start;
+            background-color: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .sophia-message.quick-reply {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .sophia-message.quick-reply:hover {
+            background-color: #f0f0f0;
+        }
+        
+        #sophia-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background-color: white;
+        }
+        
+        #sophia-input input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        #sophia-input input:focus {
+            border-color: navy;
+        }
+        
+        #sophia-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, navy, #001f3f);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        #sophia-input button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            padding: 10px 15px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #999;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .action-button {
+            padding: 6px 12px;
+            background-color: navy;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-button:hover {
+            background-color: #001f3f;
+            transform: translateY(-1px);
+        }
+        
+        /* Booking calendar */
+        .booking-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .calendar-header {
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .calendar-day {
+            padding: 5px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .calendar-day.available {
+            background-color: #e6f7ff;
+        }
+        
+        .calendar-day.booked {
+            background-color: #ffebee;
+            color: #999;
+        }
+        
+        .calendar-day.today {
+            background-color: #fff8e1;
+            font-weight: bold;
+        }
+        
+        .calendar-day.selected {
+            background-color: navy;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your existing page content goes here -->
+
+    <!-- Sophia AI Assistant -->
+    <div id="sophia-container">
+        <div id="sophia-button" onclick="toggleSophia()">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" alt="Sophia" width="40">
+            <span>Sophia</span>
+        </div>
+        <div id="sophia-window">
+            <div id="sophia-header">
+                <div class="sophia-avatar">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" width="30">
+                    <h3>Sophia</h3>
+                </div>
+                <button onclick="toggleSophia()">×</button>
+            </div>
+            <div id="sophia-messages"></div>
+            <div id="sophia-input">
+                <input type="text" id="sophia-user-input" placeholder="Ask Sophia anything...">
+                <button onclick="sendToSophia()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sophia Core System
+        const sophia = {
+            state: {
+                isOpen: false,
+                currentAction: null,
+                actionData: {},
+                userContext: null,
+                isProcessing: false
+            },
+            
+            // Initialize Sophia
+            init: function() {
+                this.loadUserContext();
+                this.loadConversation();
+                
+                if (document.getElementById('sophia-messages').children.length === 0) {
+                    this.showWelcomeMessage();
+                }
+                
+                // Add event listener for Enter key
+                document.getElementById('sophia-user-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendMessage();
+                    }
+                });
+                
+                // Close when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (this.state.isOpen && !document.getElementById('sophia-container').contains(e.target)) {
+                        this.toggleUI();
+                    }
+                });
+                
+                // Listen for booking updates
+                document.addEventListener('bookingsUpdated', () => {
+                    if (this.state.isOpen) {
+                        this.addMessage('sophia', "Your bookings have been updated!");
+                    }
+                });
+            },
+            
+            // UI Controls
+            toggleUI: function() {
+                const sophiaWindow = document.getElementById('sophia-window');
+                this.state.isOpen = !this.state.isOpen;
+                sophiaWindow.style.display = this.state.isOpen ? 'flex' : 'none';
+                
+                if (this.state.isOpen) {
+                    document.getElementById('sophia-user-input').focus();
+                    this.scrollToBottom();
+                }
+            },
+            
+            sendMessage: function() {
+                if (this.state.isProcessing) return;
+                
+                const input = document.getElementById('sophia-user-input');
+                const message = input.value.trim();
+                
+                if (message) {
+                    this.addMessage('user', message);
+                    input.value = '';
+                    this.processMessage(message);
+                }
+            },
+            
+            addMessage: function(type, text, isQuickReply = false) {
+                const messages = document.getElementById('sophia-messages');
+                const messageDiv = document.createElement('div');
+                
+                if (type === 'user') {
+                    messageDiv.className = 'sophia-message user-message';
+                } else {
+                    messageDiv.className = `sophia-message ${isQuickReply ? 'quick-reply' : ''}`;
+                }
+                
+                messageDiv.textContent = text;
+                
+                if (isQuickReply) {
+                    messageDiv.onclick = () => {
+                        this.addMessage('user', text);
+                        this.processMessage(text);
+                    };
+                }
+                
+                messages.appendChild(messageDiv);
+                this.scrollToBottom();
+                this.saveConversation();
+            },
+            
+            showTyping: function() {
+                const messages = document.getElementById('sophia-messages');
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                `;
+                messages.appendChild(typingDiv);
+                this.scrollToBottom();
+                return typingDiv;
+            },
+            
+            hideTyping: function(typingDiv) {
+                typingDiv.remove();
+            },
+            
+            scrollToBottom: function() {
+                const messages = document.getElementById('sophia-messages');
+                messages.scrollTop = messages.scrollHeight;
+            },
+            
+            // Data Management
+            loadUserContext: function() {
+                const user = JSON.parse(localStorage.getItem("loggedInUser"));
+                if (user) {
+                    this.state.userContext = {
+                        username: user.username,
+                        email: user.email,
+                        phone: user.phone
+                    };
+                }
+            },
+            
+            loadConversation: function() {
+                const conversation = JSON.parse(localStorage.getItem("sophiaConversation")) || [];
+                const messages = document.getElementById('sophia-messages');
+                messages.innerHTML = '';
+                
+                conversation.forEach(msg => {
+                    if (msg.type === 'user') {
+                        const div = document.createElement('div');
+                        div.className = 'sophia-message user-message';
+                        div.textContent = msg.text;
+                        messages.appendChild(div);
+                    } else {
+                        const div = document.createElement('div');
+                        div.className = 'sophia-message';
+                        div.textContent = msg.text;
+                        messages.appendChild(div);
+                    }
+                });
+            },
+            
+            saveConversation: function() {
+                const messages = document.getElementById('sophia-messages');
+                const conversation = [];
+                
+                Array.from(messages.children).forEach(child => {
+                    if (child.classList.contains('user-message')) {
+                        conversation.push({ type: 'user', text: child.textContent });
+                    } else if (child.classList.contains('sophia-message')) {
+                        conversation.push({ type: 'sophia', text: child.textContent });
+                    }
+                });
+                
+                localStorage.setItem("sophiaConversation", JSON.stringify(conversation));
+            },
+            
+            // Core Functionality
+            showWelcomeMessage: function() {
+                this.addMessage('sophia', "Hello! I'm Sophia, your Sports Hub Assistant. 😊");
+                
+                setTimeout(() => {
+                    this.addMessage('sophia', "I can help you with:");
+                    
+                    setTimeout(() => {
+                        this.addMessage('sophia', "🏸 Book or cancel court reservations", true);
+                        this.addMessage('sophia', "🏆 Tournament information and registration", true);
+                        this.addMessage('sophia', "👥 Find playing partners", true);
+                        this.addMessage('sophia', "📜 Rules and regulations", true);
+                        this.addMessage('sophia', "📝 Submit feedback", true);
+                    }, 500);
+                }, 800);
+            },
+            
+            processMessage: function(message) {
+                this.state.isProcessing = true;
+                const typing = this.showTyping();
+                
+                setTimeout(() => {
+                    this.hideTyping(typing);
+                    this.respondToMessage(message);
+                    this.state.isProcessing = false;
+                }, 1000 + Math.random() * 1000);
+            },
+            
+            respondToMessage: function(message) {
+                const lowerMsg = message.toLowerCase();
+                
+                // Handle multi-step actions
+                if (this.state.currentAction) {
+                    this.handleActionResponse(message);
+                    return;
+                }
+                
+                // Integrated responses
+                if (lowerMsg.includes('book') || lowerMsg.includes('reserve')) {
+                    this.startBookingProcess();
+                } 
+                else if (lowerMsg.includes('cancel')) {
+                    this.startCancelProcess();
+                } 
+                else if (lowerMsg.includes('tournament') || lowerMsg.includes('event')) {
+                    this.showTournamentInfo();
+                } 
+                else if (lowerMsg.includes('my booking') || lowerMsg.includes('reservation')) {
+                    this.showUserBookings();
+                } 
+                else if (lowerMsg.includes('feedback') || lowerMsg.includes('suggestion')) {
+                    this.startFeedbackProcess();
+                } 
+                else if (lowerMsg.includes('rule') || lowerMsg.includes('regulation')) {
+                    this.showRulesSummary();
+                } 
+                else if (lowerMsg.includes('hi') || lowerMsg.includes('hello') || lowerMsg.includes('hey')) {
+                    this.addMessage('sophia', "Hello again! 😊 How can I assist you today?");
+                }
+                else if (lowerMsg.includes('thank')) {
+                    this.addMessage('sophia', "You're welcome! Is there anything else I can help with? 😊");
+                }
+                else {
+                    this.addMessage('sophia', "I can help you with:\n- Booking courts\n- Tournament info\n- Finding partners\n- Rules\n- Feedback\n\nTry asking about one of these!");
+                }
+            },
+            
+            handleActionResponse: function(message) {
+                const lowerMsg = message.toLowerCase();
+                
+                // Handle cancellation of current action
+                if (lowerMsg.includes('cancel') || lowerMsg === 'no') {
+                    this.addMessage('sophia', "Action cancelled. How else can I help?");
+                    this.resetAction();
+                    return;
+                }
+                
+                // Route to appropriate action handler
+                switch(this.state.currentAction) {
+                    case 'booking':
+                        this.processBooking(message);
+                        break;
+                    case 'booking_confirmation':
+                        if (lowerMsg === 'confirm') {
+                            this.completeBooking();
+                        } else {
+                            this.addMessage('sophia', "Booking not confirmed. Please try again or say 'cancel' to abort.");
+                        }
+                        break;
+                    case 'cancellation':
+                        this.processCancellation(message);
+                        break;
+                    case 'cancellation_confirmation':
+                        if (lowerMsg === 'confirm') {
+                            this.completeCancellation();
+                        } else {
+                            this.addMessage('sophia', "Cancellation not confirmed. Please try again or say 'cancel' to abort.");
+                        }
+                        break;
+                    case 'feedback':
+                        this.completeFeedback(message);
+                        break;
+                    default:
+                        this.resetAction();
+                }
+            },
+            
+            resetAction: function() {
+                this.state.currentAction = null;
+                this.state.actionData = {};
+            },
+            
+            // Booking System
+            startBookingProcess: function() {
+                if (!this.state.userContext) {
+                    this.addMessage('sophia', "You need to be logged in to book a court. Please log in first.");
+                    return;
+                }
+                
+                this.state.currentAction = 'booking';
+                this.state.actionData = {};
+                this.addMessage('sophia', "Let's book a court! 🏸 Please specify:\nDate (e.g., tomorrow, Friday)\nTime (e.g., 3 PM)\nCourt number (1-8)\n\nExample: 'Book for tomorrow 3 PM Court 3'");
+            },
+            
+            processBooking: function(message) {
+                // Parse date, time, and court from message
+                const dateMatch = message.match(/(\d{4}-\d{2}-\d{2}|today|tomorrow|next week|monday|tuesday|wednesday|thursday|friday|saturday|sunday)/i);
+                const timeMatch = message.match(/(\d{1,2}(:\d{2})?\s?(AM|PM))/i);
+                const courtMatch = message.match(/court\s?(\d)/i);
+                
+                // Store parsed values
+                if (dateMatch) this.state.actionData.date = this.parseDate(dateMatch[0]);
+                if (timeMatch) this.state.actionData.time = timeMatch[0];
+                if (courtMatch) this.state.actionData.court = `Court ${courtMatch[1]}`;
+                
+                // Check for complete data
+                if (this.state.actionData.date && this.state.actionData.time && this.state.actionData.court) {
+                    this.confirmBooking();
+                } else {
+                    this.promptMissingBookingInfo();
+                }
+            },
+            
+            parseDate: function(dateString) {
+                const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                const today = new Date();
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                
+                if (dateString.toLowerCase() === 'today') {
+                    return today.toISOString().split('T')[0];
+                } else if (dateString.toLowerCase() === 'tomorrow') {
+                    return tomorrow.toISOString().split('T')[0];
+                } else if (days.includes(dateString.toLowerCase())) {
+                    const dayIndex = days.indexOf(dateString.toLowerCase());
+                    const currentDay = today.getDay();
+                    let daysToAdd = (dayIndex - currentDay + 7) % 7;
+                    daysToAdd = daysToAdd === 0 ? 7 : daysToAdd; // Next week if same day
+                    const targetDate = new Date(today);
+                    targetDate.setDate(targetDate.getDate() + daysToAdd);
+                    return targetDate.toISOString().split('T')[0];
+                } else if (dateString.toLowerCase() === 'next week') {
+                    const nextWeek = new Date(today);
+                    nextWeek.setDate(nextWeek.getDate() + 7);
+                    return nextWeek.toISOString().split('T')[0];
+                } else if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+                    return dateString; // Already in correct format
+                }
+                
+                return null;
+            },
+            
+            promptMissingBookingInfo: function() {
+                const missing = [];
+                if (!this.state.actionData.date) missing.push("date");
+                if (!this.state.actionData.time) missing.push("time");
+                if (!this.state.actionData.court) missing.push("court number");
+                
+                this.addMessage('sophia', `Please provide the ${missing.join(" and ")}:`);
+            },
+            
+            confirmBooking: function() {
+                this.addMessage('sophia', `Please confirm your booking:\n📅 Date: ${this.state.actionData.date}\n⏰ Time: ${this.state.actionData.time}\n🏟 Court: ${this.state.actionData.court}\n\nType 'confirm' to proceed or 'cancel' to abort.`);
+                this.state.currentAction = 'booking_confirmation';
+            },
+            
+            completeBooking: function() {
+                const bookingDetails = {
+                    bookingID: 'BKG' + Math.floor(100000 + Math.random() * 900000),
+                    user: this.state.userContext.username,
+                    date: this.state.actionData.date,
+                    time: this.state.actionData.time,
+                    court: this.state.actionData.court,
+                    status: 'confirmed',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Update localStorage
+                let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+                bookings.push(bookingDetails);
+                localStorage.setItem("bookings", JSON.stringify(bookings));
+                
+                // Update UI
+                this.addMessage('sophia', `✅ Booking confirmed!\nYour Booking ID: ${bookingDetails.bookingID}\n\nYou can view it in 'Your Details' page.`);
+                
+                // Update other pages by triggering event
+                document.dispatchEvent(new Event('bookingsUpdated'));
+                
+                this.resetAction();
+            },
+            
+            // Cancellation System
+            startCancelProcess: function() {
+                if (!this.state.userContext) {
+                    this.addMessage('sophia', "You need to be logged in to cancel a booking. Please log in first.");
+                    return;
+                }
+                
+                const userBookings = this.getUserBookings().filter(b => b.status !== 'cancelled');
+                
+                if (userBookings.length === 0) {
+                    this.addMessage('sophia', "You don't have any active bookings to cancel.");
+                    return;
+                }
+                
+                this.state.currentAction = 'cancellation';
+                this.addMessage('sophia', `You have ${userBookings.length} active booking(s). Please provide the Booking ID you want to cancel, or type 'list' to see your bookings.`);
+            },
+            
+            processCancellation: function(message) {
+                if (message.toLowerCase() === 'list') {
+                    this.showUserBookings();
+                    return;
+                }
+                
+                const bookingID = message.trim().toUpperCase();
+                const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+                const booking = bookings.find(b => b.bookingID === bookingID && b.user === this.state.userContext.username);
+                
+                if (booking) {
+                    this.state.actionData.bookingID = bookingID;
+                    this.addMessage('sophia', `Are you sure you want to cancel booking ${bookingID} for ${booking.date} at ${booking.time}? Type 'confirm' to proceed.`);
+                    this.state.currentAction = 'cancellation_confirmation';
+                } else {
+                    this.addMessage('sophia', "❌ Invalid Booking ID. Please check and try again, or type 'list' to see your bookings.");
+                }
+            },
+            
+            completeCancellation: function() {
+                const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+                const bookingIndex = bookings.findIndex(b => b.bookingID === this.state.actionData.bookingID);
+                
+                if (bookingIndex !== -1) {
+                    bookings[bookingIndex].status = 'cancelled';
+                    localStorage.setItem("bookings", JSON.stringify(bookings));
+                    this.addMessage('sophia', `✅ Booking ${this.state.actionData.bookingID} cancelled successfully.`);
+                    
+                    // Update other pages by triggering event
+                    document.dispatchEvent(new Event('bookingsUpdated'));
+                }
+                
+                this.resetAction();
+            },
+            
+            // Tournament System
+            showTournamentInfo: function() {
+                const tournaments = this.getUpcomingTournaments();
+                
+                if (tournaments.length === 0) {
+                    this.addMessage('sophia', "There are no upcoming tournaments currently. Check back later!");
+                    return;
+                }
+                
+                this.addMessage('sophia', `🏆 Upcoming Tournaments (${tournaments.length}):`);
+                
+                tournaments.forEach(tournament => {
+                    this.addMessage('sophia', `${tournament.name}\n📅 ${tournament.date} | 📍 ${tournament.location}`);
+                });
+                
+                this.addMessage('sophia', "Would you like to register for any tournament? If yes, please type the tournament name.");
+                this.state.currentAction = 'tournament_registration';
+            },
+            
+            // Feedback System
+            startFeedbackProcess: function() {
+                this.state.currentAction = 'feedback';
+                this.addMessage('sophia', "Please share your feedback or suggestions about the Sports Hub. What did you like or what can we improve?");
+            },
+            
+            completeFeedback: function(message) {
+                const feedback = {
+                    user: this.state.userContext ? this.state.userContext.username : 'Anonymous',
+                    message: message,
+                    timestamp: new Date().toISOString()
+                };
+                
+                let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+                feedbacks.push(feedback);
+                localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+                
+                this.addMessage('sophia', "📝 Thank you for your valuable feedback! We'll use it to improve our services.");
+                this.resetAction();
+            },
+            
+            // Rules System
+            showRulesSummary: function() {
+                this.addMessage('sophia', "📜 Sports Hub Rules Summary:");
+                this.addMessage('sophia', "1. Proper sports attire required\n2. Non-marking shoes mandatory\n3. No food/drinks (except water)\n4. 60-minute time limit per match\n5. Be respectful to others");
+                this.addMessage('sophia', "For complete rules, visit the Rules & Regulations page.");
+            },
+            
+            // User Bookings
+            showUserBookings: function() {
+                if (!this.state.userContext) {
+                    this.addMessage('sophia', "You need to be logged in to view your bookings.");
+                    return;
+                }
+                
+                const bookings = this.getUserBookings();
+                
+                if (bookings.length === 0) {
+                    this.addMessage('sophia', "You don't have any bookings yet.");
+                    return;
+                }
+                
+                this.addMessage('sophia', `📅 Your Bookings (${bookings.length}):`);
+                
+                bookings.forEach(booking => {
+                    const status = booking.status === 'cancelled' ? '❌ Cancelled' : '✅ Active';
+                    this.addMessage('sophia', `${status} | ${booking.date} ${booking.time}\nCourt ${booking.court} | ID: ${booking.bookingID}`);
+                });
+            },
+            
+            // Helper Functions
+            getUserBookings: function() {
+                if (!this.state.userContext) return [];
+                
+                const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+                return bookings
+                    .filter(b => b.user === this.state.userContext.username)
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+            },
+            
+            getUpcomingTournaments: function() {
+                const tournaments = JSON.parse(localStorage.getItem("tournaments")) || [];
+                const today = new Date().toISOString().split('T')[0];
+                
+                return tournaments
+                    .filter(t => t.date >= today)
+                    .sort((a, b) => a.date.localeCompare(b.date));
+            },
+            
+            // Initialize on page load
+            start: function() {
+                this.init();
+            }
+        };
+
+        // Start Sophia when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            sophia.start();
+        });
+
+        // Global functions for UI interaction
+        function toggleSophia() {
+            sophia.toggleUI();
+        }
+
+        function sendToSophia() {
+            sophia.sendMessage();
+        }
+    </script>
+    
+</body>
+</html>
+
+
+
+   
+
+
+
+
+
+

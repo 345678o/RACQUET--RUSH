@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | College Sports Hub</title>
+    <style>
+        :root {
+            --primary: #00274D;
+            --secondary: #004080;
+            --accent: #0066CC;
+            --light: #F5F5F5;
+            --dark: #333;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            background-color: var(--secondary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 3px;
+            background: white;
+            transition: var(--transition);
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 2rem;
+            background: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            width: 250px;
+            overflow: hidden;
+            transform-origin: top right;
+            transform: scale(0);
+            transition: var(--transition);
+        }
+
+        .hamburger-menu.active {
+            display: block;
+            transform: scale(1);
+        }
+
+        .hamburger-menu a {
+            display: block;
+            padding: 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .hamburger-menu a:hover {
+            background: var(--light);
+            color: var(--primary);
+            padding-left: 1.5rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .welcome-message h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-message p {
+            color: var(--dark);
+            opacity: 0.8;
+        }
+
+        .user-type {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            color: var(--primary);
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .profile-card,
+        .booking-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .info-group {
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: var(--border-radius);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Booking History */
+        .booking-history {
+            margin-top: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-booked {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .cancel-btn {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Edit Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .modal-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--light);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .container {
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        /* Navigation Bar */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 100px;
+        }
+
+        /* Main Navigation Links */
+        .main-nav {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .main-nav a:hover {
+            background-color: darkblue;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 4px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: navy;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 999;
+        }
+
+        .hamburger-menu.active {
+            display: block;
+        }
+
+        .hamburger-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu a:hover {
+            background: rgb(163, 13, 103);
+        }
+
+        /* Section Styling */
+        .section-container {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            padding: 40px;
+            margin: 50px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: justify;
+        }
+
+        .section-container h2 {
+            color: blue;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .section-container p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                /* Hide main nav links on smaller screens */
+            }
+
+            .hamburger-menu {
+                width: 100%;
+                left: 0;
+                top: 60px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: navy;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+    </head>
+
+    <body onload="checkLogin()">
+        <script>
+            function toggleMenu() {
+                const menu = document.querySelector('.hamburger-menu');
+                menu.classList.toggle('active');
+            }
+        </script>
+
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="logo"><img
+                    src="logo.jpg"
+                    alt="College Sports Hub Logo"></div>
+
+            <!-- Main navigation links -->
+            <ul class="main-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="booking.html">Slot Booking</a></li>
+                <a href="details.html" class="active">Your Details</a>
+            </ul>
+
+            <!-- Hamburger icon -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <!-- Hidden menu links -->
+            <div class="hamburger-menu">
+
+                <a href="team.html">Find a Team</a>
+                <a href="tournaments.html">Upcoming Tournaments</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="rules.html">Rules & Regulations</a>
+
+                <a href="#" id="logoutNav" onclick="logout()">Logout</a>
+            </div>
+        </nav>
+        <!-- Main Content -->
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="welcome-message">
+                    <h1 id="welcome-name">Welcome, User!</h1>
+                    <p id="welcome-email">user@example.com</p>
+                </div>
+                <div class="user-type" id="user-type-badge">Student</div>
+            </div>
+
+            <section class="profile-section">
+                <div class="profile-card">
+                    <h2 class="section-title">Personal Information</h2>
+                    <div class="profile-info">
+                        <div class="info-group">
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value" id="profile-fullname">Loading...</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Username</div>
+                            <div class="info-value" id="profile-username">Loading...</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Email</div>
+                            <div class="info-value" id="profile-email">Loading...</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value" id="profile-phone">Loading...</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Roll Number</div>
+                            <div class="info-value" id="profile-rollno">Loading...</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Student Type</div>
+                            <div class="info-value" id="profile-student-type">Loading...</div>
+                        </div>
+                    </div>
+                    <button class="edit-btn" onclick="openEditModal()">Edit Profile</button>
+                </div>
+
+                <div class="profile-card">
+                    <h2 class="section-title">Recent Activity</h2>
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <p><strong>Last Login:</strong> <span id="last-login">Just now</span></p>
+                        </div>
+                        <div class="activity-item">
+                            <p><strong>Total Bookings:</strong> <span id="total-bookings">0</span></p>
+                        </div>
+                        <div class="activity-item">
+                            <p><strong>Upcoming Bookings:</strong> <span id="upcoming-bookings">0</span></p>
+                        </div>
+                    </div>
+                    <button class="edit-btn" onclick="window.location.href='booking.html'">Book a Court</button>
+                </div>
+            </section>
+
+
+
+
+            <!-- Edit Profile Modal -->
+            <div class="modal" id="editModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Edit Profile</h2>
+                        <button class="close-btn" onclick="closeEditModal()">&times;</button>
+                    </div>
+                    <form id="editProfileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-fullname">Full Name</label>
+                                <input type="text" id="edit-fullname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-username">Username</label>
+                                <input type="text" id="edit-username" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-phone">Phone</label>
+                                <input type="tel" id="edit-phone" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-rollno">Roll Number</label>
+                                <input type="text" id="edit-rollno" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-student-type">Student Type</label>
+                                <select id="edit-student-type" required>
+                                    <option value="BTech">BTech</option>
+                                    <option value="MBA">MBA</option>
+                                    <option value="Medical">Medical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                // Global variables
+                let currentUser = null;
+                let allUsers = {};
+                let allBookings = [];
+
+                // DOM Content Loaded
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Check if user is logged in
+                    const loggedInUsername = localStorage.getItem('loggedInUser');
+                    if (!loggedInUsername) {
+                        window.location.href = 'login.html';
+                        return;
+                    }
+
+                    // Load user data
+                    loadUserData(loggedInUsername);
+
+                    // Load booking data
+                    loadBookingData(loggedInUsername);
+
+                    // Initialize hamburger menu
+                    setupHamburgerMenu();
+                });
+
+                // Load user data from localStorage
+                function loadUserData(username) {
+                    allUsers = JSON.parse(localStorage.getItem('users')) || {};
+                    currentUser = allUsers[username];
+
+                    if (!currentUser) {
+                        alert('User data not found!');
+                        logout();
+                        return;
+                    }
+
+                    // Update profile information
+                    document.getElementById('welcome-name').textContent = `Welcome, ${currentUser.fullname || username}!`;
+                    document.getElementById('welcome-email').textContent = currentUser.email || '';
+                    document.getElementById('profile-fullname').textContent = currentUser.fullname || 'Not set';
+                    document.getElementById('profile-username').textContent = username;
+                    document.getElementById('profile-email').textContent = currentUser.email || 'Not set';
+                    document.getElementById('profile-phone').textContent = currentUser.phone || 'Not set';
+                    document.getElementById('profile-rollno').textContent = currentUser.rollno || 'Not set';
+                    document.getElementById('profile-student-type').textContent = currentUser.studentType || 'Not set';
+                    document.getElementById('user-type-badge').textContent = currentUser.studentType || 'Student';
+                }
+
+                // Load booking data from localStorage
+                // Cancel a booking
+                function cancelBooking(bookingId) {
+                    if (confirm('Are you sure you want to cancel this booking?')) {
+                        const bookingIndex = allBookings.findIndex(b => b.id === bookingId);
+                        if (bookingIndex !== -1) {
+                            allBookings[bookingIndex].status = 'cancelled';
+                            localStorage.setItem('bookings', JSON.stringify(allBookings));
+                            loadBookingData(currentUser.username);
+                            alert('Booking cancelled successfully!');
+                        }
+                    }
+                }
+
+                // Edit Profile Modal
+                function openEditModal() {
+                    document.getElementById('editModal').style.display = 'flex';
+
+                    // Populate form with current data
+                    document.getElementById('edit-fullname').value = currentUser.fullname || '';
+                    document.getElementById('edit-username').value = currentUser.username || '';
+                    document.getElementById('edit-email').value = currentUser.email || '';
+                    document.getElementById('edit-phone').value = currentUser.phone || '';
+                    document.getElementById('edit-rollno').value = currentUser.rollno || '';
+                    document.getElementById('edit-student-type').value = currentUser.studentType || 'BTech';
+                }
+
+                function closeEditModal() {
+                    document.getElementById('editModal').style.display = 'none';
+                }
+
+                // Save profile changes
+                document.getElementById('editProfileForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Get form values
+                    const fullname = document.getElementById('edit-fullname').value.trim();
+                    const username = document.getElementById('edit-username').value.trim();
+                    const email = document.getElementById('edit-email').value.trim();
+                    const phone = document.getElementById('edit-phone').value.trim();
+                    const rollno = document.getElementById('edit-rollno').value.trim();
+                    const studentType = document.getElementById('edit-student-type').value;
+
+                    // Validate
+                    if (!fullname || !username || !email || !phone || !rollno) {
+                        alert('All fields are required!');
+                        return;
+                    }
+
+                    // Check if username changed and already exists
+                    const currentUsername = localStorage.getItem('loggedInUser');
+                    if (username !== currentUsername && allUsers[username]) {
+                        alert('Username already exists!');
+                        return;
+                    }
+
+                    // Update user data
+                    const oldUserData = allUsers[currentUsername];
+                    delete allUsers[currentUsername];
+
+                    allUsers[username] = {
+                        ...oldUserData,
+                        fullname,
+                        username,
+                        email,
+                        phone,
+                        rollno,
+                        studentType
+                    };
+
+                    // Save to localStorage
+                    localStorage.setItem('users', JSON.stringify(allUsers));
+                    localStorage.setItem('loggedInUser', username);
+
+                    // Update bookings with new username
+                    updateBookingsWithNewUsername(currentUsername, username);
+
+                    // Reload data
+                    loadUserData(username);
+                    closeEditModal();
+                    alert('Profile updated successfully!');
+                });
+
+                // Update bookings with new username
+                function updateBookingsWithNewUsername(oldUsername, newUsername) {
+                    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+                    const updatedBookings = bookings.map(booking => {
+                        if (booking.userId === oldUsername) {
+                            return { ...booking, userId: newUsername };
+                        }
+                        return booking;
+                    });
+                    localStorage.setItem('bookings', JSON.stringify(updatedBookings));
+                }
+
+                // Hamburger menu functionality
+                function setupHamburgerMenu() {
+                    const hamburger = document.querySelector('.hamburger');
+                    const menu = document.getElementById('hamburgerMenu');
+
+                    hamburger.addEventListener('click', function () {
+                        menu.classList.toggle('active');
+                    });
+
+                    // Close when clicking outside
+                    document.addEventListener('click', function (e) {
+                        if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+                            menu.classList.remove('active');
+                        }
+                    });
+                }
+
+                // Logout function
+                function logout() {
+                    localStorage.removeItem('loggedInUser');
+                    window.location.href = 'login.html';
+                }
+                // Enhanced loadBookings function
+                function loadBookings() {
+                    try {
+                        const userEmail = localStorage.getItem("loggedInUser");
+                        if (!userEmail) {
+                            window.location.href = "login.html";
+                            return;
+                        }
+
+                        const bookingsData = localStorage.getItem('sportBookings');
+                        if (!bookingsData) {
+                            document.getElementById('bookings-container').innerHTML =
+                                '<div class="no-bookings"><p>You have no active bookings.</p></div>';
+                            return;
+                        }
+
+                        const allBookings = JSON.parse(bookingsData);
+                        const userBookings = allBookings.filter(b => b.email === userEmail && b.status !== 'cancelled');
+
+                        if (userBookings.length === 0) {
+                            document.getElementById('bookings-container').innerHTML =
+                                '<div class="no-bookings"><p>You have no active bookings.</p></div>';
+                            return;
+                        }
+
+                        let html = '';
+                        userBookings.forEach(booking => {
+                            const bookingDate = new Date(booking.date + 'T00:00:00');
+                            const formattedDate = bookingDate.toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+
+                            html += `
+                <div class="booking-card" id="booking-${booking.id}">
+                    <h3>${booking.sportType} - Court ${booking.court}</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Booking ID:</span>
+                        <span>${booking.id}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date:</span>
+                        <span>${formattedDate}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Time Slot:</span>
+                        <span>${booking.timeSlot}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status:</span>
+                        <span>${booking.status}</span>
+                    </div>
+                    <button class="cancel-btn" onclick="cancelBooking('${booking.id}')">
+                        Cancel Booking
+                    </button>
+                </div>
+            `;
+                        });
+
+                        document.getElementById('bookings-container').innerHTML = html;
+                    } catch (e) {
+                        console.error('Error loading bookings:', e);
+                        document.getElementById('bookings-container').innerHTML =
+                            '<div class="no-bookings"><p>Error loading bookings. Please try again.</p></div>';
+                    }
+                }
+
+
+
+
+            </script>
+
+    </body>
+
+</html>
+<script>
