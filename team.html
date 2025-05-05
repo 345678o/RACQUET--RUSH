@@ -11,7 +11,7 @@
             padding: 0;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
@@ -25,129 +25,456 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+            z-index: 1000;
+            overflow-x: auto;
+            min-width: 320px;
+        }
+        .logo {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
         }
         .logo img {
-            height: 60px;
+            height: 70px;
+            width: auto;
         }
         .main-nav {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
+            transition: max-height 0.3s, opacity 0.3s;
         }
         .main-nav a {
-            color: white;
             text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            color: white;
+            font-size: 16px;
+            padding: 14px 20px;
+            border-radius: 5px;
+            transition: background 0.2s;
+            white-space: nowrap;
+            display: block;
         }
-        .main-nav a:hover, .main-nav a.active {
-            background-color: #004080;
+        .main-nav a:hover {
+            background-color: darkblue;
         }
         .hamburger {
             display: none;
             flex-direction: column;
+            gap: 6px;
             cursor: pointer;
+            margin-left: 20px;
+            width: 44px;
+            height: 44px;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
         }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
+        .hamburger span {
+            display: block;
+            width: 32px;
+            height: 4px;
             background: white;
-            margin: 3px 0;
-            transition: all 0.3s;
+            border-radius: 2px;
+            transition: 0.3s;
         }
         .hamburger-menu {
             display: none;
             position: absolute;
-            top: 70px;
+            top: 80px;
             right: 20px;
             background: #00274D;
-            width: 200px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
         }
-        .hamburger-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-        }
-        .hamburger-menu a:hover {
-            background-color: #004080;
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .hamburger-menu.active {
             display: block;
-            animation: fadeIn 0.3s;
+        }
+        .hamburger-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        .hamburger-menu a:hover {
+            background: #00509E;
+            padding-left: 30px;
+        }
+        .hamburger-menu a:last-child {
+            border-bottom: none;
         }
         /* Main Content */
         .container {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
+            margin: 2rem auto;
+            padding: 2rem;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #00274D;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #00274D;
         }
         input, select, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 0.75rem;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #00274D;
         }
         textarea {
             height: 100px;
+            resize: vertical;
         }
         .btn {
-            padding: 12px 20px;
+            padding: 0.75rem 1.5rem;
             background-color: #00274D;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
         }
         .btn:hover {
             background-color: #004080;
         }
         .players-list {
-            margin-top: 30px;
+            margin-top: 3rem;
         }
         .player-card {
-            padding: 20px;
-            margin-bottom: 15px;
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
             border-radius: 8px;
-            background: #f9f9f9;
-            border-left: 5px solid #00274D;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #00274D;
+            transition: transform 0.3s ease;
+        }
+        .player-card:hover {
+            transform: translateY(-2px);
         }
         .player-card h3 {
             color: #00274D;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
         }
         .player-card p {
-            margin: 5px 0;
+            margin: 0.5rem 0;
+            color: #555;
+        }
+        .player-card .btn {
+            margin-top: 1rem;
+            background-color: #28a745;
+        }
+        .player-card .btn:hover {
+            background-color: #218838;
         }
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            nav {
+                flex-wrap: wrap;
+            }
             .main-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #00274D;
+                flex-direction: column;
+                width: 100vw;
+                gap: 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 display: none;
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+            }
+            .main-nav.active {
+                display: flex;
+                max-height: 500px;
+                opacity: 1;
+            }
+            .main-nav li {
+                width: 100%;
+            }
+            .main-nav a {
+                display: block;
+                padding: 18px 24px;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+                font-size: 18px;
             }
             .hamburger {
                 display: flex;
+            }
+        }
+        #nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1099;
+        }
+        #nav-backdrop.active {
+            display: block;
+        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+                margin: 1.75rem auto;
+                padding: 1.75rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .player-card h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                margin: 1.5rem auto;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            input, select, textarea {
+                padding: 0.7rem;
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 0.7rem 1.25rem;
+                font-size: 0.95rem;
+            }
+
+            .player-card {
+                padding: 1.25rem;
+            }
+
+            .player-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .player-card p {
+                font-size: 0.95rem;
+                margin: 0.4rem 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .container {
+                margin: 1.25rem auto;
+                padding: 1.25rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                margin-bottom: 1.25rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input, select, textarea {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .player-card {
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .player-card h3 {
+                font-size: 1rem;
+            }
+
+            .player-card p {
+                font-size: 0.9rem;
+                margin: 0.3rem 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav {
+                padding: 8px 12px;
+            }
+
+            .logo {
+                height: 40px;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .container {
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            label {
+                font-size: 0.85rem;
+            }
+
+            input, select, textarea {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .btn {
+                padding: 0.5rem 0.9rem;
+                font-size: 0.85rem;
+            }
+
+            .player-card {
+                padding: 0.9rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .player-card h3 {
+                font-size: 0.95rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .player-card p {
+                font-size: 0.85rem;
+                margin: 0.25rem 0;
+            }
+        }
+
+        @media (max-width: 400px) {
+            nav {
+                padding: 6px 10px;
+            }
+
+            .logo {
+                height: 35px;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+
+            .container {
+                margin: 0.75rem auto;
+                padding: 0.75rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 0.75rem;
+            }
+
+            label {
+                font-size: 0.8rem;
+            }
+
+            input, select, textarea {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .player-card {
+                padding: 0.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .player-card h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .player-card p {
+                font-size: 0.8rem;
+                margin: 0.2rem 0;
             }
         }
     </style>
@@ -289,36 +616,23 @@
 
 <!-- Navigation Bar -->
 <nav>
-<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-
-<!-- Main navigation links -->
-<ul class="main-nav">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html" >About</a></li>
-    <li><a href="booking.html">Slot Booking</a></li>
-   
-        <a href="team.html"class="active">Find a Team</a>
-</ul>
-
-<!-- Hamburger icon -->
-<div class="hamburger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-
-<!-- Hidden menu links -->
-<div class="hamburger-menu">
-   
-    <a href="team.html">Find a Team</a>
-    <a href="tournaments.html">Upcoming Tournaments</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="rules.html">Rules & Regulations</a>
-    <a href="details.html">Your Details</a>
-    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
-</div>
+    <div class="logo">
+        <img src="logo.jpg" alt="College Sports Hub Logo">
+    </div>
+    <ul class="main-nav" id="mainNav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+        <li><a href="team.html" class="active">Find a Team</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
 </nav>
-   
+<div id="nav-backdrop"></div>
+
     <!-- Main Content -->
     <div class="container">
         <h1>Find a Badminton Partner</h1>
@@ -356,6 +670,10 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="playerDate">Preferred Date</label>
+                <input type="date" id="playerDate" required min="${new Date().toISOString().split('T')[0]}">
+            </div>
+            <div class="form-group">
                 <label for="playerMessage">Additional Message (Optional)</label>
                 <textarea id="playerMessage"></textarea>
             </div>
@@ -373,24 +691,30 @@
             checkLogin();
             
             const players = JSON.parse(localStorage.getItem("badmintonPlayers")) || [];
+            const currentUser = localStorage.getItem("loggedInUser");
             const playersList = document.getElementById('playersList');
             
-            if (players.length === 0) {
+            // Filter out current user's registration and show only active players
+            const otherPlayers = players.filter(p => p.userId !== currentUser && p.status === 'active');
+            
+            if (otherPlayers.length === 0) {
                 playersList.innerHTML = '<p>No players currently looking for partners. Be the first to add yourself!</p>';
                 return;
             }
             
             playersList.innerHTML = '';
             
-            players.forEach(player => {
+            otherPlayers.forEach(player => {
                 const playerCard = document.createElement('div');
                 playerCard.className = 'player-card';
                 playerCard.innerHTML = `
                     <h3>${player.name}</h3>
                     <p><strong>Skill Level:</strong> ${player.skill}</p>
                     <p><strong>Availability:</strong> ${player.availability}</p>
+                    <p><strong>Preferred Date:</strong> ${new Date(player.date).toLocaleDateString()}</p>
                     ${player.message ? `<p><strong>Message:</strong> ${player.message}</p>` : ''}
                     <p><strong>Contact:</strong> ${player.email} | ${player.phone}</p>
+                    <button class="btn" onclick="selectTeamMate('${player.id}')">Select as Team Mate</button>
                 `;
                 playersList.appendChild(playerCard);
             });
@@ -403,9 +727,11 @@
             const phone = document.getElementById('playerPhone').value;
             const skill = document.getElementById('playerSkill').value;
             const availability = document.getElementById('playerAvailability').value;
+            const date = document.getElementById('playerDate').value;
             const message = document.getElementById('playerMessage').value;
+            const currentUser = localStorage.getItem("loggedInUser");
             
-            if (!name || !email || !phone || !skill || !availability) {
+            if (!name || !email || !phone || !skill || !availability || !date) {
                 alert('Please fill in all required fields');
                 return;
             }
@@ -423,27 +749,34 @@
             const players = JSON.parse(localStorage.getItem("badmintonPlayers")) || [];
             
             // Check if player already exists
-            const existingPlayer = players.find(p => p.email === email || p.phone === phone);
+            const existingPlayer = players.find(p => p.userId === currentUser);
             if (existingPlayer) {
                 if (confirm('You already have a listing. Update your information?')) {
                     // Update existing player
                     existingPlayer.name = name;
+                    existingPlayer.email = email;
                     existingPlayer.phone = phone;
                     existingPlayer.skill = skill;
                     existingPlayer.availability = availability;
+                    existingPlayer.date = date;
                     existingPlayer.message = message;
+                    existingPlayer.status = 'active';
                 } else {
                     return;
                 }
             } else {
                 // Add new player
                 players.push({
+                    id: Date.now().toString(),
                     name,
                     email,
                     phone,
                     skill,
                     availability,
+                    date,
                     message,
+                    userId: currentUser,
+                    status: 'active',
                     timestamp: new Date().toISOString()
                 });
             }
@@ -459,10 +792,11 @@
             document.getElementById('playerPhone').value = '';
             document.getElementById('playerSkill').value = '';
             document.getElementById('playerAvailability').value = '';
+            document.getElementById('playerDate').value = '';
             document.getElementById('playerMessage').value = '';
         }
         
-        // Check login status
+        // Check login status and pre-fill data
         function checkLogin() {
             const user = localStorage.getItem("loggedInUser");
             if (!user) {
@@ -470,20 +804,20 @@
             } else {
                 document.getElementById("logoutNav").style.display = "block";
                 // Pre-fill name and email if available
-                const users = JSON.parse(localStorage.getItem("users")) || [];
-                const currentUser = users.find(u => u.username === user);
-                if (currentUser) {
-                    document.getElementById('playerName').value = currentUser.username;
-                    document.getElementById('playerEmail').value = currentUser.email || '';
-                    document.getElementById('playerPhone').value = currentUser.phone || '';
+                const userData = JSON.parse(localStorage.getItem("userData"));
+                if (userData) {
+                    document.getElementById('playerName').value = userData.name || '';
+                    document.getElementById('playerEmail').value = userData.email || '';
+                    document.getElementById('playerPhone').value = userData.phone || '';
                 }
             }
         }
         
         // Toggle mobile menu
-        function toggleMenu() {
-            const menu = document.querySelector(".hamburger-menu");
-            menu.classList.toggle("active");
+        function toggleMenu(e) {
+            e.stopPropagation();
+            document.getElementById('mainNav').classList.toggle('active');
+            document.getElementById('nav-backdrop').classList.toggle('active');
         }
         
         // Logout function
@@ -492,6 +826,59 @@
             localStorage.removeItem("userType");
             window.location.href = "login.html";
         }
+
+        function selectTeamMate(teamMateId) {
+            const currentUser = localStorage.getItem("loggedInUser");
+            const players = JSON.parse(localStorage.getItem("badmintonPlayers")) || [];
+            const teamMate = players.find(p => p.id === teamMateId);
+            const currentUserRegistration = players.find(p => p.userId === currentUser);
+
+            if (!currentUserRegistration) {
+                alert('Please register yourself first before selecting a team mate');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to team up with ${teamMate.name}?`)) {
+                // Create team record
+                const teams = JSON.parse(localStorage.getItem("badmintonTeams")) || [];
+                const teamId = Date.now().toString();
+                
+                teams.push({
+                    id: teamId,
+                    player1: currentUserRegistration,
+                    player2: teamMate,
+                    status: 'active',
+                    createdAt: new Date().toISOString()
+                });
+
+                // Update both players' status to indicate they're in a team
+                currentUserRegistration.status = 'in_team';
+                currentUserRegistration.teamId = teamId;
+                teamMate.status = 'in_team';
+                teamMate.teamId = teamId;
+
+                localStorage.setItem("badmintonTeams", JSON.stringify(teams));
+                localStorage.setItem("badmintonPlayers", JSON.stringify(players));
+
+                alert(`You have successfully teamed up with ${teamMate.name}!`);
+                loadPlayers();
+            }
+        }
+
+        function closeMenu() {
+            document.getElementById('mainNav').classList.remove('active');
+            document.getElementById('nav-backdrop').classList.remove('active');
+        }
+
+        document.querySelectorAll('.main-nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        window.addEventListener('resize', function() {
+            if(window.innerWidth > 900) closeMenu();
+        });
+
+        window.addEventListener('scroll', closeMenu);
     </script>
     
 </body>

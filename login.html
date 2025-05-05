@@ -280,13 +280,13 @@
             return;
         }
 
-        if (users[username]) {
-            errorElement.textContent = "Username already exists!";
-            return;
-        }
-
+        // Check for duplicate username, email, or phone (case-insensitive)
         for (let user in users) {
-            if (users[user].email === email) {
+            if (user.toLowerCase() === username.toLowerCase()) {
+                errorElement.textContent = "Username already exists!";
+                return;
+            }
+            if (users[user].email.toLowerCase() === email.toLowerCase()) {
                 errorElement.textContent = "Email already registered!";
                 return;
             }
@@ -330,6 +330,15 @@
 
         if (users[username] && users[username].password === password) {
             localStorage.setItem("loggedInUser", username);
+            // Store userData for booking and details pages
+            localStorage.setItem("userData", JSON.stringify({
+                username: username,
+                email: users[username].email,
+                phone: users[username].phone,
+                rollNo: users[username].rollno,
+                name: users[username].fullname,
+                studentType: users[username].studentType
+            }));
             window.location.href = "index.html";
         } else {
             errorElement.textContent = "Invalid username or password!";

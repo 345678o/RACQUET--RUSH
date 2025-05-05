@@ -5,17 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upcoming Tournaments</title>
     <style>
+        :root {
+            --primary: #1a237e;
+            --secondary: #283593;
+            --success: #2e7d32;
+            --warning: #f57f17;
+            --danger: #c62828;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --admin: #d32f2f;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
             line-height: 1.6;
         }
+
         /* Navigation */
         nav {
             background-color: #00274D;
@@ -25,142 +38,500 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+            z-index: 1000;
+            overflow-x: auto;
+            min-width: 320px;
         }
+
+        .logo {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
         .logo img {
-            height: 60px;
+            height: 100px;
+            width: auto;
         }
+
         .main-nav {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
         }
+
         .main-nav a {
-            color: white;
             text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .main-nav a:hover, .main-nav a.active {
-            background-color: #004080;
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: all 0.3s;
-        }
-        .hamburger-menu {
-            display: none;
-            position: absolute;
-            top: 70px;
-            right: 20px;
-            background: #00274D;
-            width: 200px;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            z-index: 1000;
+            transition: background 0.2s;
+            white-space: nowrap;
         }
-        .hamburger-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
+
+        .main-nav a:hover {
+            background-color: darkblue;
         }
-        .hamburger-menu a:hover {
-            background-color: #004080;
-        }
-        .hamburger-menu.active {
-            display: block;
-            animation: fadeIn 0.3s;
-        }
+
         /* Main Content */
         .container {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 20px;
+            margin: 40px auto;
+            padding: 30px;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
+
         h1, h2 {
-            color: #00274D;
-            margin-bottom: 20px;
+            color: var(--primary);
+            margin-bottom: 30px;
             text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
+
+        h1 {
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 40px;
+        }
+
         .tournament-list {
-            margin: 30px 0;
+            margin: 40px 0;
         }
+
         .tournament-card {
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            background: #f9f9f9;
-            border-left: 5px solid #00274D;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            background: white;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        .tournament-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
         .tournament-card h3 {
-            color: #00274D;
-            margin-bottom: 10px;
-        }
-        .tournament-card p {
-            margin: 5px 0;
-        }
-        .form-group {
+            color: var(--primary);
             margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
         }
+
+        .tournament-card p {
+            margin: 8px 0;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .tournament-card p strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
         }
+
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
         }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
         .btn {
-            padding: 10px 20px;
-            background-color: #00274D;
+            padding: 12px 25px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
+
         .btn:hover {
-            background-color: #004080;
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .admin-panel {
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 40px;
+            padding: 25px;
             background: #fff8e1;
-            border-radius: 8px;
+            border-radius: 10px;
             border-left: 5px solid #ffc107;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
+
         .admin-panel h3 {
-            color: #d32f2f;
+            color: var(--admin);
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
         }
+
         .admin-btn {
-            background-color: #d32f2f;
-            margin-top: 10px;
+            background-color: var(--admin);
+            margin-top: 15px;
         }
+
         .admin-btn:hover {
             background-color: #b71c1c;
         }
+
         /* Responsive */
         @media (max-width: 768px) {
             .main-nav {
                 display: none;
             }
-            .hamburger {
-                display: flex;
+
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .tournament-card {
+                padding: 20px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+                margin: 35px auto;
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 22px;
+                margin-top: 35px;
+            }
+
+            .tournament-card {
+                padding: 22px;
+                margin-bottom: 22px;
+            }
+
+            .tournament-card h3 {
+                font-size: 19px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                margin: 30px auto;
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 25px;
+            }
+
+            h2 {
+                font-size: 20px;
+                margin-top: 30px;
+            }
+
+            .tournament-list {
+                margin: 30px 0;
+            }
+
+            .tournament-card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .tournament-card h3 {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            .tournament-card p {
+                font-size: 14px;
+                margin: 6px 0;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .form-group input, .form-group textarea {
+                padding: 10px 12px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                height: 70px;
+            }
+
+            .logo img {
+                height: 70px;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 18px;
+                margin-top: 25px;
+            }
+
+            .tournament-list {
+                margin: 25px 0;
+            }
+
+            .tournament-card {
+                padding: 18px;
+                margin-bottom: 18px;
+            }
+
+            .tournament-card h3 {
+                font-size: 17px;
+                margin-bottom: 10px;
+            }
+
+            .tournament-card p {
+                font-size: 13px;
+                margin: 5px 0;
+            }
+
+            .admin-panel {
+                margin-top: 30px;
+                padding: 20px;
+            }
+
+            .admin-panel h3 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav {
+                padding: 8px 12px;
+            }
+
+            .logo {
+                height: 60px;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 18px;
+            }
+
+            h2 {
+                font-size: 17px;
+                margin-top: 20px;
+            }
+
+            .tournament-list {
+                margin: 20px 0;
+            }
+
+            .tournament-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .tournament-card h3 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .tournament-card p {
+                font-size: 12px;
+                margin: 4px 0;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-group label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .form-group input, .form-group textarea {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .admin-panel {
+                margin-top: 25px;
+                padding: 15px;
+            }
+
+            .admin-panel h3 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            nav {
+                padding: 6px 10px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .container {
+                margin: 15px auto;
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+
+            h2 {
+                font-size: 16px;
+                margin-top: 18px;
+            }
+
+            .tournament-list {
+                margin: 18px 0;
+            }
+
+            .tournament-card {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .tournament-card h3 {
+                font-size: 15px;
+                margin-bottom: 6px;
+            }
+
+            .tournament-card p {
+                font-size: 11px;
+                margin: 3px 0;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .form-group input, .form-group textarea {
+                padding: 7px 9px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 7px 14px;
+                font-size: 12px;
+            }
+
+            .admin-panel {
+                margin-top: 20px;
+                padding: 12px;
+            }
+
+            .admin-panel h3 {
+                font-size: 15px;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -302,34 +673,156 @@
 
 <!-- Navigation Bar -->
 <nav>
-<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-
-<!-- Main navigation links -->
-<ul class="main-nav">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html" >About</a></li>
-    <li><a href="booking.html">Slot Booking</a></li>
-   
-        <a href="tournaments.html" class="active" >Upcoming Tournaments</a>
-</ul>
-
-<!-- Hamburger icon -->
-<div class="hamburger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-
-<!-- Hidden menu links -->
-<div class="hamburger-menu">
-   
-    <a href="team.html">Find a Team</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="rules.html">Rules & Regulations</a>
-    <a href="details.html">Your Details</a>
-    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
-</div>
+    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+    <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul class="main-nav" id="mainNav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+        <li><a href="team.html">Find a Team</a></li>
+        <li><a href="tournaments.html" class="active">Tournaments</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
 </nav>
+<div id="nav-backdrop" onclick="closeMenu()"></div>
+
+<style>
+nav {
+    background-color: #00274D;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+}
+.logo {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.logo img {
+    height: 70px;
+    width: auto;
+}
+.main-nav {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    transition: max-height 0.3s, opacity 0.3s;
+}
+.main-nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 14px 20px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    display: block;
+}
+.main-nav a:hover {
+    background-color: darkblue;
+}
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+.hamburger span {
+    display: block;
+    width: 32px;
+    height: 4px;
+    background: white;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+@media (max-width: 900px) {
+    nav {
+        flex-wrap: wrap;
+    }
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #00274D;
+        flex-direction: column;
+        width: 100vw;
+        gap: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
+    .main-nav.active {
+        display: flex;
+        max-height: 500px;
+        opacity: 1;
+    }
+    .main-nav li {
+        width: 100%;
+    }
+    .main-nav a {
+        display: block;
+        padding: 18px 24px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        font-size: 18px;
+    }
+    .hamburger {
+        display: flex;
+    }
+}
+#nav-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1099;
+}
+#nav-backdrop.active {
+    display: block;
+}
+</style>
+<script>
+function toggleMenu(e) {
+    e.stopPropagation();
+    document.getElementById('mainNav').classList.toggle('active');
+    document.getElementById('nav-backdrop').classList.toggle('active');
+}
+function closeMenu() {
+    document.getElementById('mainNav').classList.remove('active');
+    document.getElementById('nav-backdrop').classList.remove('active');
+}
+document.querySelectorAll('.main-nav a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
+window.addEventListener('resize', function() {
+    if(window.innerWidth > 900) closeMenu();
+});
+window.addEventListener('scroll', closeMenu);
+</script>
    
     <!-- Main Content -->
     <!-- Main Content -->

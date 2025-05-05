@@ -16,35 +16,172 @@
 
         /* Navigation Bar */
         nav {
-            background-color: navy; /* Blue */
-            padding: 15px 20px;
+            background-color: var(--nav-bg);
+            color: white;
+            padding: 0 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            height: 100px;
+            position: relative;
+            z-index: var(--nav-z);
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
         }
+
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+            height: 100px;
             display: flex;
+            align-items: center;
+            flex-shrink: 0;
         }
-        .nav-links li {
-            margin-right: 20px;
+
+        .logo img {
+            height: 100px;
+            width: auto;
         }
-        .nav-links a {
+
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
+            transition: max-height 0.3s, opacity 0.3s;
+            z-index: var(--nav-menu-z);
+        }
+
+        .main-nav a {
             text-decoration: none;
             color: white;
-            font-size: 18px;
-            padding: 8px 12px;
-            border-radius: 5px;
+            font-size: 1.2rem;
+            padding: 1.2rem 2rem;
+            border-radius: var(--nav-link-radius);
+            transition: background 0.2s;
+            white-space: nowrap;
+            display: block;
         }
-        .nav-links a:hover {
-            background-color: #0056b3; /* Darker Blue */
+
+        .main-nav a:hover, .main-nav a.active {
+            background-color: #003366;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            justify-content: center;
+            align-items: center;
+            z-index: var(--nav-hamburger-z);
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 2.2rem;
+            height: 0.35rem;
+            background: white;
+            border-radius: 0.2rem;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 0 1.5rem;
+            }
+            .logo {
+                height: 90px;
+            }
+            .logo img {
+                height: 90px;
+            }
+            .main-nav {
+                position: absolute;
+                top: 100px;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                flex-direction: column;
+                width: 100vw;
+                gap: 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                display: none;
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+            }
+            .main-nav.active {
+                display: flex;
+                max-height: 500px;
+                opacity: 1;
+            }
+            .main-nav li {
+                width: 100%;
+            }
+            .main-nav a {
+                display: block;
+                padding: 1.2rem 2rem;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.08);
+                font-size: 1.2rem;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 0 1rem;
+            }
+            .logo {
+                height: 80px;
+            }
+            .logo img {
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo {
+                height: 70px;
+            }
+            .logo img {
+                height: 70px;
+            }
+        }
+
+        /* Backdrop for mobile menu */
+        #nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: var(--nav-backdrop-z);
+        }
+        #nav-backdrop.active {
+            display: block;
         }
 
         .container {
@@ -130,24 +267,45 @@
         flex-direction: column;
         gap: 6px;
         cursor: pointer;
+        padding: 10px;
+        transition: transform 0.3s ease;
     }
 
     .hamburger div {
         width: 30px;
-        height: 4px;
+        height: 3px;
         background: white;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .hamburger:hover {
+        transform: scale(1.05);
     }
 
     .hamburger-menu {
         display: none;
         position: absolute;
-        top: 70px;
+        top: 80px;
         right: 20px;
-        background: navy;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        z-index: 999;
+        background: #00274D;
+        width: 250px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        overflow: hidden;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .hamburger-menu.active {
@@ -156,14 +314,35 @@
 
     .hamburger-menu a {
         display: block;
-        padding: 15px 20px;
+        padding: 15px 25px;
         color: white;
         text-decoration: none;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 16px;
+        letter-spacing: 0.5px;
     }
 
     .hamburger-menu a:hover {
-        background: rgb(163, 13, 103);
+        background: #00509E;
+        padding-left: 30px;
+    }
+
+    .hamburger-menu a:last-child {
+        border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+        .main-nav {
+            display: none;
+        }
+
+        .hamburger-menu {
+            width: 100%;
+            right: 0;
+            top: 70px;
+            border-radius: 0;
+        }
     }
 
     /* Section Styling */
@@ -197,18 +376,6 @@
         margin-bottom: 20px;
     }
 
-    @media (max-width: 768px) {
-        .main-nav {
-            display: none; /* Hide main nav links on smaller screens */
-        }
-
-        .hamburger-menu {
-            width: 100%;
-            left: 0;
-            top: 60px;
-        }
-    }
-
     /* Footer */
     footer {
         background: rgb(212, 8, 8);
@@ -217,7 +384,7 @@
         text-align: center;
         margin-top: 30px;
     }
-</style>
+  </style>
 
 </head>
 <body onload="checkLogin()">
@@ -230,33 +397,157 @@
 
 <!-- Navigation Bar -->
 <nav>
-<div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-
-<!-- Main navigation links -->
-<ul class="main-nav">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="booking.html">Slot Booking</a></li>
-   <li><a href="rules.html" class="active">Rules & Regulations</a></li>
-</ul>
-
-<!-- Hamburger icon -->
-<div class="hamburger" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-
-<!-- Hidden menu links -->
-<div class="hamburger-menu">
-   
-    <a href="team.html">Find a Team</a>
-    <a href="tournaments.html">Upcoming Tournaments</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="details.html">Your Details</a>
-    <a href="#" id="logoutNav" onclick="logout()">Logout</a>
-</div>
+    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
+    <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul class="main-nav" id="mainNav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+        <li><a href="team.html">Find a Team</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="rules.html" class="active">Rules</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
 </nav>
+<div id="nav-backdrop" onclick="closeMenu()"></div>
+
+<style>
+nav {
+    background-color: #00274D;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+}
+.logo {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.logo img {
+    height: 70px;
+    width: auto;
+}
+.main-nav {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    transition: max-height 0.3s, opacity 0.3s;
+}
+.main-nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 14px 20px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    display: block;
+}
+.main-nav a:hover {
+    background-color: darkblue;
+}
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    margin-left: 20px;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+.hamburger span {
+    display: block;
+    width: 32px;
+    height: 4px;
+    background: white;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+@media (max-width: 900px) {
+    nav {
+        flex-wrap: wrap;
+    }
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #00274D;
+        flex-direction: column;
+        width: 100vw;
+        gap: 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+    }
+    .main-nav.active {
+        display: flex;
+        max-height: 500px;
+        opacity: 1;
+    }
+    .main-nav li {
+        width: 100%;
+    }
+    .main-nav a {
+        display: block;
+        padding: 18px 24px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        font-size: 18px;
+    }
+    .hamburger {
+        display: flex;
+    }
+}
+#nav-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1099;
+}
+#nav-backdrop.active {
+    display: block;
+}
+</style>
+<script>
+function toggleMenu(e) {
+    e.stopPropagation();
+    document.getElementById('mainNav').classList.toggle('active');
+    document.getElementById('nav-backdrop').classList.toggle('active');
+}
+function closeMenu() {
+    document.getElementById('mainNav').classList.remove('active');
+    document.getElementById('nav-backdrop').classList.remove('active');
+}
+document.querySelectorAll('.main-nav a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
+window.addEventListener('resize', function() {
+    if(window.innerWidth > 900) closeMenu();
+});
+window.addEventListener('scroll', closeMenu);
+</script>
+
     <!-- Rules & Regulations Section -->
     <div class="container">
         <h1>Rules & Regulations</h1>
@@ -317,6 +608,165 @@
             window.location.href = "login.html";
         }
     </script>
+
+    <!-- Responsive Design -->
+     <style>
+
+
+    @media (max-width: 1200px) {
+        .container {
+            width: 85%;
+            margin: 40px auto;
+            padding: 18px;
+        }
+
+        ul {
+            font-size: 17px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .container {
+            width: 90%;
+            margin: 35px auto;
+            padding: 16px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        ul {
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        nav {
+            padding: 10px 15px;
+        }
+
+        .logo {
+            height: 70px;
+        }
+
+        .logo img {
+            height: 70px;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+            padding: 14px;
+        }
+
+        h1 {
+            font-size: 26px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        ul {
+            font-size: 15px;
+            padding-left: 25px;
+        }
+
+        .btn {
+            padding: 7px 14px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        nav {
+            padding: 8px 12px;
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        .container {
+            width: 98%;
+            margin: 25px auto;
+            padding: 12px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        ul {
+            font-size: 14px;
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        nav {
+            padding: 6px 10px;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+
+        ul {
+            font-size: 13px;
+            padding-left: 15px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+    }
+</style>
 </body>
 </html>
 
