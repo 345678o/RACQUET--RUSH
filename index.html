@@ -67,51 +67,77 @@
 
         /* Navigation Bar */
         nav {
-            background-color: #00274D;
+            background-color: #0a2342;
             color: white;
-            padding: 15px 20px;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 90px !important;
+            min-height: 90px !important;
+            border-bottom: 1px solid #e0e6ed;
             position: relative;
             z-index: 1000;
+            box-shadow: none;
         }
 
         .logo {
-            height: 70px;
+            height: 60px;
+            width: 60px;
             display: flex;
             align-items: center;
             flex-shrink: 0;
+            margin-right: 10px;
+            transition: none;
         }
 
         .logo img {
-            height: 70px;
-            width: auto;
+            height: 60px;
+            width: 60px;
+            max-width: 100%;
+            border-radius: 0;
+            object-fit: cover;
         }
 
         .main-nav {
             display: flex;
-            gap: 20px;
+            gap: 0.5rem;
             list-style: none;
             margin: 0;
             padding: 0;
             flex-shrink: 0;
-            transition: max-height 0.3s, opacity 0.3s;
+            align-items: center;
         }
 
         .main-nav a {
             text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 14px 20px;
-            border-radius: 5px;
-            transition: background 0.2s;
+            color: #f4f6fa;
+            font-size: 1rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: 0.2rem;
+            transition: background 0.2s, color 0.2s;
             white-space: nowrap;
             display: block;
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
         .main-nav a:hover {
-            background-color: darkblue;
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .main-nav a.active {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+        }
+
+        .main-nav a.active::after {
+            display: none;
         }
 
         .hamburger {
@@ -138,51 +164,53 @@
 
         @media (max-width: 900px) {
             nav {
-                flex-wrap: wrap;
-            }
-            .main-nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #00274D;
                 flex-direction: column;
-                width: 100vw;
-                gap: 0;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                display: none;
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
+                height: auto !important;
+                min-height: auto !important;
+                padding: 0.5rem;
             }
-            .main-nav.active {
-                display: flex;
-                max-height: 500px;
-                opacity: 1;
+
+            .logo {
+                margin-bottom: 0.5rem;
             }
-            .main-nav li {
+
+            .main-nav {
                 width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.5rem 0;
+                justify-content: flex-start;
+                gap: 0.2rem;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
             }
+
+            .main-nav::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+
+            .main-nav li {
+                flex: 0 0 auto;
+            }
+
             .main-nav a {
-                display: block;
-                padding: 18px 24px;
-                border-radius: 0;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
-                font-size: 18px;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.95rem;
+                background-color: transparent;
+                border-radius: 12px;
             }
-            .hamburger {
-                display: flex;
-            }
-            nav .logo, .logo img {
-                height: 100px !important;
-                max-height: 100px !important;
+
+            .main-nav a:hover, .main-nav a.active {
+                background-color: #17335c;
+                color: #e0e6ed;
             }
         }
 
-        @media (max-width: 600px) {
-            nav .logo, .logo img {
-                height: 80px !important;
-                max-height: 80px !important;
+        @media (max-width: 480px) {
+            .main-nav a {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -429,17 +457,28 @@
             max-height: 120px !important;
             width: auto;
         }
+
+        @media (max-width: 900px) {
+            nav .logo, .logo img {
+                height: 100px !important;
+                max-height: 100px !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav .logo, .logo img {
+                height: 80px !important;
+                max-height: 80px !important;
+            }
+        }
     </style>
 </head>
 
 <body onload="checkLogin()">
     <!-- Navigation Section -->
     <nav>
-        <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-        <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="logo">
+            <img src="../assets/images/sports/logo.jpg" alt="College Sports Hub Logo">
         </div>
         <ul class="main-nav" id="mainNav">
             <li><a href="index.html" class="active">Home</a></li>
@@ -450,7 +489,7 @@
             <li><a href="rules.html">Rules</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="details.html">Details</a></li>
-            <li><a href="#" onclick="logout()">Logout</a></li>
+            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
     </nav>
     <div id="nav-backdrop" onclick="closeMenu()"></div>
@@ -464,7 +503,7 @@
     <!-- About Us Section -->
     <div class="section-container">
         <h2>About Us</h2>
-        <img src="WhatsApp Image 2025-04-04 at 20.58.39_28008160.jpg" alt="About Us">
+        <img src="../assets/images/sports/trophies.jpg"" alt="About Us">
         <p>Learn about our mission to provide seamless sports booking experiences for students and sports enthusiasts.</p>
         <a href="about.html" class="btn">Learn More</a>
     </div>
@@ -472,7 +511,7 @@
     <!-- Slot Booking Section -->
     <div class="section-container">
         <h2>Slot Booking</h2>
-        <img src="OIP.jpg" alt="Slot Booking">
+        <img src="../assets/images/sports/book my slot.png" alt="Slot Booking">
         <p>Reserve your badminton court in advance and secure your game time without any hassle.</p>
         <a href="booking.html" class="btn">Book Now</a>
     </div>
@@ -480,7 +519,7 @@
     <!-- Find a Team Section -->
     <div class="section-container">
         <h2>Find a Team</h2>
-        <img src="OIP (1).jpeg" alt="Find a Team">
+        <img src="../assets/images/sports/badmintion.jpeg" alt="Find a Team">
         <p>Looking for a badminton partner? Connect with other players and form your perfect team.</p>
         <a href="team.html" class="btn">Find Players</a>
     </div>
@@ -488,7 +527,7 @@
     <!-- Upcoming Tournaments Section -->
     <div class="section-container">
         <h2>Upcoming Tournaments</h2>
-        <img src="OIP (2).jpeg" alt="Upcoming Tournaments">
+        <img src="../assets/images/sports/badmin 2.jpeg" alt="Upcoming Tournaments">
         <p>Stay updated on college and external badminton tournaments. Participate and showcase your skills!</p>
         <a href="tournaments.html" class="btn">View Tournaments</a>
     </div>
@@ -496,7 +535,7 @@
     <!-- Rules and Regulations Section -->
     <div class="section-container">
         <h2>Rules and Regulations</h2>
-        <img src="Screenshot 2025-04-18 124310.png" alt="rules">
+        <img src="../assets/images/sports/rules.png" alt="rules">
         <p>Follow the Rules and Regulations of the badminton court. Click on view rules to know the rules.</p>
         <a href="rules.html" class="btn">View Rules</a>
     </div>
@@ -507,6 +546,68 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active class to current page link
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.main-nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Add smooth scrolling to navigation
+            const nav = document.querySelector('.main-nav');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            nav.addEventListener('mousedown', (e) => {
+                isDown = true;
+                nav.style.cursor = 'grabbing';
+                startX = e.pageX - nav.offsetLeft;
+                scrollLeft = nav.scrollLeft;
+            });
+
+            nav.addEventListener('mouseleave', () => {
+                isDown = false;
+                nav.style.cursor = 'grab';
+            });
+
+            nav.addEventListener('mouseup', () => {
+                isDown = false;
+                nav.style.cursor = 'grab';
+            });
+
+            nav.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - nav.offsetLeft;
+                const walk = (x - startX) * 2;
+                nav.scrollLeft = scrollLeft - walk;
+            });
+
+            // Touch events for mobile
+            nav.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - nav.offsetLeft;
+                scrollLeft = nav.scrollLeft;
+            });
+
+            nav.addEventListener('touchend', () => {
+                isDown = false;
+            });
+
+            nav.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - nav.offsetLeft;
+                const walk = (x - startX) * 2;
+                nav.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
 </body>
 </html>
 

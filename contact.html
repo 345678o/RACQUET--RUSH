@@ -3,8 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - University Sports Facility</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Contact - College Sports Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="nav.js"></script>
+    <script>
+        function checkLogin() {
+            const user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "block";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active class to current page link
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.main-nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Add smooth scrolling to navigation
+            const nav = document.querySelector('.main-nav');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            nav.addEventListener('mousedown', (e) => {
+                isDown = true;
+                nav.style.cursor = 'grabbing';
+                startX = e.pageX - nav.offsetLeft;
+                scrollLeft = nav.scrollLeft;
+            });
+
+            nav.addEventListener('mouseleave', () => {
+                isDown = false;
+                nav.style.cursor = 'grab';
+            });
+
+            nav.addEventListener('mouseup', () => {
+                isDown = false;
+                nav.style.cursor = 'grab';
+            });
+
+            nav.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - nav.offsetLeft;
+                const walk = (x - startX) * 2;
+                nav.scrollLeft = scrollLeft - walk;
+            });
+
+            // Touch events for mobile
+            nav.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - nav.offsetLeft;
+                scrollLeft = nav.scrollLeft;
+            });
+
+            nav.addEventListener('touchend', () => {
+                isDown = false;
+            });
+
+            nav.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - nav.offsetLeft;
+                const walk = (x - startX) * 2;
+                nav.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
     <style>
         :root {
             --primary: #1a237e;
@@ -29,77 +106,135 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
+        /* Navigation Bar */
         nav {
-            background-color: #00274D;
+            background-color: #0a2342;
             color: white;
-            padding: 15px 20px;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 90px !important;
+            min-height: 90px !important;
+            border-bottom: 1px solid #e0e6ed;
             position: relative;
             z-index: 1000;
-            overflow-x: auto;
-            min-width: 320px;
+            box-shadow: none;
         }
 
         .logo {
-            height: 70px;
+            height: 60px;
+            width: 60px;
             display: flex;
             align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            margin-right: 10px;
+            transition: none;
         }
 
         .logo img {
-            height: 70px;
-            width: auto;
+            height: 60px;
+            width: 60px;
+            max-width: 100%;
+            border-radius: 0;
+            object-fit: cover;
         }
 
         .main-nav {
             display: flex;
-            gap: 20px;
+            gap: 0.5rem;
             list-style: none;
             margin: 0;
             padding: 0;
             flex-shrink: 0;
-            transition: max-height 0.3s, opacity 0.3s;
+            align-items: center;
         }
 
         .main-nav a {
             text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 14px 20px;
-            border-radius: 5px;
-            transition: background 0.2s;
+            color: #f4f6fa;
+            font-size: 1rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: 0.2rem;
+            transition: background 0.2s, color 0.2s;
             white-space: nowrap;
             display: block;
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
         .main-nav a:hover {
-            background-color: darkblue;
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+            transform: none;
         }
 
-        .hamburger {
+        .main-nav a.active {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+        }
+
+        .main-nav a.active::after {
             display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            margin-left: 20px;
-            width: 44px;
-            height: 44px;
-            justify-content: center;
-            align-items: center;
-            z-index: 1100;
         }
 
-        .hamburger span {
+        @media (max-width: 900px) {
+            nav {
+                flex-direction: column;
+                height: auto !important;
+                min-height: auto !important;
+                padding: 0.5rem;
+            }
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+            .main-nav {
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.5rem 0;
+                justify-content: flex-start;
+                gap: 0.2rem;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+            .main-nav::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            .main-nav li {
+                flex: 0 0 auto;
+            }
+            .main-nav a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.95rem;
+                background-color: transparent;
+                border-radius: 12px;
+            }
+            .main-nav a:hover, .main-nav a.active {
+                background-color: #17335c;
+                color: #e0e6ed;
+            }
+        }
+        @media (max-width: 480px) {
+            .main-nav a {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+        #nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1099;
+        }
+        #nav-backdrop.active {
             display: block;
-            width: 32px;
-            height: 4px;
-            background: white;
-            border-radius: 2px;
-            transition: 0.3s;
         }
 
         /* Main Content */
@@ -328,51 +463,6 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .main-nav {
-                display: none;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            .map-container {
-                margin: 20px;
-                border-radius: 8px;
-            }
-            
-            .map-container iframe {
-                height: 300px;
-            }
-
-            .map-marker {
-                padding: 10px 15px;
-                min-width: 180px;
-            }
-
-            .marker-label {
-                font-size: 16px;
-            }
-
-            .marker-address {
-                font-size: 12px;
-            }
-        }
-
         /* Add this new style for hamburger menu */
         .mobile-menu {
             display: none;
@@ -392,8 +482,8 @@
 
         .mobile-menu a {
             display: block;
-        color: white;
-        padding: 15px;
+            color: white;
+            padding: 15px;
             text-decoration: none;
         }
 
@@ -520,55 +610,28 @@
             .main-nav {
                 display: none;
             }
-    }
-
-    #nav-backdrop {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.3);
-        z-index: 1099;
-    }
-
-    #nav-backdrop.active {
-        display: block;
-    }
-</style>
+        }
+    </style>
 </head>
 <body onload="checkLogin()">
-<!-- Navigation Bar -->
-<nav>
-    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-    <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <ul class="main-nav" id="mainNav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Slot Booking</a></li>
-        <li><a href="team.html">Find a Team</a></li>
-        <li><a href="tournaments.html">Tournaments</a></li>
-        <li><a href="rules.html">Rules</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-        <li><a href="details.html">Details</a></li>
-        <li><a href="#" onclick="logout()">Logout</a></li>
-    </ul>
-</nav>
-<div id="nav-backdrop" onclick="closeMenu()"></div>
-
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" onclick="toggleMenu()">☰ Menu</button>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="team.html"><i class="fas fa-users"></i> Find a Team</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
-        <a href="rules.html"><i class="fas fa-book"></i> Rules & Regulations</a>
-        <a href="details.html"><i class="fas fa-user"></i> Your Details</a>
-        <a href="#" id="logoutNav" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="../assets/images/sports/logo.jpg" alt="College Sports Hub Logo">
+        </div>
+        <ul class="main-nav" id="mainNav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="booking.html">Slot Booking</a></li>
+            <li><a href="team.html">Find a Team</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="details.html">Details</a></li>
+            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
+        </ul>
+    </nav>
+    <div id="nav-backdrop"></div>
 
     <div class="container">
         <h1>Contact Us</h1>
@@ -669,21 +732,13 @@
     </div>
 
     <script>
-        function checkLogin() {
-            const user = localStorage.getItem("loggedInUser");
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("logoutNav").style.display = "block";
-            }
-        }
-
+        // Navigation functions
         function toggleMenu(e) {
             e.stopPropagation();
             document.getElementById('mainNav').classList.toggle('active');
             document.getElementById('nav-backdrop').classList.toggle('active');
         }
-        
+
         function closeMenu() {
             document.getElementById('mainNav').classList.remove('active');
             document.getElementById('nav-backdrop').classList.remove('active');
@@ -698,6 +753,15 @@
         });
 
         window.addEventListener('scroll', closeMenu);
+
+        function checkLogin() {
+            const user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "block";
+            }
+        }
 
         function logout() {
             localStorage.removeItem("loggedInUser");

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Sports Court Booking System</title>
+    <title>Slot Booking - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="booking.css">
     <script src="nav.js"></script>
@@ -657,56 +658,126 @@
             }
         }
 
+        /* Navigation Bar */
         nav {
-            background-color: #00274D;
+            background-color: #0a2342;
             color: white;
-            padding: 15px 20px;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 90px !important;
+            min-height: 90px !important;
+            border-bottom: 1px solid #e0e6ed;
             position: relative;
             z-index: 1000;
+            box-shadow: none;
         }
 
         .logo {
-            height: 120px !important;
-            max-height: 120px !important;
+            height: 60px;
+            width: 60px;
             display: flex;
             align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            margin-right: 10px;
+            transition: none;
         }
 
         .logo img {
-            height: 120px !important;
-            max-height: 120px !important;
-            width: auto;
+            height: 60px;
+            width: 60px;
+            max-width: 100%;
+            border-radius: 0;
+            object-fit: cover;
         }
 
         .main-nav {
             display: flex;
-            gap: 20px;
+            gap: 0.5rem;
             list-style: none;
             margin: 0;
             padding: 0;
             flex-shrink: 0;
-            transition: max-height 0.3s, opacity 0.3s;
+            align-items: center;
         }
 
         .main-nav a {
             text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 14px 20px;
-            border-radius: 5px;
-            transition: background 0.2s;
+            color: #f4f6fa;
+            font-size: 1rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: 0.2rem;
+            transition: background 0.2s, color 0.2s;
             white-space: nowrap;
             display: block;
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
         .main-nav a:hover {
-            background-color: darkblue;
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+            transform: none;
         }
 
+        .main-nav a.active {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+        }
+
+        .main-nav a.active::after {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                flex-direction: column;
+                height: auto !important;
+                min-height: auto !important;
+                padding: 0.5rem;
+            }
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+            .main-nav {
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.5rem 0;
+                justify-content: flex-start;
+                gap: 0.2rem;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE and Edge */
+            }
+            .main-nav::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera */
+            }
+            .main-nav li {
+                flex: 0 0 auto;
+            }
+            .main-nav a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.95rem;
+                background-color: transparent;
+                border-radius: 12px;
+            }
+            .main-nav a:hover, .main-nav a.active {
+                background-color: #17335c;
+                color: #e0e6ed;
+            }
+        }
+        @media (max-width: 480px) {
+            .main-nav a {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
         #nav-backdrop {
             display: none;
             position: fixed;
@@ -714,22 +785,19 @@
             background: rgba(0,0,0,0.3);
             z-index: 1099;
         }
-
         #nav-backdrop.active {
             display: block;
         }
 
-        @media (max-width: 900px) {
-            nav .logo, .logo img {
-                height: 100px !important;
-                max-height: 100px !important;
-            }
+        .court-scroll {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1rem;
+            scrollbar-width: none; /* Firefox */
         }
-        @media (max-width: 600px) {
-            nav .logo, .logo img {
-                height: 80px !important;
-                max-height: 80px !important;
-            }
+        .court-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
     </style>
     <script>
@@ -772,28 +840,29 @@
     </script>
 </head>
 <body onload="checkLogin()">
-
-<!-- Navigation Bar -->
-<nav>
-    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-    <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <ul class="main-nav" id="mainNav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html" class="active">Slot Booking</a></li>
-        <li><a href="team.html">Find a Team</a></li>
-        <li><a href="tournaments.html">Tournaments</a></li>
-        <li><a href="rules.html">Rules</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="details.html">Details</a></li>
-        <li><a href="#" onclick="logout()">Logout</a></li>
-    </ul>
-</nav>
-<div id="nav-backdrop" onclick="closeMenu()"></div>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="../assets/images/sports/logo.jpg" alt="College Sports Hub Logo">
+        </div>
+        <ul class="main-nav" id="mainNav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="booking.html" class="active">Slot Booking</a></li>
+            <li><a href="team.html">Find a Team</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="details.html">Details</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu(event)">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <div id="nav-backdrop"></div>
 
     <div class="container">
     <div class="login-section" role="status" aria-live="polite">
@@ -811,33 +880,33 @@
             <div class="tab active" data-tab="booking" role="tab" aria-selected="true" aria-controls="booking-tab">New Booking</div>
             <div class="tab" data-tab="cancel" role="tab" aria-selected="false" aria-controls="cancel-tab">Cancel Booking</div>
             <div class="tab" data-tab="my-bookings" role="tab" aria-selected="false" aria-controls="my-bookings-tab">My Bookings</div>
-            </div>
+        </div>
             
-            <!-- New Booking Tab Content -->
+        <!-- New Booking Tab Content -->
         <div class="tab-content active" id="booking-tab" role="tabpanel" aria-labelledby="booking-tab">
-                <div class="control-panel">
-                    <div class="control-group">
-                        <label for="booking-date">Booking Date</label>
+            <div class="control-panel">
+                <div class="control-group">
+                    <label for="booking-date">Booking Date</label>
                     <input type="date" id="booking-date" required>
-                    </div>
-                    
-                    <div class="control-group">
-                        <label for="time-slot">Time Slot</label>
-                    <select id="time-slot" required>
-                            <option value="13:00-14:00">1:00 PM - 2:00 PM</option>
-                            <option value="14:00-15:00">2:00 PM - 3:00 PM</option>
-                            <option value="15:00-16:00">3:00 PM - 4:00 PM</option>
-                            <option value="16:00-17:00">4:00 PM - 5:00 PM</option>
-                            <option value="17:00-18:00">5:00 PM - 6:00 PM</option>
-                        </select>
-                    </div>
-                    
-                    <div class="control-group">
-                    <label for="student-type-display">Student Type</label>
-                    <input type="text" id="student-type-display" readonly>
-                    </div>
                 </div>
                 
+                <div class="control-group">
+                    <label for="time-slot">Time Slot</label>
+                    <select id="time-slot" required>
+                        <option value="13:00-14:00">1:00 PM - 2:00 PM</option>
+                        <option value="14:00-15:00">2:00 PM - 3:00 PM</option>
+                        <option value="15:00-16:00">3:00 PM - 4:00 PM</option>
+                        <option value="16:00-17:00">4:00 PM - 5:00 PM</option>
+                        <option value="17:00-18:00">5:00 PM - 6:00 PM</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="student-type-display">Student Type</label>
+                    <input type="text" id="student-type-display" readonly>
+                </div>
+            </div>
+            
             <div class="notification-area" id="notification-area" role="alert" aria-live="polite"></div>
             
             <!-- Booked Details Section -->
@@ -848,7 +917,9 @@
                 </div>
             </div>
             
-            <div class="court-grid" role="grid">
+            <!-- Court Selection Section -->
+            <div class="court-scroll">
+                <div class="court-grid" role="grid">
                     <div class="court-row">
                         <div class="court-label">Court #</div>
                         <div class="court-number">1</div>
@@ -862,872 +933,879 @@
                         <div class="court-number">9</div>
                         <div class="court-number">10</div>
                     </div>
-                    
                     <div class="court-status-row">
                         <div class="status-label">Status</div>
-                    <div class="court available" data-court="1" role="gridcell" tabindex="0" aria-label="Court 1 Available">Available</div>
-                    <div class="court available" data-court="2" role="gridcell" tabindex="0" aria-label="Court 2 Available">Available</div>
-                    <div class="court available" data-court="3" role="gridcell" tabindex="0" aria-label="Court 3 Available">Available</div>
-                    <div class="court available" data-court="4" role="gridcell" tabindex="0" aria-label="Court 4 Available">Available</div>
-                    <div class="court available" data-court="5" role="gridcell" tabindex="0" aria-label="Court 5 Available">Available</div>
-                    <div class="court available" data-court="6" role="gridcell" tabindex="0" aria-label="Court 6 Available">Available</div>
-                    <div class="court available" data-court="7" role="gridcell" tabindex="0" aria-label="Court 7 Available">Available</div>
-                    <div class="court available" data-court="8" role="gridcell" tabindex="0" aria-label="Court 8 Available">Available</div>
-                    <div class="court available" data-court="9" role="gridcell" tabindex="0" aria-label="Court 9 Available">Available</div>
-                    <div class="court available" data-court="10" role="gridcell" tabindex="0" aria-label="Court 10 Available">Available</div>
+                        <div class="court available" data-court="1" role="gridcell" tabindex="0" aria-label="Court 1 Available">Available</div>
+                        <div class="court available" data-court="2" role="gridcell" tabindex="0" aria-label="Court 2 Available">Available</div>
+                        <div class="court available" data-court="3" role="gridcell" tabindex="0" aria-label="Court 3 Available">Available</div>
+                        <div class="court available" data-court="4" role="gridcell" tabindex="0" aria-label="Court 4 Available">Available</div>
+                        <div class="court available" data-court="5" role="gridcell" tabindex="0" aria-label="Court 5 Available">Available</div>
+                        <div class="court available" data-court="6" role="gridcell" tabindex="0" aria-label="Court 6 Available">Available</div>
+                        <div class="court available" data-court="7" role="gridcell" tabindex="0" aria-label="Court 7 Available">Available</div>
+                        <div class="court available" data-court="8" role="gridcell" tabindex="0" aria-label="Court 8 Available">Available</div>
+                        <div class="court available" data-court="9" role="gridcell" tabindex="0" aria-label="Court 9 Available">Available</div>
+                        <div class="court available" data-court="10" role="gridcell" tabindex="0" aria-label="Court 10 Available">Available</div>
                     </div>
                 </div>
+            </div>
             
             <div class="loading-overlay" id="loading-overlay" style="display: none;">
                 <div class="loading-spinner"></div>
                 <p>Processing your request...</p>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="color-box available"></div>
+                    <span>Available</span>
                 </div>
-                
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="color-box available"></div>
-                        <span>Available</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="color-box selected"></div>
-                        <span>Selected</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="color-box booked"></div>
-                        <span>Booked</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="color-box restricted"></div>
-                        <span>Type Restricted</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="color-box type-restricted"></div>
-                        <span>BTech/MBA Restricted</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="color-box time-restricted"></div>
-                        <span>Time Restricted</span>
-                    </div>
+                <div class="legend-item">
+                    <div class="color-box selected"></div>
+                    <span>Selected</span>
                 </div>
-                
-                <div class="user-details-form" id="user-details-form" style="display: none;">
-                    <h3 class="form-title">Enter Booking Details</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="user-name">Full Name</label>
-                        <input type="text" id="user-name" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-email">University Email ID</label>
-                        <input type="email" id="user-email" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="user-rollno">University Roll Number</label>
-                        <input type="text" id="user-rollno" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-phone">Phone Number</label>
-                        <input type="tel" id="user-phone" readonly>
-                        </div>
-                    </div>
-                    <div class="button-group">
-                        <button class="btn btn-danger" id="cancel-booking">Cancel</button>
-                        <button class="btn btn-primary" id="submit-booking">Confirm Booking</button>
-                    </div>
+                <div class="legend-item">
+                    <div class="color-box booked"></div>
+                    <span>Booked</span>
                 </div>
-                
-                <div class="booking-confirmation" id="booking-confirmation" style="display: none;">
-                    <h3 class="confirmation-title">Booking Confirmation</h3>
-                    <div class="confirmation-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Booking ID:</div>
-                            <div class="detail-value" id="booking-id">Loading...</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Court Number:</div>
-                            <div class="detail-value" id="confirmation-court"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Date:</div>
-                            <div class="detail-value" id="confirmation-date"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Time Slot:</div>
-                            <div class="detail-value" id="confirmation-time"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Student Name:</div>
-                            <div class="detail-value" id="confirmation-name"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Email ID:</div>
-                            <div class="detail-value" id="confirmation-email"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Roll Number:</div>
-                            <div class="detail-value" id="confirmation-rollno"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Phone Number:</div>
-                            <div class="detail-value" id="confirmation-phone"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="booking-id" id="booking-id-display"></div>
-                    
-                    <div class="button-group">
-                        <button class="btn btn-outline" id="print-booking">Print Confirmation</button>
-                        <button class="btn btn-success" id="new-booking">Make Another Booking</button>
-                    </div>
+                <div class="legend-item">
+                    <div class="color-box restricted"></div>
+                    <span>Type Restricted</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box type-restricted"></div>
+                    <span>BTech/MBA Restricted</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box time-restricted"></div>
+                    <span>Time Restricted</span>
                 </div>
             </div>
             
-            <!-- Cancel Booking Tab Content -->
-            <div class="tab-content" id="cancel-tab">
-                <div class="cancel-booking-form">
-                    <h3 class="form-title">Cancel Existing Booking</h3>
+            <div class="user-details-form" id="user-details-form" style="display: none;">
+                <h3 class="form-title">Enter Booking Details</h3>
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="cancel-booking-id">Booking ID</label>
-                        <input type="text" id="cancel-booking-id" placeholder="Enter your booking ID">
+                        <label for="user-name">Full Name</label>
+                        <input type="text" id="user-name" readonly>
                     </div>
-                    <div class="button-group">
-                        <button class="btn btn-outline" id="back-to-booking">Back to Booking</button>
-                        <button class="btn btn-danger" id="confirm-cancel">Cancel Booking</button>
+                    <div class="form-group">
+                        <label for="user-email">University Email ID</label>
+                        <input type="email" id="user-email" readonly>
                     </div>
                 </div>
-                
-                <div class="booking-confirmation" id="cancel-confirmation" style="display: none;">
-                    <h3 class="confirmation-title">Booking Cancellation Confirmation</h3>
-                    <div class="confirmation-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Booking ID:</div>
-                            <div class="detail-value" id="cancel-confirm-id"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Court Number:</div>
-                            <div class="detail-value" id="cancel-confirm-court"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Date:</div>
-                            <div class="detail-value" id="cancel-confirm-date"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Time Slot:</div>
-                            <div class="detail-value" id="cancel-confirm-time"></div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Status:</div>
-                            <div class="detail-value" id="cancel-confirm-status">Cancelled</div>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-rollno">University Roll Number</label>
+                        <input type="text" id="user-rollno" readonly>
                     </div>
-                    
-                    <div class="notification-area" id="cancel-notification"></div>
-                    
-                    <div class="button-group">
-                        <button class="btn btn-success" id="new-booking-after-cancel">Make New Booking</button>
+                    <div class="form-group">
+                        <label for="user-phone">Phone Number</label>
+                        <input type="tel" id="user-phone" readonly>
                     </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-danger" id="cancel-booking">Cancel</button>
+                    <button class="btn btn-primary" id="submit-booking">Confirm Booking</button>
                 </div>
             </div>
             
-            <!-- My Bookings Tab Content -->
-            <div class="tab-content" id="my-bookings-tab">
-                <div class="booking-confirmation">
-                    <h3 class="confirmation-title">My Bookings</h3>
-                    <div id="my-bookings-list">
-                        <p>Loading your bookings...</p>
+            <div class="booking-confirmation" id="booking-confirmation" style="display: none;">
+                <h3 class="confirmation-title">Booking Confirmation</h3>
+                <div class="confirmation-details">
+                    <div class="detail-row">
+                        <div class="detail-label">Booking ID:</div>
+                        <div class="detail-value" id="booking-id">Loading...</div>
                     </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Court Number:</div>
+                        <div class="detail-value" id="confirmation-court"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date:</div>
+                        <div class="detail-value" id="confirmation-date"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Time Slot:</div>
+                        <div class="detail-value" id="confirmation-time"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Student Name:</div>
+                        <div class="detail-value" id="confirmation-name"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email ID:</div>
+                        <div class="detail-value" id="confirmation-email"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Roll Number:</div>
+                        <div class="detail-value" id="confirmation-rollno"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Phone Number:</div>
+                        <div class="detail-value" id="confirmation-phone"></div>
+                    </div>
+                </div>
+                
+                <div class="booking-id" id="booking-id-display"></div>
+                
+                <div class="button-group">
+                    <button class="btn btn-outline" id="print-booking">Print Confirmation</button>
+                    <button class="btn btn-success" id="new-booking">Make Another Booking</button>
                 </div>
             </div>
         </div>
         
-        <div class="footer">
-            <p>© 2025 University Sports Facility Management System | For assistance, contact sportsdesk@university.edu</p>
+        <!-- Cancel Booking Tab Content -->
+        <div class="tab-content" id="cancel-tab" role="tabpanel" aria-labelledby="cancel-tab" style="display: none;">
+            <div class="cancel-booking-form">
+                <h3 class="form-title">Cancel Existing Booking</h3>
+                <div class="form-group">
+                    <label for="cancel-booking-id">Booking ID</label>
+                    <input type="text" id="cancel-booking-id" placeholder="Enter your booking ID">
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-outline" id="back-to-booking">Back to Booking</button>
+                    <button class="btn btn-danger" id="confirm-cancel">Cancel Booking</button>
+                </div>
+            </div>
+            
+            <div class="booking-confirmation" id="cancel-confirmation" style="display: none;">
+                <h3 class="confirmation-title">Booking Cancellation Confirmation</h3>
+                <div class="confirmation-details">
+                    <div class="detail-row">
+                        <div class="detail-label">Booking ID:</div>
+                        <div class="detail-value" id="cancel-confirm-id"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Court Number:</div>
+                        <div class="detail-value" id="cancel-confirm-court"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date:</div>
+                        <div class="detail-value" id="cancel-confirm-date"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Time Slot:</div>
+                        <div class="detail-value" id="cancel-confirm-time"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value" id="cancel-confirm-status">Cancelled</div>
+                    </div>
+                </div>
+                
+                <div class="notification-area" id="cancel-notification"></div>
+                
+                <div class="button-group">
+                    <button class="btn btn-success" id="new-booking-after-cancel">Make New Booking</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- My Bookings Tab Content -->
+        <div class="tab-content" id="my-bookings-tab" role="tabpanel" aria-labelledby="my-bookings-tab" style="display: none;">
+            <div class="booking-confirmation">
+                <h3 class="confirmation-title">My Bookings</h3>
+                <div id="my-bookings-list">
+                    <p>Loading your bookings...</p>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script>
-    // Global variables
-    let selectedCourt = null;
-    let userEmail = "guest@university.edu";
-    let userBookings = {};
-    let currentBookings = {};
-    let allBookings = {};
-
-            // DOM Elements
-            const courts = document.querySelectorAll('.court');
-            const dateInput = document.getElementById('booking-date');
-            const timeSlotSelect = document.getElementById('time-slot');
-            const notificationArea = document.getElementById('notification-area');
-            const userDetailsForm = document.getElementById('user-details-form');
-            const bookingConfirmation = document.getElementById('booking-confirmation');
-            const userNameInput = document.getElementById('user-name');
-            const userEmailInput = document.getElementById('user-email');
-            const userRollNoInput = document.getElementById('user-rollno');
-            const userPhoneInput = document.getElementById('user-phone');
-            const submitBookingBtn = document.getElementById('submit-booking');
-            const cancelBookingBtn = document.getElementById('cancel-booking');
-            const newBookingBtn = document.getElementById('new-booking');
-            const printBookingBtn = document.getElementById('print-booking');
-            const bookingIdDisplay = document.getElementById('booking-id-display');
-    const loggedInEmailSpan = document.getElementById('logged-in-email');
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const cancelBookingIdInput = document.getElementById('cancel-booking-id');
-            const confirmCancelBtn = document.getElementById('confirm-cancel');
-            const backToBookingBtn = document.getElementById('back-to-booking');
-            const cancelConfirmation = document.getElementById('cancel-confirmation');
-            const cancelNotification = document.getElementById('cancel-notification');
-            const newBookingAfterCancelBtn = document.getElementById('new-booking-after-cancel');
-            const myBookingsTab = document.getElementById('my-bookings-tab');
-            const myBookingsList = document.getElementById('my-bookings-list');
-    const logoutBtn = document.getElementById('logout-btn');
-
-    // Initialize the page when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check login status and load user data immediately
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        if (!loggedInUser) {
-            window.location.href = 'login.html';
-            return;
-        }
-
-        // Load user data immediately
-        const users = JSON.parse(localStorage.getItem('users')) || {};
-        const userData = users[loggedInUser];
         
-        if (!userData) {
-            window.location.href = 'login.html';
-                    return;
-                }
-                
-        // Update all user information fields immediately
-        loggedInEmailSpan.textContent = userData.email;
-        userNameInput.value = userData.fullname || '';
-        userEmailInput.value = userData.email || '';
-        userRollNoInput.value = userData.rollno || '';
-        userPhoneInput.value = userData.phone || '';
-        document.getElementById('student-type-display').value = userData.studentType || '';
+    <div class="footer">
+        <p>© 2025 University Sports Facility Management System | For assistance, contact sportsdesk@university.edu</p>
+    </div>
+</div>
 
-        // Initialize the rest of the page
-        initialize();
-    });
+<script>
+// Global variables
+let selectedCourt = null;
+let userEmail = "guest@university.edu";
+let userBookings = {};
+let currentBookings = {};
+let allBookings = {};
 
-    // Initialize function
-    function initialize() {
-        // Set default date to today
-        const today = new Date();
+        // DOM Elements
+        const courts = document.querySelectorAll('.court');
         const dateInput = document.getElementById('booking-date');
-        dateInput.value = today.toISOString().split('T')[0];
-        
-        // Add event listener for date changes
-        dateInput.addEventListener('change', function() {
-            updateCourtAvailability();
-        });
-        
-        loadBookings();
-        updateCourtAvailability();
-        setupEventListeners();
-    }
+        const timeSlotSelect = document.getElementById('time-slot');
+        const notificationArea = document.getElementById('notification-area');
+        const userDetailsForm = document.getElementById('user-details-form');
+        const bookingConfirmation = document.getElementById('booking-confirmation');
+        const userNameInput = document.getElementById('user-name');
+        const userEmailInput = document.getElementById('user-email');
+        const userRollNoInput = document.getElementById('user-rollno');
+        const userPhoneInput = document.getElementById('user-phone');
+        const submitBookingBtn = document.getElementById('submit-booking');
+        const cancelBookingBtn = document.getElementById('cancel-booking');
+        const newBookingBtn = document.getElementById('new-booking');
+        const printBookingBtn = document.getElementById('print-booking');
+        const bookingIdDisplay = document.getElementById('booking-id-display');
+const loggedInEmailSpan = document.getElementById('logged-in-email');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const cancelBookingIdInput = document.getElementById('cancel-booking-id');
+        const confirmCancelBtn = document.getElementById('confirm-cancel');
+        const backToBookingBtn = document.getElementById('back-to-booking');
+        const cancelConfirmation = document.getElementById('cancel-confirmation');
+        const cancelNotification = document.getElementById('cancel-notification');
+        const newBookingAfterCancelBtn = document.getElementById('new-booking-after-cancel');
+        const myBookingsTab = document.getElementById('my-bookings-tab');
+        const myBookingsList = document.getElementById('my-bookings-list');
+const logoutBtn = document.getElementById('logout-btn');
 
-    // Set up all event listeners
-    function setupEventListeners() {
-        // Court selection
-        courts.forEach(court => {
-            court.addEventListener('click', handleCourtClick);
-        });
-        
-        timeSlotSelect.addEventListener('change', updateCourtAvailability);
-
-        // Buttons
-        submitBookingBtn.addEventListener('click', handleBookingSubmit);
-        cancelBookingBtn.addEventListener('click', handleBookingCancel);
-        newBookingBtn.addEventListener('click', handleNewBooking);
-        printBookingBtn.addEventListener('click', handlePrintBooking);
-        confirmCancelBtn.addEventListener('click', handleConfirmCancel);
-        backToBookingBtn.addEventListener('click', handleBackToBooking);
-        newBookingAfterCancelBtn.addEventListener('click', handleNewBookingAfterCancel);
-        logoutBtn.addEventListener('click', handleLogout);
-
-        // Tabs
-        tabs.forEach(tab => {
-            tab.addEventListener('click', handleTabClick);
-        });
-    }
-
-    // Load bookings from localStorage
-    function loadBookings() {
-        try {
-            const savedBookings = JSON.parse(localStorage.getItem('sportBookings')) || [];
-            currentBookings = {};
-            allBookings = {};
-            
-            // Get today's date for comparison
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            // Process saved bookings
-            savedBookings.forEach(booking => {
-                const bookingDate = new Date(booking.date);
-                bookingDate.setHours(0, 0, 0, 0);
-                
-                // Only include future bookings in currentBookings
-                if (bookingDate >= today) {
-                    const bookingKey = `${booking.date}-${booking.timeSlot}`;
-                    if (!currentBookings[bookingKey]) {
-                        currentBookings[bookingKey] = [];
-                    }
-                    currentBookings[bookingKey].push(booking.court);
-                }
-                
-                // Store all booking details in allBookings
-                allBookings[booking.id] = booking;
-            });
-            
-            // Update user's bookings
-            updateUserBookings();
-        } catch (error) {
-            console.error('Error loading bookings:', error);
-            showNotification('Error loading booking data. Please refresh the page.', 'error');
-        }
-            }
-            
-            // Update court availability based on rules
-            function updateCourtAvailability() {
-                const date = dateInput.value;
-                const timeSlot = timeSlotSelect.value;
-        
-                // Check if date is in the past
-                if (date) {
-                    const selectedDate = new Date(date);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    
-                    if (selectedDate < today) {
-                        showNotification('Cannot select past dates. Please select today or a future date.', 'error');
-                        dateInput.value = today.toISOString().split('T')[0];
-                        return;
-                    }
-                }
-                
-                // Get student type from logged in user data
-                const loggedInUser = localStorage.getItem('loggedInUser');
-                const users = JSON.parse(localStorage.getItem('users')) || {};
-                const userData = users[loggedInUser];
-                const studentType = userData ? userData.studentType.toLowerCase() : '';
-                
-                const startHour = parseInt(timeSlot.split(':')[0]);
-                
-                // Reset all courts to available first
-                courts.forEach(court => {
-                    court.className = 'court available';
-                    court.textContent = 'Available';
-                });
-
-                // Apply restrictions based on student type and time
-                if (studentType === 'btech' || studentType === 'mba') {
-                    // BTech/MBA students cannot book from 1PM to 3PM
-                    if (startHour >= 13 && startHour < 15) {
-                        courts.forEach(court => {
-                            court.className = 'court time-restricted';
-                            court.textContent = 'Time Restricted';
-                        });
-                    }
-                    // BTech/MBA students cannot book courts 1 and 2 from 3PM to 6PM
-                    else if (startHour >= 15 && startHour < 18) {
-                        courts[0].className = 'court type-restricted';
-                        courts[0].textContent = 'Restricted';
-                        courts[1].className = 'court type-restricted';
-                        courts[1].textContent = 'Restricted';
-                    }
-                } 
-                // Medical students cannot book courts 3-10 from 3PM to 6PM
-                else if (studentType === 'medical' && startHour >= 15 && startHour < 18) {
-                        for (let i = 2; i < courts.length; i++) {
-                            courts[i].className = 'court restricted';
-                            courts[i].textContent = 'Restricted';
-                    }
-                }
-
-                // Mark booked courts
-                const bookingKey = `${date}-${timeSlot}`;
-                if (currentBookings[bookingKey]) {
-                    currentBookings[bookingKey].forEach(courtNum => {
-                        const courtElement = document.querySelector(`.court[data-court="${courtNum}"]`);
-                        if (courtElement) {
-                            courtElement.className = 'court booked';
-                            courtElement.textContent = 'Booked';
-                        }
-                    });
-                }
-
-                // Check if user already has a booking for this date
-                if (hasUserBookedForDay(date)) {
-                    courts.forEach(court => {
-                        if (court.classList.contains('available')) {
-                            court.className = 'court restricted';
-                            court.textContent = 'One booking per day';
-                        }
-                    });
-                    showNotification('You can only book one court per day.', 'error');
-                }
-
-                // Update booked details
-                updateBookedDetails();
-            }
-
-    // Event Handlers
-    function handleCourtClick() {
-        // Check if date is selected
-        if (!dateInput.value) {
-            showNotification('Please select a date first.', 'error');
-            dateInput.focus();
-            return;
-        }
-
-                    if (this.classList.contains('available')) {
-                        // Deselect previous selection
-                        if (selectedCourt) {
-                            const prevSelected = document.querySelector(`.court[data-court="${selectedCourt}"]`);
-                            prevSelected.className = 'court available';
-                            prevSelected.textContent = 'Available';
-                        }
-                        
-                        // Select new court
-                        selectedCourt = this.getAttribute('data-court');
-                        this.className = 'court selected';
-                        this.textContent = 'Selected';
-                        
-                        // Show user details form
-                        userDetailsForm.style.display = 'block';
-                        bookingConfirmation.style.display = 'none';
-                    } else if (this.classList.contains('selected')) {
-                        // Deselect current selection
-                        this.className = 'court available';
-                        this.textContent = 'Available';
-                        selectedCourt = null;
-                        userDetailsForm.style.display = 'none';
-                        showNotification('Selection canceled.', 'error');
-                    } else if (this.classList.contains('restricted')) {
-                        showNotification('This court is restricted for your student type.', 'error');
-                    } else if (this.classList.contains('type-restricted')) {
-                        showNotification('BTech/MBA students cannot book courts 1 and 2 from 3PM-6PM.', 'error');
-                    } else if (this.classList.contains('time-restricted')) {
-                        showNotification('All courts are restricted for your student type during this time (1PM-3PM).', 'error');
-                    } else if (this.classList.contains('booked')) {
-                        showNotification('This court has already been booked by another student.', 'error');
-                    }
-    }
-
-    function handleBookingSubmit() {
-        showLoading();
-        
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        if (!loggedInUser) {
-            window.location.href = 'login.html';
-                    return;
-                }
-                
-        const users = JSON.parse(localStorage.getItem('users')) || {};
-        const userData = users[loggedInUser];
-        
-        if (!userData) {
-            showNotification('User data not found. Please log in again.', 'error');
-            hideLoading();
-                    return;
-                }
-                
-        const userName = userData.fullname;
-        const userEmail = userData.email;
-        const userRollNo = userData.rollno;
-        const userPhone = userData.phone;
-        const studentType = userData.studentType ? userData.studentType.toLowerCase() : '';
-        const date = dateInput.value;
-        const timeSlot = timeSlotSelect.value;
-        const courtNumber = selectedCourt;
-
-        // Validate inputs
-        if (!userName || !userEmail || !userRollNo || !userPhone) {
-            showNotification('Please complete your profile information.', 'error');
-            hideLoading();
-                    return;
-                }
-        if (!courtNumber) {
-            showNotification('Please select a court.', 'error');
-            hideLoading();
-                    return;
-                }
-        if (!isSlotAvailable(date, timeSlot, courtNumber)) {
-            showNotification('This slot has already been booked.', 'error');
-            hideLoading();
-                    return;
-                }
-        if (hasUserBookedForDay(date)) {
-                    showNotification('You can only book one court per day.', 'error');
-            hideLoading();
-                    return;
-                }
-                
-                // Generate booking details
-        const bookingId = 'B' + Date.now() + Math.floor(Math.random() * 1000);
-        const bookingDetails = {
-            id: bookingId,
-                    court: courtNumber,
-            date: date,
-                    timeSlot: timeSlot,
-                    name: userName,
-                    email: userEmail,
-                    rollNo: userRollNo,
-                    phone: userPhone,
-            status: 'confirmed',
-            bookingTime: new Date().toISOString(),
-            studentType: studentType
-        };
-
-        // Save booking
-        if (!saveBooking(bookingDetails)) {
-            hideLoading();
-            return;
-        }
-
-        // Update current bookings
-        const bookingKey = `${date}-${timeSlot}`;
-        if (!currentBookings[bookingKey]) {
-            currentBookings[bookingKey] = [];
-        }
-        currentBookings[bookingKey].push(courtNumber);
-
-        // Store all booking details
-        allBookings[bookingId] = bookingDetails;
-                
-                // Update user bookings
-                updateUserBookings();
-                
-                // Show booking confirmation
-        showBookingConfirmation(bookingDetails);
-
-        // Reset form and update UI
-        resetForm();
-        updateCourtAvailability();
-        hideLoading();
-    }
-
-    function handleBookingCancel() {
-        resetForm();
-                userDetailsForm.style.display = 'none';
-        bookingConfirmation.style.display = 'none';
-        showNotification('Booking cancelled.', 'error');
-    }
-
-    function handleNewBooking() {
-        resetForm();
-        userDetailsForm.style.display = 'none';
-                bookingConfirmation.style.display = 'none';
-                updateCourtAvailability();
-    }
-            
-    function handlePrintBooking() {
-                window.print();
-    }
-
-    function handleConfirmCancel() {
-        const bookingId = cancelBookingIdInput.value.trim();
-                if (!bookingId) {
-            showNotification('Please enter a booking ID.', 'error');
-                    return;
-                }
-        cancelBookingById(bookingId);
-    }
-
-    function handleBackToBooking() {
-        tabs[0].click();
-    }
-
-    function handleNewBookingAfterCancel() {
-        tabs[0].click();
-    }
-
-    function handleLogout() {
-        localStorage.removeItem('loggedInUser');
+// Initialize the page when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check login status and load user data immediately
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
         window.location.href = 'login.html';
+        return;
     }
 
-    function handleTabClick() {
-        const tabId = this.getAttribute('data-tab');
-        
-        // Update tab states
-        tabs.forEach(t => {
-            t.classList.remove('active');
-            t.setAttribute('aria-selected', 'false');
-        });
-        this.classList.add('active');
-        this.setAttribute('aria-selected', 'true');
-        
-        // Update content visibility
-        tabContents.forEach(content => {
-            content.classList.remove('active');
-            if (content.id === `${tabId}-tab`) {
-                content.classList.add('active');
+    // Load user data immediately
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const userData = users[loggedInUser];
+    
+    if (!userData) {
+        window.location.href = 'login.html';
+                return;
             }
-        });
-        
-        // Reset forms when switching tabs
-        if (tabId === 'booking') {
-            resetForm();
-            userDetailsForm.style.display = 'none';
-            bookingConfirmation.style.display = 'none';
-        } else if (tabId === 'cancel') {
-            cancelBookingIdInput.value = '';
-                cancelConfirmation.style.display = 'none';
-        }
-    }
+            
+    // Update all user information fields immediately
+    loggedInEmailSpan.textContent = userData.email;
+    userNameInput.value = userData.fullname || '';
+    userEmailInput.value = userData.email || '';
+    userRollNoInput.value = userData.rollno || '';
+    userPhoneInput.value = userData.phone || '';
+    document.getElementById('student-type-display').value = userData.studentType || '';
 
-    // Utility Functions
-    function isSlotAvailable(date, timeSlot, court) {
-        const bookingKey = `${date}-${timeSlot}`;
-        return !currentBookings[bookingKey] || !currentBookings[bookingKey].includes(court);
-    }
+    // Initialize the rest of the page
+    initialize();
+});
 
-    function hasUserBookedForDay(date) {
-        return Object.values(userBookings).some(booking => 
-            booking.date === date && booking.status === 'confirmed'
-        );
-    }
+// Initialize function
+function initialize() {
+    // Set default date to today
+    const today = new Date();
+    const dateInput = document.getElementById('booking-date');
+    dateInput.value = today.toISOString().split('T')[0];
+    
+    // Add event listener for date changes
+    dateInput.addEventListener('change', function() {
+        updateCourtAvailability();
+    });
+    
+    loadBookings();
+    updateCourtAvailability();
+    setupEventListeners();
+}
 
-    function saveBooking(bookingDetails) {
-        try {
-            const savedBookings = JSON.parse(localStorage.getItem('sportBookings')) || [];
-            savedBookings.push(bookingDetails);
-            localStorage.setItem('sportBookings', JSON.stringify(savedBookings));
-            return true;
-        } catch (error) {
-            console.error('Error saving booking:', error);
-            showNotification('Error saving booking. Please try again.', 'error');
-            return false;
-        }
-    }
+// Set up all event listeners
+function setupEventListeners() {
+    // Court selection
+    courts.forEach(court => {
+        court.addEventListener('click', handleCourtClick);
+    });
+    
+    timeSlotSelect.addEventListener('change', updateCourtAvailability);
 
-    function showLoading() {
-        document.getElementById('loading-overlay').style.display = 'flex';
-    }
+    // Buttons
+    submitBookingBtn.addEventListener('click', handleBookingSubmit);
+    cancelBookingBtn.addEventListener('click', handleBookingCancel);
+    newBookingBtn.addEventListener('click', handleNewBooking);
+    printBookingBtn.addEventListener('click', handlePrintBooking);
+    confirmCancelBtn.addEventListener('click', handleConfirmCancel);
+    backToBookingBtn.addEventListener('click', handleBackToBooking);
+    newBookingAfterCancelBtn.addEventListener('click', handleNewBookingAfterCancel);
+    logoutBtn.addEventListener('click', handleLogout);
 
-    function hideLoading() {
-        document.getElementById('loading-overlay').style.display = 'none';
-    }
+    // Tabs
+    tabs.forEach(tab => {
+        tab.addEventListener('click', handleTabClick);
+    });
+}
 
-    function showNotification(message, type = 'error') {
-        notificationArea.textContent = message;
-        notificationArea.className = 'notification-area ' + type;
-    }
-
-    function resetForm() {
-        userNameInput.value = '';
-        userEmailInput.value = '';
-        userRollNoInput.value = '';
-        userPhoneInput.value = '';
-        selectedCourt = null;
-    }
-
-    function updateUserBookings() {
-        const loggedInUser = localStorage.getItem('loggedInUser');
-        const users = JSON.parse(localStorage.getItem('users')) || {};
-        const userData = users[loggedInUser];
-        userEmail = userData ? userData.email : "guest@university.edu";
-        
-        userBookings = {};
-        for (const [id, booking] of Object.entries(allBookings)) {
-            if (booking.email === userEmail) {
-                userBookings[id] = booking;
-            }
-        }
-        renderMyBookings();
-    }
-
-    function renderMyBookings() {
-        if (Object.keys(userBookings).length === 0) {
-            myBookingsList.innerHTML = '<p>You have no active bookings.</p>';
-            return;
-        }
+// Load bookings from localStorage
+function loadBookings() {
+    try {
+        const savedBookings = JSON.parse(localStorage.getItem('sportBookings')) || [];
+        currentBookings = {};
+        allBookings = {};
         
         // Get today's date for comparison
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
-        let html = '<div class="confirmation-details">';
-        let hasActiveBookings = false;
-        
-        for (const [id, booking] of Object.entries(userBookings)) {
-            if (booking.status === 'cancelled') continue;
-            
+        // Process saved bookings
+        savedBookings.forEach(booking => {
             const bookingDate = new Date(booking.date);
             bookingDate.setHours(0, 0, 0, 0);
             
-            // Only show current and future bookings
+            // Only include future bookings in currentBookings
             if (bookingDate >= today) {
-                hasActiveBookings = true;
-                html += `
+                const bookingKey = `${booking.date}-${booking.timeSlot}`;
+                if (!currentBookings[bookingKey]) {
+                    currentBookings[bookingKey] = [];
+                }
+                currentBookings[bookingKey].push(booking.court);
+            }
+            
+            // Store all booking details in allBookings
+            allBookings[booking.id] = booking;
+        });
+        
+        // Update user's bookings
+        updateUserBookings();
+    } catch (error) {
+        console.error('Error loading bookings:', error);
+        showNotification('Error loading booking data. Please refresh the page.', 'error');
+    }
+        }
+        
+        // Update court availability based on rules
+        function updateCourtAvailability() {
+            const date = dateInput.value;
+            const timeSlot = timeSlotSelect.value;
+    
+            // Check if date is in the past
+            if (date) {
+                const selectedDate = new Date(date);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (selectedDate < today) {
+                    showNotification('Cannot select past dates. Please select today or a future date.', 'error');
+                    dateInput.value = today.toISOString().split('T')[0];
+                    return;
+                }
+            }
+            
+            // Get student type from logged in user data
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            const userData = users[loggedInUser];
+            const studentType = userData ? userData.studentType.toLowerCase() : '';
+            
+            const startHour = parseInt(timeSlot.split(':')[0]);
+            
+            // Reset all courts to available first
+            courts.forEach(court => {
+                court.className = 'court available';
+                court.textContent = 'Available';
+            });
+
+            // Apply restrictions based on student type and time
+            if (studentType === 'btech' || studentType === 'mba') {
+                // BTech/MBA students cannot book from 1PM to 3PM
+                if (startHour >= 13 && startHour < 15) {
+                    courts.forEach(court => {
+                        court.className = 'court time-restricted';
+                        court.textContent = 'Time Restricted';
+                    });
+                }
+                // BTech/MBA students cannot book courts 1 and 2 from 3PM to 6PM
+                else if (startHour >= 15 && startHour < 18) {
+                    courts[0].className = 'court type-restricted';
+                    courts[0].textContent = 'Restricted';
+                    courts[1].className = 'court type-restricted';
+                    courts[1].textContent = 'Restricted';
+                }
+            } 
+            // Medical students cannot book courts 3-10 from 3PM to 6PM
+            else if (studentType === 'medical' && startHour >= 15 && startHour < 18) {
+                    for (let i = 2; i < courts.length; i++) {
+                        courts[i].className = 'court restricted';
+                        courts[i].textContent = 'Restricted';
+                }
+            }
+
+            // Mark booked courts
+            const bookingKey = `${date}-${timeSlot}`;
+            if (currentBookings[bookingKey]) {
+                currentBookings[bookingKey].forEach(courtNum => {
+                    const courtElement = document.querySelector(`.court[data-court="${courtNum}"]`);
+                    if (courtElement) {
+                        courtElement.className = 'court booked';
+                        courtElement.textContent = 'Booked';
+                    }
+                });
+            }
+
+            // Check if user already has a booking for this date
+            if (hasUserBookedForDay(date)) {
+                courts.forEach(court => {
+                    if (court.classList.contains('available')) {
+                        court.className = 'court restricted';
+                        court.textContent = 'One booking per day';
+                    }
+                });
+                showNotification('You can only book one court per day.', 'error');
+            }
+
+            // Update booked details
+            updateBookedDetails();
+        }
+
+// Event Handlers
+function handleCourtClick() {
+    // Check if date is selected
+    if (!dateInput.value) {
+        showNotification('Please select a date first.', 'error');
+        dateInput.focus();
+        return;
+    }
+
+                if (this.classList.contains('available')) {
+                    // Deselect previous selection
+                    if (selectedCourt) {
+                        const prevSelected = document.querySelector(`.court[data-court="${selectedCourt}"]`);
+                        prevSelected.className = 'court available';
+                        prevSelected.textContent = 'Available';
+                    }
+                    
+                    // Select new court
+                    selectedCourt = this.getAttribute('data-court');
+                    this.className = 'court selected';
+                    this.textContent = 'Selected';
+                    
+                    // Show user details form
+                    userDetailsForm.style.display = 'block';
+                    bookingConfirmation.style.display = 'none';
+                } else if (this.classList.contains('selected')) {
+                    // Deselect current selection
+                    this.className = 'court available';
+                    this.textContent = 'Available';
+                    selectedCourt = null;
+                    userDetailsForm.style.display = 'none';
+                    showNotification('Selection canceled.', 'error');
+                } else if (this.classList.contains('restricted')) {
+                    showNotification('This court is restricted for your student type.', 'error');
+                } else if (this.classList.contains('type-restricted')) {
+                    showNotification('BTech/MBA students cannot book courts 1 and 2 from 3PM-6PM.', 'error');
+                } else if (this.classList.contains('time-restricted')) {
+                    showNotification('All courts are restricted for your student type during this time (1PM-3PM).', 'error');
+                } else if (this.classList.contains('booked')) {
+                    showNotification('This court has already been booked by another student.', 'error');
+                }
+}
+
+function handleBookingSubmit() {
+    showLoading();
+    
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) {
+        window.location.href = 'login.html';
+                return;
+            }
+            
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const userData = users[loggedInUser];
+    
+    if (!userData) {
+        showNotification('User data not found. Please log in again.', 'error');
+        hideLoading();
+                return;
+            }
+            
+    const userName = userData.fullname;
+    const userEmail = userData.email;
+    const userRollNo = userData.rollno;
+    const userPhone = userData.phone;
+    const studentType = userData.studentType ? userData.studentType.toLowerCase() : '';
+    const date = dateInput.value;
+    const timeSlot = timeSlotSelect.value;
+    const courtNumber = selectedCourt;
+
+    // Validate inputs
+    if (!userName || !userEmail || !userRollNo || !userPhone) {
+        showNotification('Please complete your profile information.', 'error');
+        hideLoading();
+                return;
+            }
+    if (!courtNumber) {
+        showNotification('Please select a court.', 'error');
+        hideLoading();
+                return;
+            }
+    if (!isSlotAvailable(date, timeSlot, courtNumber)) {
+        showNotification('This slot has already been booked.', 'error');
+        hideLoading();
+                return;
+            }
+    if (hasUserBookedForDay(date)) {
+                showNotification('You can only book one court per day.', 'error');
+        hideLoading();
+                return;
+            }
+            
+            // Generate booking details
+    const bookingId = 'B' + Date.now() + Math.floor(Math.random() * 1000);
+    const bookingDetails = {
+        id: bookingId,
+                court: courtNumber,
+        date: date,
+                timeSlot: timeSlot,
+                name: userName,
+                email: userEmail,
+                rollNo: userRollNo,
+                phone: userPhone,
+        status: 'confirmed',
+        bookingTime: new Date().toISOString(),
+        studentType: studentType
+    };
+
+    // Save booking
+    if (!saveBooking(bookingDetails)) {
+        hideLoading();
+        return;
+    }
+
+    // Update current bookings
+    const bookingKey = `${date}-${timeSlot}`;
+    if (!currentBookings[bookingKey]) {
+        currentBookings[bookingKey] = [];
+    }
+    currentBookings[bookingKey].push(courtNumber);
+
+    // Store all booking details
+    allBookings[bookingId] = bookingDetails;
+            
+            // Update user bookings
+            updateUserBookings();
+            
+            // Show booking confirmation
+    showBookingConfirmation(bookingDetails);
+
+    // Reset form and update UI
+    resetForm();
+    updateCourtAvailability();
+    hideLoading();
+}
+
+function handleBookingCancel() {
+    resetForm();
+            userDetailsForm.style.display = 'none';
+    bookingConfirmation.style.display = 'none';
+    showNotification('Booking cancelled.', 'error');
+}
+
+function handleNewBooking() {
+    resetForm();
+    userDetailsForm.style.display = 'none';
+            bookingConfirmation.style.display = 'none';
+            updateCourtAvailability();
+}
+        
+function handlePrintBooking() {
+            window.print();
+}
+
+function handleConfirmCancel() {
+    const bookingId = cancelBookingIdInput.value.trim();
+            if (!bookingId) {
+        showNotification('Please enter a booking ID.', 'error');
+                return;
+            }
+    cancelBookingById(bookingId);
+}
+
+function handleBackToBooking() {
+    tabs[0].click();
+}
+
+function handleNewBookingAfterCancel() {
+    tabs[0].click();
+}
+
+function handleLogout() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = 'login.html';
+}
+
+function handleTabClick() {
+    const tabId = this.getAttribute('data-tab');
+    
+    // Update tab states
+    tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+    });
+    this.classList.add('active');
+    this.setAttribute('aria-selected', 'true');
+    
+    // Hide all tab contents first
+    tabContents.forEach(content => {
+        content.classList.remove('active');
+        content.style.display = 'none';
+    });
+    
+    // Show only the selected tab content
+    const selectedContent = document.getElementById(`${tabId}-tab`);
+    if (selectedContent) {
+        selectedContent.classList.add('active');
+        selectedContent.style.display = 'block';
+    }
+    
+    // Reset forms when switching tabs
+    if (tabId === 'booking') {
+        resetForm();
+        userDetailsForm.style.display = 'none';
+        bookingConfirmation.style.display = 'none';
+    } else if (tabId === 'cancel') {
+        cancelBookingIdInput.value = '';
+        cancelConfirmation.style.display = 'none';
+    } else if (tabId === 'my-bookings') {
+        updateUserBookings();
+    }
+}
+
+// Utility Functions
+function isSlotAvailable(date, timeSlot, court) {
+    const bookingKey = `${date}-${timeSlot}`;
+    return !currentBookings[bookingKey] || !currentBookings[bookingKey].includes(court);
+}
+
+function hasUserBookedForDay(date) {
+    return Object.values(userBookings).some(booking => 
+        booking.date === date && booking.status === 'confirmed'
+    );
+}
+
+function saveBooking(bookingDetails) {
+    try {
+        const savedBookings = JSON.parse(localStorage.getItem('sportBookings')) || [];
+        savedBookings.push(bookingDetails);
+        localStorage.setItem('sportBookings', JSON.stringify(savedBookings));
+        return true;
+    } catch (error) {
+        console.error('Error saving booking:', error);
+        showNotification('Error saving booking. Please try again.', 'error');
+        return false;
+    }
+}
+
+function showLoading() {
+    document.getElementById('loading-overlay').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.getElementById('loading-overlay').style.display = 'none';
+}
+
+function showNotification(message, type = 'error') {
+    notificationArea.textContent = message;
+    notificationArea.className = 'notification-area ' + type;
+}
+
+function resetForm() {
+    userNameInput.value = '';
+    userEmailInput.value = '';
+    userRollNoInput.value = '';
+    userPhoneInput.value = '';
+    selectedCourt = null;
+}
+
+function updateUserBookings() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const userData = users[loggedInUser];
+    userEmail = userData ? userData.email : "guest@university.edu";
+    
+    userBookings = {};
+    for (const [id, booking] of Object.entries(allBookings)) {
+        if (booking.email === userEmail) {
+            userBookings[id] = booking;
+        }
+    }
+    renderMyBookings();
+}
+
+function renderMyBookings() {
+    if (Object.keys(userBookings).length === 0) {
+        myBookingsList.innerHTML = '<p>You have no active bookings.</p>';
+        return;
+    }
+    
+    // Get today's date for comparison
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let html = '<div class="confirmation-details">';
+    let hasActiveBookings = false;
+    
+    for (const [id, booking] of Object.entries(userBookings)) {
+        if (booking.status === 'cancelled') continue;
+        
+        const bookingDate = new Date(booking.date);
+        bookingDate.setHours(0, 0, 0, 0);
+        
+        // Only show current and future bookings
+        if (bookingDate >= today) {
+            hasActiveBookings = true;
+            html += `
+                <div class="detail-row">
+                    <div class="detail-label">Booking ID:</div>
+                    <div class="detail-value">${id}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Court Number:</div>
+                    <div class="detail-value">${booking.court}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date:</div>
+                    <div class="detail-value">${bookingDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        day: 'numeric', 
+                        month: 'long', 
+                        year: 'numeric' 
+                    })}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Time Slot:</div>
+                    <div class="detail-value">${booking.timeSlot}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value">${booking.status === 'confirmed' ? 'Confirmed' : 'Cancelled'}</div>
+                </div>
+                <div class="button-group" style="margin: 15px 0 30px;">
+                    <button class="btn btn-danger cancel-my-booking" data-booking-id="${id}">Cancel Booking</button>
+                </div>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            `;
+        }
+    }
+    html += '</div>';
+    
+    if (!hasActiveBookings) {
+        myBookingsList.innerHTML = '<p>You have no active bookings.</p>';
+    } else {
+        myBookingsList.innerHTML = html;
+        
+        // Add event listeners to cancel buttons
+        document.querySelectorAll('.cancel-my-booking').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const bookingId = this.getAttribute('data-booking-id');
+                cancelBookingById(bookingId);
+            });
+        });
+    }
+}
+
+function cancelBookingById(bookingId) {
+    if (!allBookings[bookingId]) {
+        showNotification('No booking found with this ID.', 'error');
+        return;
+    }
+    
+    if (allBookings[bookingId].status === 'cancelled') {
+        showNotification('This booking has already been cancelled.', 'error');
+        return;
+    }
+    
+    // Cancel the booking
+    const booking = allBookings[bookingId];
+    booking.status = 'cancelled';
+    
+    // Remove from current bookings
+    const bookingKey = `${booking.date}-${booking.timeSlot}`;
+    if (currentBookings[bookingKey]) {
+        currentBookings[bookingKey] = currentBookings[bookingKey].filter(
+            court => court !== booking.court
+        );
+    }
+    
+    // Update the UI
+    updateCourtAvailability();
+    updateUserBookings();
+    
+    showNotification('Booking has been successfully cancelled.', 'success');
+}
+
+function showBookingConfirmation(bookingDetails) {
+    document.getElementById('booking-id').textContent = bookingDetails.id;
+    document.getElementById('confirmation-court').textContent = bookingDetails.court;
+    document.getElementById('confirmation-date').textContent = 
+        new Date(bookingDetails.date).toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+        });
+    document.getElementById('confirmation-time').textContent = bookingDetails.timeSlot;
+    document.getElementById('confirmation-name').textContent = bookingDetails.name;
+    document.getElementById('confirmation-email').textContent = bookingDetails.email;
+    document.getElementById('confirmation-rollno').textContent = bookingDetails.rollNo;
+    document.getElementById('confirmation-phone').textContent = bookingDetails.phone;
+    bookingIdDisplay.textContent = `Booking ID: ${bookingDetails.id}`;
+    
+    // Mark the court as booked
+    const selectedCourtElement = document.querySelector(`.court[data-court="${bookingDetails.court}"]`);
+    selectedCourtElement.className = 'court booked';
+    selectedCourtElement.textContent = 'Booked';
+    
+    // Hide form and show confirmation
+    userDetailsForm.style.display = 'none';
+    bookingConfirmation.style.display = 'block';
+    
+    showNotification('Booking confirmed successfully!', 'success');
+}
+
+function updateBookedDetails() {
+    const date = dateInput.value;
+    const timeSlot = timeSlotSelect.value;
+    const bookingKey = `${date}-${timeSlot}`;
+    const bookedDetailsSection = document.getElementById('booked-details-section');
+    const currentBookingsList = document.getElementById('current-bookings-list');
+    
+    if (!date || !timeSlot) {
+        bookedDetailsSection.style.display = 'none';
+        return;
+    }
+    
+    const bookings = currentBookings[bookingKey] || [];
+    
+    if (bookings.length === 0) {
+        currentBookingsList.innerHTML = '<p>No bookings for this time slot.</p>';
+        bookedDetailsSection.style.display = 'block';
+        return;
+    }
+    
+    let html = '';
+    bookings.forEach(courtNumber => {
+        const booking = Object.values(allBookings).find(b => 
+            b.date === date && 
+            b.timeSlot === timeSlot && 
+            b.court === courtNumber &&
+            b.status === 'confirmed'
+        );
+        
+        if (booking) {
+            html += `
+                <div class="booking-item">
                     <div class="detail-row">
-                        <div class="detail-label">Booking ID:</div>
-                        <div class="detail-value">${id}</div>
-                    </div>
-                    <div class="detail-row">
-                        <div class="detail-label">Court Number:</div>
+                        <div class="detail-label">Court:</div>
                         <div class="detail-value">${booking.court}</div>
                     </div>
                     <div class="detail-row">
-                        <div class="detail-label">Date:</div>
-                        <div class="detail-value">${bookingDate.toLocaleDateString('en-US', { 
-                            weekday: 'long', 
-                            day: 'numeric', 
-                            month: 'long', 
-                            year: 'numeric' 
-                        })}</div>
+                        <div class="detail-label">Booked By:</div>
+                        <div class="detail-value">${booking.name}</div>
                     </div>
                     <div class="detail-row">
-                        <div class="detail-label">Time Slot:</div>
-                        <div class="detail-value">${booking.timeSlot}</div>
+                        <div class="detail-label">Student Type:</div>
+                        <div class="detail-value">${booking.studentType === 'medical' ? 'Medical Student' : 
+                            booking.studentType === 'btech' ? 'BTech Student' : 'MBA Student'}</div>
                     </div>
-                    <div class="detail-row">
-                        <div class="detail-label">Status:</div>
-                        <div class="detail-value">${booking.status === 'confirmed' ? 'Confirmed' : 'Cancelled'}</div>
-                    </div>
-                    <div class="button-group" style="margin: 15px 0 30px;">
-                        <button class="btn btn-danger cancel-my-booking" data-booking-id="${id}">Cancel Booking</button>
-                    </div>
-                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-                `;
-            }
+                </div>
+            `;
         }
-        html += '</div>';
-        
-        if (!hasActiveBookings) {
-            myBookingsList.innerHTML = '<p>You have no active bookings.</p>';
-        } else {
-            myBookingsList.innerHTML = html;
-            
-            // Add event listeners to cancel buttons
-            document.querySelectorAll('.cancel-my-booking').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const bookingId = this.getAttribute('data-booking-id');
-                    cancelBookingById(bookingId);
-                });
-            });
-        }
-    }
-
-    function cancelBookingById(bookingId) {
-        if (!allBookings[bookingId]) {
-            showNotification('No booking found with this ID.', 'error');
-            return;
-        }
-        
-        if (allBookings[bookingId].status === 'cancelled') {
-            showNotification('This booking has already been cancelled.', 'error');
-            return;
-        }
-        
-        // Cancel the booking
-        const booking = allBookings[bookingId];
-        booking.status = 'cancelled';
-        
-        // Remove from current bookings
-        const bookingKey = `${booking.date}-${booking.timeSlot}`;
-        if (currentBookings[bookingKey]) {
-            currentBookings[bookingKey] = currentBookings[bookingKey].filter(
-                court => court !== booking.court
-            );
-        }
-        
-        // Update the UI
-        updateCourtAvailability();
-        updateUserBookings();
-        
-        showNotification('Booking has been successfully cancelled.', 'success');
-    }
-
-    function showBookingConfirmation(bookingDetails) {
-        document.getElementById('booking-id').textContent = bookingDetails.id;
-        document.getElementById('confirmation-court').textContent = bookingDetails.court;
-        document.getElementById('confirmation-date').textContent = 
-            new Date(bookingDetails.date).toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                day: 'numeric', 
-                month: 'long', 
-                year: 'numeric' 
-            });
-        document.getElementById('confirmation-time').textContent = bookingDetails.timeSlot;
-        document.getElementById('confirmation-name').textContent = bookingDetails.name;
-        document.getElementById('confirmation-email').textContent = bookingDetails.email;
-        document.getElementById('confirmation-rollno').textContent = bookingDetails.rollNo;
-        document.getElementById('confirmation-phone').textContent = bookingDetails.phone;
-        bookingIdDisplay.textContent = `Booking ID: ${bookingDetails.id}`;
-        
-        // Mark the court as booked
-        const selectedCourtElement = document.querySelector(`.court[data-court="${bookingDetails.court}"]`);
-        selectedCourtElement.className = 'court booked';
-        selectedCourtElement.textContent = 'Booked';
-        
-        // Hide form and show confirmation
-        userDetailsForm.style.display = 'none';
-        bookingConfirmation.style.display = 'block';
-        
-        showNotification('Booking confirmed successfully!', 'success');
-    }
-
-    function updateBookedDetails() {
-        const date = dateInput.value;
-        const timeSlot = timeSlotSelect.value;
-        const bookingKey = `${date}-${timeSlot}`;
-        const bookedDetailsSection = document.getElementById('booked-details-section');
-        const currentBookingsList = document.getElementById('current-bookings-list');
-        
-        if (!date || !timeSlot) {
-            bookedDetailsSection.style.display = 'none';
-            return;
-        }
-        
-        const bookings = currentBookings[bookingKey] || [];
-        
-        if (bookings.length === 0) {
-            currentBookingsList.innerHTML = '<p>No bookings for this time slot.</p>';
-            bookedDetailsSection.style.display = 'block';
-            return;
-        }
-        
-        let html = '';
-        bookings.forEach(courtNumber => {
-            const booking = Object.values(allBookings).find(b => 
-                b.date === date && 
-                b.timeSlot === timeSlot && 
-                b.court === courtNumber &&
-                b.status === 'confirmed'
-            );
-            
-            if (booking) {
-                html += `
-                    <div class="booking-item">
-                        <div class="detail-row">
-                            <div class="detail-label">Court:</div>
-                            <div class="detail-value">${booking.court}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Booked By:</div>
-                            <div class="detail-value">${booking.name}</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Student Type:</div>
-                            <div class="detail-value">${booking.studentType === 'medical' ? 'Medical Student' : 
-                                booking.studentType === 'btech' ? 'BTech Student' : 'MBA Student'}</div>
-                        </div>
-                    </div>
-                `;
-            }
-        });
-        
-        currentBookingsList.innerHTML = html || '<p>No bookings for this time slot.</p>';
-        bookedDetailsSection.style.display = 'block';
-    }
+    });
+    
+    currentBookingsList.innerHTML = html || '<p>No bookings for this time slot.</p>';
+    bookedDetailsSection.style.display = 'block';
+}
 </script>
 
 </body>

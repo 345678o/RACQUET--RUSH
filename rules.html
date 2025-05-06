@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rules & Regulations</title>
+    <title>Rules - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="nav.js"></script>
+    <script>
+        function checkLogin() {
+            let user = localStorage.getItem("loggedInUser");
+            if (!user) {
+                alert("You are not logged in. Redirecting to login page.");
+                window.location.href = "login.html";
+            } else {
+                document.getElementById("logoutNav").style.display = "inline";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have successfully logged out.");
+            window.location.href = "login.html";
+        }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,172 +34,316 @@
 
         /* Navigation Bar */
         nav {
-            background-color: var(--nav-bg);
+            background-color: #0a2342;
             color: white;
-            padding: 0 3rem;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 100px;
+            height: 90px !important;
+            min-height: 90px !important;
+            border-bottom: 1px solid #e0e6ed;
             position: relative;
-            z-index: var(--nav-z);
-            width: 100%;
-            max-width: 1800px;
-            margin: 0 auto;
+            z-index: 1000;
+            box-shadow: none;
         }
 
         .logo {
-            height: 100px;
+            height: 60px;
+            width: 60px;
             display: flex;
             align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            margin-right: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 2px;
         }
 
         .logo img {
-            height: 100px;
-            width: auto;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            background: white;
+            height: 60px;
+            width: 60px;
+            max-width: 100%;
+            border-radius: 0;
+            object-fit: cover;
         }
 
         .main-nav {
             display: flex;
-            gap: 2rem;
+            gap: 0.5rem;
             list-style: none;
             margin: 0;
             padding: 0;
             flex-shrink: 0;
-            transition: max-height 0.3s, opacity 0.3s;
-            z-index: var(--nav-menu-z);
+            align-items: center;
         }
 
         .main-nav a {
             text-decoration: none;
-            color: white;
-            font-size: 1.2rem;
-            padding: 1.2rem 2rem;
-            border-radius: var(--nav-link-radius);
-            transition: background 0.2s;
+            color: #f4f6fa;
+            font-size: 1rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: 0.2rem;
+            transition: background 0.2s, color 0.2s;
             white-space: nowrap;
             display: block;
+            position: relative;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
-        .main-nav a:hover, .main-nav a.active {
-            background-color: #003366;
+        .main-nav a:hover {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .main-nav a.active {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+        }
+
+        .main-nav a.active::after {
+            display: none;
         }
 
         .hamburger {
             display: none;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 6px;
             cursor: pointer;
-            margin-left: 1.5rem;
-            width: 3rem;
-            height: 3rem;
+            margin-left: 20px;
+            width: 44px;
+            height: 44px;
             justify-content: center;
             align-items: center;
-            z-index: var(--nav-hamburger-z);
-            background: none;
-            border: none;
+            z-index: 1100;
         }
 
         .hamburger span {
             display: block;
-            width: 2.2rem;
-            height: 0.35rem;
+            width: 32px;
+            height: 4px;
             background: white;
-            border-radius: 0.2rem;
+            border-radius: 2px;
             transition: 0.3s;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(10px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-10px) rotate(-45deg);
         }
 
         @media (max-width: 900px) {
             nav {
-                flex-wrap: wrap;
-                height: auto;
-                padding: 0 1.5rem;
+                flex-direction: column;
+                height: auto !important;
+                min-height: auto !important;
+                padding: 0.5rem;
             }
             .logo {
-                height: 90px;
-            }
-            .logo img {
-                height: 90px;
+                margin-bottom: 0.5rem;
             }
             .main-nav {
-                position: absolute;
-                top: 100px;
-                left: 0;
-                right: 0;
-                background: var(--nav-bg);
-                flex-direction: column;
-                width: 100vw;
-                gap: 0;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                display: none;
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.5rem 0;
+                justify-content: flex-start;
+                gap: 0.2rem;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
-            .main-nav.active {
-                display: flex;
-                max-height: 500px;
-                opacity: 1;
+            .main-nav::-webkit-scrollbar {
+                display: none;
             }
             .main-nav li {
-                width: 100%;
+                flex: 0 0 auto;
             }
             .main-nav a {
-                display: block;
-                padding: 1.2rem 2rem;
-                border-radius: 0;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
-                font-size: 1.2rem;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.95rem;
+                background-color: transparent;
+                border-radius: 12px;
             }
-            .hamburger {
-                display: flex;
-            }
-        }
-
-        @media (max-width: 600px) {
-            nav {
-                padding: 0 1rem;
-            }
-            .logo {
-                height: 80px;
-            }
-            .logo img {
-                height: 80px;
+            .main-nav a:hover, .main-nav a.active {
+                background-color: #17335c;
+                color: #e0e6ed;
             }
         }
-
-        @media (max-width: 400px) {
-            .logo {
-                height: 70px;
-            }
-            .logo img {
-                height: 70px;
+        @media (max-width: 480px) {
+            .main-nav a {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.85rem;
             }
         }
-
-        /* Backdrop for mobile menu */
         #nav-backdrop {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.3);
-            z-index: var(--nav-backdrop-z);
+            z-index: 1099;
         }
         #nav-backdrop.active {
             display: block;
+        }
+        @media (max-width: 1200px) {
+            .container {
+                width: 85%;
+                margin: 40px auto;
+                padding: 18px;
+            }
+
+            ul {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                width: 90%;
+                margin: 35px auto;
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            ul {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                height: 70px;
+            }
+
+            .logo img {
+                height: 70px;
+            }
+
+            .container {
+                width: 95%;
+                margin: 30px auto;
+                padding: 14px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            ul {
+                font-size: 15px;
+                padding-left: 25px;
+            }
+
+            .btn {
+                padding: 7px 14px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav {
+                padding: 8px 12px;
+            }
+
+            .logo {
+                height: 60px;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .container {
+                width: 98%;
+                margin: 25px auto;
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            ul {
+                font-size: 14px;
+                padding-left: 20px;
+                line-height: 1.5;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            nav {
+                padding: 6px 10px;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .container {
+                width: 100%;
+                margin: 20px auto;
+                padding: 10px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            ul {
+                font-size: 13px;
+                padding-left: 15px;
+                line-height: 1.4;
+            }
+
+            .btn {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
         }
 
         .container {
@@ -223,185 +385,10 @@
         }
     </style>
 </head>
-<body>
-
-  <style>
-    /* Navigation Bar */
-    nav {
-        background-color: #00274D;
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        z-index: 1000;
-    }
-
-    .logo img {
-        height: 100px;
-    }
-
-    /* Main Navigation Links */
-    .main-nav {
-        display: flex;
-        gap: 20px;
-        list-style: none;
-    }
-
-    .main-nav a {
-        text-decoration: none;
-        color: white;
-        font-size: 16px;
-        padding: 10px 15px;
-        border-radius: 5px;
-    }
-
-    .main-nav a:hover {
-        background-color: darkblue;
-    }
-
-    /* Hamburger Menu */
-    .hamburger {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        cursor: pointer;
-        padding: 10px;
-        transition: transform 0.3s ease;
-    }
-
-    .hamburger div {
-        width: 30px;
-        height: 3px;
-        background: white;
-        transition: all 0.3s ease;
-        border-radius: 2px;
-    }
-
-    .hamburger:hover {
-        transform: scale(1.05);
-    }
-
-    .hamburger-menu {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 20px;
-        background: #00274D;
-        width: 250px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        overflow: hidden;
-        animation: slideDown 0.3s ease;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .hamburger-menu.active {
-        display: block;
-    }
-
-    .hamburger-menu a {
-        display: block;
-        padding: 15px 25px;
-        color: white;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 16px;
-        letter-spacing: 0.5px;
-    }
-
-    .hamburger-menu a:hover {
-        background: #00509E;
-        padding-left: 30px;
-    }
-
-    .hamburger-menu a:last-child {
-        border-bottom: none;
-    }
-
-    @media (max-width: 768px) {
-        .main-nav {
-            display: none;
-        }
-
-        .hamburger-menu {
-            width: 100%;
-            right: 0;
-            top: 70px;
-            border-radius: 0;
-        }
-    }
-
-    /* Section Styling */
-    .section-container {
-        background: rgba(255, 255, 255, 0.9);
-        color: black;
-        padding: 40px;
-        margin: 50px auto;
-        width: 80%;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        text-align: justify;
-    }
-
-    .section-container h2 {
-        color: blue;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .section-container img {
-        width: 100%;
-        max-width: 600px;
-        border-radius: 10px;
-        display: block;
-        margin: 20px auto;
-    }
-
-    .section-container p {
-        font-size: 18px;
-        margin-bottom: 20px;
-    }
-
-    /* Footer */
-    footer {
-        background: rgb(212, 8, 8);
-        color: white;
-        padding: 15px;
-        text-align: center;
-        margin-top: 30px;
-    }
-  </style>
-
-</head>
 <body onload="checkLogin()">
-    <script >
-         function toggleMenu() {
-            const menu = document.querySelector('.hamburger-menu');
-            menu.classList.toggle('active');
-        }
-    </script>
-
-<!-- Navigation Bar -->
 <nav>
-    <div class="logo"><img src="logo.jpg" alt="College Sports Hub Logo"></div>
-    <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu(event)">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="logo">
+        <img src="../assets/images/sports/logo.jpg" alt="College Sports Hub Logo">
     </div>
     <ul class="main-nav" id="mainNav">
         <li><a href="index.html">Home</a></li>
@@ -412,361 +399,58 @@
         <li><a href="rules.html" class="active">Rules</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="details.html">Details</a></li>
-        <li><a href="#" onclick="logout()">Logout</a></li>
+        <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
     </ul>
-</nav>
-<div id="nav-backdrop" onclick="closeMenu()"></div>
-
-<style>
-nav {
-    background-color: #00274D;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 1000;
-}
-.logo {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-.logo img {
-    height: 70px;
-    width: auto;
-}
-.main-nav {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex-shrink: 0;
-    transition: max-height 0.3s, opacity 0.3s;
-}
-.main-nav a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    padding: 14px 20px;
-    border-radius: 5px;
-    transition: background 0.2s;
-    white-space: nowrap;
-    display: block;
-}
-.main-nav a:hover {
-    background-color: darkblue;
-}
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-    margin-left: 20px;
-    width: 44px;
-    height: 44px;
-    justify-content: center;
-    align-items: center;
-    z-index: 1100;
-}
-.hamburger span {
-    display: block;
-    width: 32px;
-    height: 4px;
-    background: white;
-    border-radius: 2px;
-    transition: 0.3s;
-}
-@media (max-width: 900px) {
-    nav {
-        flex-wrap: wrap;
-    }
-    .main-nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #00274D;
-        flex-direction: column;
-        width: 100vw;
-        gap: 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        display: none;
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-    }
-    .main-nav.active {
-        display: flex;
-        max-height: 500px;
-        opacity: 1;
-    }
-    .main-nav li {
-        width: 100%;
-    }
-    .main-nav a {
-        display: block;
-        padding: 18px 24px;
-        border-radius: 0;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        font-size: 18px;
-    }
-    .hamburger {
-        display: flex;
-    }
-}
-#nav-backdrop {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 1099;
-}
-#nav-backdrop.active {
-    display: block;
-}
-</style>
-<script>
-function toggleMenu(e) {
-    e.stopPropagation();
-    document.getElementById('mainNav').classList.toggle('active');
-    document.getElementById('nav-backdrop').classList.toggle('active');
-}
-function closeMenu() {
-    document.getElementById('mainNav').classList.remove('active');
-    document.getElementById('nav-backdrop').classList.remove('active');
-}
-document.querySelectorAll('.main-nav a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-});
-window.addEventListener('resize', function() {
-    if(window.innerWidth > 900) closeMenu();
-});
-window.addEventListener('scroll', closeMenu);
-</script>
-
-    <!-- Rules & Regulations Section -->
-    <div class="container">
-        <h1>Rules & Regulations</h1>
-        
-        <h2>1. General Court Rules</h2>
-        <ul>
-            <li>Only registered users are allowed to book a court.</li>
-            <li>Players must wear proper sports attire and  enter the court bare foot.</li>
-            <li>Food and drinks (except water) are not allowed inside the court.</li>
-            <li>Respect other players and avoid unnecessary disruptions.</li>
-        </ul>
-
-        <h2>2. Booking & Cancellation</h2>
-        <ul>
-            <li>Each player can book a maximum of one slot per day.</li>
-            <li>Bookings must be made at least 10 minutes before the slot starts.</li>
-            <li>If you cannot attend, cancel your booking at least 30 minutes before.</li>
-            <li>Repeated no-shows may lead to temporary suspension.</li>
-        </ul>
-
-        <h2>3. Gameplay Etiquette</h2>
-        <ul>
-            <li>Each match is limited to 60 minutes.</li>
-            <li>Follow fair play rules and resolve disputes amicably.</li>
-            <li>Bring your personal shuttles; it won't be provided.</li>
-        </ul>
-
-        <h2>4. Code of Conduct</h2>
-        <ul>
-            <li>Any kind of misconduct, violence, or disrespect  will result in an immediate ban.</li>
-            <li>Maintain a friendly sportsmanship spirit.</li>
-            <li>Follow the guidance of the court staff at all times.</li>
-            <li> DO not use Cell phone </li>
-            <li> You are under CC TV surveillance </li>
-        <li> No shouting </li>
-            <li>  No Group sitting and disturbing </li>
-               <li> No Bettings
-                </li>
-        </ul>
-
-        <a href="index.html" class="btn">Back to Home</a>
+    <div class="hamburger" onclick="toggleMenu(event)">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
+</nav>
+<div id="nav-backdrop"></div>
 
-    <script>
-        function checkLogin() {
-            let user = localStorage.getItem("loggedInUser");
-            if (!user) {
-                alert("You are not logged in. Redirecting to login page.");
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("logoutNav").style.display = "inline";
-            }
-        }
+<!-- Rules & Regulations Section -->
+<div class="container">
+    <h1>Rules & Regulations</h1>
+    
+    <h2>1. General Court Rules</h2>
+    <ul>
+        <li>Only registered users are allowed to book a court.</li>
+        <li>Players must wear proper sports attire and  enter the court bare foot.</li>
+        <li>Food and drinks (except water) are not allowed inside the court.</li>
+        <li>Respect other players and avoid unnecessary disruptions.</li>
+    </ul>
 
-        function logout() {
-            localStorage.removeItem("loggedInUser");
-            alert("You have successfully logged out.");
-            window.location.href = "login.html";
-        }
-    </script>
+    <h2>2. Booking & Cancellation</h2>
+    <ul>
+        <li>Each player can book a maximum of one slot per day.</li>
+        <li>Bookings must be made at least 10 minutes before the slot starts.</li>
+        <li>If you cannot attend, cancel your booking at least 30 minutes before.</li>
+        <li>Repeated no-shows may lead to temporary suspension.</li>
+    </ul>
 
-    <!-- Responsive Design -->
-     <style>
+    <h2>3. Gameplay Etiquette</h2>
+    <ul>
+        <li>Each match is limited to 60 minutes.</li>
+        <li>Follow fair play rules and resolve disputes amicably.</li>
+        <li>Bring your personal shuttles; it won't be provided.</li>
+    </ul>
 
+    <h2>4. Code of Conduct</h2>
+    <ul>
+        <li>Any kind of misconduct, violence, or disrespect  will result in an immediate ban.</li>
+        <li>Maintain a friendly sportsmanship spirit.</li>
+        <li>Follow the guidance of the court staff at all times.</li>
+        <li> DO not use Cell phone </li>
+        <li> You are under CC TV surveillance </li>
+    <li> No shouting </li>
+        <li>  No Group sitting and disturbing </li>
+           <li> No Bettings
+            </li>
+    </ul>
 
-    @media (max-width: 1200px) {
-        .container {
-            width: 85%;
-            margin: 40px auto;
-            padding: 18px;
-        }
-
-        ul {
-            font-size: 17px;
-        }
-    }
-
-    @media (max-width: 992px) {
-        .container {
-            width: 90%;
-            margin: 35px auto;
-            padding: 16px;
-        }
-
-        h1 {
-            font-size: 28px;
-        }
-
-        h2 {
-            font-size: 24px;
-        }
-
-        ul {
-            font-size: 16px;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            font-size: 15px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        nav {
-            padding: 10px 15px;
-        }
-
-        .logo {
-            height: 70px;
-        }
-
-        .logo img {
-            height: 70px;
-        }
-
-        .container {
-            width: 95%;
-            margin: 30px auto;
-            padding: 14px;
-        }
-
-        h1 {
-            font-size: 26px;
-        }
-
-        h2 {
-            font-size: 22px;
-        }
-
-        ul {
-            font-size: 15px;
-            padding-left: 25px;
-        }
-
-        .btn {
-            padding: 7px 14px;
-            font-size: 14px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        nav {
-            padding: 8px 12px;
-        }
-
-        .logo {
-            height: 60px;
-        }
-
-        .logo img {
-            height: 60px;
-        }
-
-        .container {
-            width: 98%;
-            margin: 25px auto;
-            padding: 12px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        h2 {
-            font-size: 20px;
-        }
-
-        ul {
-            font-size: 14px;
-            padding-left: 20px;
-            line-height: 1.5;
-        }
-
-        .btn {
-            padding: 6px 12px;
-            font-size: 13px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        nav {
-            padding: 6px 10px;
-        }
-
-        .logo {
-            height: 50px;
-        }
-
-        .logo img {
-            height: 50px;
-        }
-
-        .container {
-            width: 100%;
-            margin: 20px auto;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 22px;
-        }
-
-        h2 {
-            font-size: 18px;
-        }
-
-        ul {
-            font-size: 13px;
-            padding-left: 15px;
-            line-height: 1.4;
-        }
-
-        .btn {
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-    }
-</style>
+    <a href="index.html" class="btn">Back to Home</a>
+</div>
 </body>
 </html>
 
