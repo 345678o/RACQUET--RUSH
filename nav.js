@@ -18,27 +18,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    hamburger.addEventListener('click', toggleMenu);
-    navBackdrop.addEventListener('click', closeMenu);
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleMenu);
+    }
+    if (navBackdrop) {
+        navBackdrop.addEventListener('click', closeMenu);
+    }
     
     document.querySelectorAll('.main-nav a').forEach(link => {
         link.addEventListener('click', closeMenu);
     });
 
-    // Improved touch handling
+    // Improved touch handling for horizontal scrolling
     let touchStartX = 0;
     let touchEndX = 0;
+    let isScrolling = false;
     
     mainNav.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
+        isScrolling = false;
     }, { passive: true });
     
     mainNav.addEventListener('touchmove', (e) => {
+        if (isScrolling) return;
+        
         touchEndX = e.touches[0].clientX;
         const diff = touchStartX - touchEndX;
         
         // Only prevent default if we're actually scrolling horizontally
-        if (Math.abs(diff) > 10) {
+        if (Math.abs(diff) > 5) {
+            isScrolling = true;
             e.preventDefault();
         }
     }, { passive: false });
@@ -46,10 +55,20 @@ document.addEventListener('DOMContentLoaded', function() {
     mainNav.addEventListener('touchend', () => {
         touchStartX = 0;
         touchEndX = 0;
+        isScrolling = false;
     }, { passive: true });
 
+    // Add padding to body to account for fixed navigation
+    const navHeight = document.querySelector('nav').offsetHeight;
+    document.body.style.paddingTop = navHeight + 'px';
+
     window.addEventListener('resize', function() {
-        if(window.innerWidth > 900) closeMenu();
+        if(window.innerWidth > 900) {
+            closeMenu();
+        }
+        // Update body padding when window is resized
+        const navHeight = document.querySelector('nav').offsetHeight;
+        document.body.style.paddingTop = navHeight + 'px';
     });
 
     window.addEventListener('scroll', closeMenu);

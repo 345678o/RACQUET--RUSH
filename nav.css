@@ -76,7 +76,6 @@ nav {
     min-width: 70px;
     text-align: center;
     background-color: rgba(255,255,255,0.05);
-    pointer-events: auto;
 }
 
 .main-nav a:hover, .main-nav a.active {
@@ -85,58 +84,47 @@ nav {
 }
 
 /* Mobile Navigation */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     nav {
         padding: 0.5rem;
         min-height: 44px;
     }
-    .nav-container {
-        padding: 0 5px;
-        gap: 0.25rem;
-    }
-    .logo {
-        height: 35px;
-        padding-right: 0.25rem;
-    }
-    .main-nav {
-        gap: 0.25rem;
-        overflow-x: auto;
-    }
-    .main-nav a {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.85rem;
-        min-width: 65px;
-        height: 35px;
-    }
-}
 
-@media (max-width: 576px) {
-    nav {
-        padding: 0.4rem;
-        min-height: 40px;
+    .main-nav {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        padding: 0.5rem 0;
+        justify-content: flex-start;
+        gap: 0.2rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        white-space: nowrap;
     }
-    .logo {
-        height: 30px;
+
+    .main-nav::-webkit-scrollbar {
+        display: none;
     }
+
+    .main-nav li {
+        flex: 0 0 auto;
+        display: inline-block;
+    }
+
     .main-nav a {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.8rem;
-        min-width: 60px;
-        height: 32px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        display: inline-block;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 }
 
 /* Touch-friendly styles */
 @media (max-width: 768px) {
-    .main-nav a {
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .main-nav a:active {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: scale(0.95);
-    }
-
     .main-nav {
         scroll-snap-type: x mandatory;
         scroll-padding: 0 0.5rem;
@@ -144,6 +132,12 @@ nav {
 
     .main-nav a {
         scroll-snap-align: center;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .main-nav a:active {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(0.95);
     }
 }
 
@@ -168,6 +162,7 @@ nav {
     z-index: 2000;
     pointer-events: none;
 }
+
 #nav-backdrop.active {
     display: block;
     pointer-events: auto;
@@ -180,33 +175,18 @@ nav {
     pointer-events: auto;
 }
 
-@media (max-width: 900px) {
-    .main-nav {
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-x;
-        padding: 0.5rem 0;
-        justify-content: flex-start;
-        gap: 0.2rem;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
+@media (max-width: 576px) {
+    nav {
+        padding: 0.4rem;
+        min-height: 40px;
     }
-    
-    .main-nav::-webkit-scrollbar {
-        display: none;
+    .logo {
+        height: 30px;
     }
-    
-    .main-nav li {
-        flex: 0 0 auto;
-    }
-    
     .main-nav a {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.95rem;
-        white-space: nowrap;
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 60px;
+        height: 32px;
     }
 } 
