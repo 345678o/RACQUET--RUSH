@@ -13,14 +13,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 10px rgba(0,0,0,0.12);
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-nav::-webkit-scrollbar {
-    display: none;
 }
 
 .nav-container {
@@ -31,6 +24,7 @@ nav::-webkit-scrollbar {
     min-width: max-content;
     padding: 0 10px;
     gap: 0.5rem;
+    -webkit-overflow-scrolling: touch;
 }
 
 .logo {
@@ -59,10 +53,8 @@ nav::-webkit-scrollbar {
     padding: 0;
     flex-shrink: 0;
     min-width: max-content;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
-    pointer-events: auto;
 }
 
 .main-nav a {
@@ -190,18 +182,31 @@ nav::-webkit-scrollbar {
 
 @media (max-width: 900px) {
     .main-nav {
-        display: none;
-        flex-direction: column;
-        position: fixed;
-        top: 56px;
-        left: 0;
-        right: 0;
-        background: #00274D;
-        z-index: 3000;
-        width: 100vw;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+        padding: 0.5rem 0;
+        justify-content: flex-start;
+        gap: 0.2rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
-    .main-nav.active {
-        display: flex;
+    
+    .main-nav::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .main-nav li {
+        flex: 0 0 auto;
+    }
+    
+    .main-nav a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 } 
