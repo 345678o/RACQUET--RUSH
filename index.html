@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sports Booking System</title>
     <link rel="stylesheet" href="styles.css">
     <script src="nav.js"></script>
@@ -54,7 +54,22 @@
 
     <!-- Styles -->
     <style>
-        /* General Styles */
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -63,9 +78,11 @@
             background-size: cover;
             text-align: center;
             color: white;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
-        /* Navigation Bar */
+        /* Navigation styles */
         nav {
             background-color: #0a2342;
             color: white;
@@ -76,7 +93,10 @@
             height: 90px !important;
             min-height: 90px !important;
             border-bottom: 1px solid #e0e6ed;
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             box-shadow: none;
         }
@@ -107,6 +127,8 @@
             padding: 0;
             flex-shrink: 0;
             align-items: center;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
         }
 
         .main-nav a {
@@ -179,24 +201,31 @@
                 overflow-x: auto;
                 overflow-y: hidden;
                 -webkit-overflow-scrolling: touch;
+                touch-action: pan-x;
                 padding: 0.5rem 0;
                 justify-content: flex-start;
                 gap: 0.2rem;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                white-space: nowrap;
+                display: flex;
+                flex-wrap: nowrap;
             }
 
             .main-nav::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera */
+                display: none;
             }
 
             .main-nav li {
                 flex: 0 0 auto;
+                display: inline-block;
             }
 
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
+                white-space: nowrap;
+                display: inline-block;
                 background-color: transparent;
                 border-radius: 12px;
             }
@@ -469,6 +498,17 @@
             nav .logo, .logo img {
                 height: 80px !important;
                 max-height: 80px !important;
+            }
+        }
+
+        /* Add padding to body to account for fixed navigation */
+        body {
+            padding-top: 90px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding-top: 120px;
             }
         }
     </style>
