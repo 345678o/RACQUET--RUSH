@@ -1,4 +1,4 @@
-zzzzzz// Navigation functionality
+// Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburgerBtn');
     const mainNav = document.getElementById('mainNav');
