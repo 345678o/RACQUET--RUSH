@@ -5,9 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tournaments - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
+    <script src="common.js"></script>
     <script src="nav.js"></script>
     <script>
-        // ... use the same JS as in team.html above ...
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!AppUtils.checkLogin()) {
+                return;
+            }
+
+            // Get current user data
+            const userData = AppUtils.getCurrentUser();
+            if (!userData) {
+                AppUtils.showError("error-message", "Error loading user data. Please try logging in again.");
+                return;
+            }
+
+            // Load tournaments
+            const tournaments = [
+                {
+                    id: 1,
+                    name: "Inter-College Badminton Championship",
+                    sport: "Badminton",
+                    date: "2024-03-15",
+                    time: "09:00",
+                    venue: "Main Sports Complex",
+                    registrationDeadline: "2024-03-10",
+                    maxTeams: 16,
+                    status: "open"
+                },
+                {
+                    id: 2,
+                    name: "Basketball League",
+                    sport: "Basketball",
+                    date: "2024-03-20",
+                    time: "14:00",
+                    venue: "Basketball Court",
+                    registrationDeadline: "2024-03-15",
+                    maxTeams: 8,
+                    status: "open"
+                }
+            ];
+
+            // Display tournaments
+            const tournamentsList = document.getElementById("tournaments-list");
+            tournamentsList.innerHTML = tournaments.map(tournament => `
+                <div class="tournament-card">
+                    <h3>${tournament.name}</h3>
+                    <p><strong>Sport:</strong> ${tournament.sport}</p>
+                    <p><strong>Date:</strong> ${AppUtils.formatDate(new Date(tournament.date))}</p>
+                    <p><strong>Time:</strong> ${AppUtils.formatTime(tournament.time)}</p>
+                    <p><strong>Venue:</strong> ${tournament.venue}</p>
+                    <p><strong>Registration Deadline:</strong> ${AppUtils.formatDate(new Date(tournament.registrationDeadline))}</p>
+                    <p><strong>Status:</strong> <span class="status ${tournament.status}">${tournament.status}</span></p>
+                    <button onclick="registerTeam(${tournament.id})" class="register-btn">Register Team</button>
+                </div>
+            `).join('');
+
+            // Handle team registration
+            window.registerTeam = function(tournamentId) {
+                try {
+                    const tournament = tournaments.find(t => t.id === tournamentId);
+                    if (!tournament) {
+                        AppUtils.showError("registration-error", "Tournament not found!");
+                        return;
+                    }
+
+                    // Check if registration is still open
+                    const deadline = new Date(tournament.registrationDeadline);
+                    if (new Date() > deadline) {
+                        AppUtils.showError("registration-error", "Registration deadline has passed!");
+                        return;
+                    }
+
+                    // Check if user already has a team registered
+                    const teamRegistrations = AppUtils.getTeamRegistrations();
+                    const existingRegistration = teamRegistrations.find(reg => 
+                        reg.tournamentId === tournamentId && 
+                        reg.username === userData.username
+                    );
+
+                    if (existingRegistration) {
+                        AppUtils.showError("registration-error", "You have already registered a team for this tournament!");
+                        return;
+                    }
+
+                    // Check if tournament is full
+                    const registeredTeams = teamRegistrations.filter(reg => reg.tournamentId === tournamentId);
+                    if (registeredTeams.length >= tournament.maxTeams) {
+                        AppUtils.showError("registration-error", "Tournament is full!");
+                        return;
+                    }
+
+                    // Create new team registration
+                    const newRegistration = {
+                        id: Date.now().toString(),
+                        tournamentId: tournamentId,
+                        username: userData.username,
+                        teamName: `${userData.name}'s Team`,
+                        role: 'captain',
+                        status: 'pending',
+                        createdAt: new Date().toISOString()
+                    };
+
+                    teamRegistrations.push(newRegistration);
+                    if (AppUtils.saveTeamRegistrations(teamRegistrations)) {
+                        AppUtils.showSuccess("registration-success", "Team registered successfully!");
+                        location.reload(); // Refresh to update the list
+                    } else {
+                        AppUtils.showError("registration-error", "Failed to register team. Please try again.");
+                    }
+                } catch (e) {
+                    console.error('Error registering team:', e);
+                    AppUtils.showError("registration-error", "An error occurred. Please try again.");
+                }
+            };
+        });
     </script>
     <style>
         :root {

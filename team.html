@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find a Team - College Sports Hub</title>
+    <title>Team Management - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
     <script src="nav.js"></script>
     <style>
         * {
@@ -782,6 +783,161 @@
                 loadPlayers();
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!AppUtils.checkLogin()) {
+                return;
+            }
+
+            // Get current user data
+            const userData = AppUtils.getCurrentUser();
+            if (!userData) {
+                AppUtils.showError("error-message", "Error loading user data. Please try logging in again.");
+                return;
+            }
+
+            // Load user's team registrations
+            const teamRegistrations = AppUtils.getTeamRegistrations().filter(reg => reg.username === userData.username);
+            const teamsList = document.getElementById("teams-list");
+            if (teamRegistrations.length === 0) {
+                teamsList.innerHTML = "<p>You are not part of any teams.</p>";
+            } else {
+                teamsList.innerHTML = teamRegistrations.map(reg => `
+                    <div class="team-card">
+                        <h3>${reg.teamName}</h3>
+                        <p><strong>Role:</strong> ${reg.role}</p>
+                        <p><strong>Status:</strong> <span class="status ${reg.status}">${reg.status}</span></p>
+                        <button onclick="viewTeamDetails('${reg.id}')" class="view-btn">View Details</button>
+                    </div>
+                `).join('');
+            }
+
+            // Handle team creation
+            document.getElementById("createTeamForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                try {
+                    const teamName = document.getElementById("team-name").value.trim();
+                    const sport = document.getElementById("team-sport").value;
+                    const maxPlayers = parseInt(document.getElementById("max-players").value);
+
+                    AppUtils.clearMessage("team-error");
+                    AppUtils.clearMessage("team-success");
+
+                    if (!teamName || !sport || !maxPlayers) {
+                        AppUtils.showError("team-error", "All fields are required!");
+                        return;
+                    }
+
+                    // Check if team name already exists
+                    const teams = AppUtils.getTeams();
+                    if (teams.some(team => team.name.toLowerCase() === teamName.toLowerCase())) {
+                        AppUtils.showError("team-error", "A team with this name already exists!");
+                        return;
+                    }
+
+                    // Create new team
+                    const newTeam = {
+                        id: Date.now().toString(),
+                        name: teamName,
+                        sport: sport,
+                        maxPlayers: maxPlayers,
+                        captain: userData.username,
+                        players: [userData.username],
+                        status: 'active',
+                        createdAt: new Date().toISOString()
+                    };
+
+                    teams.push(newTeam);
+                    if (AppUtils.saveTeams(teams)) {
+                        // Create team registration for captain
+                        const teamRegistrations = AppUtils.getTeamRegistrations();
+                        teamRegistrations.push({
+                            id: Date.now().toString(),
+                            teamId: newTeam.id,
+                            username: userData.username,
+                            teamName: teamName,
+                            role: 'captain',
+                            status: 'active',
+                            createdAt: new Date().toISOString()
+                        });
+
+                        if (AppUtils.saveTeamRegistrations(teamRegistrations)) {
+                            AppUtils.showSuccess("team-success", "Team created successfully!");
+                            document.getElementById("createTeamForm").reset();
+                            location.reload(); // Refresh to show new team
+                        } else {
+                            AppUtils.showError("team-error", "Failed to create team registration. Please try again.");
+                        }
+                    } else {
+                        AppUtils.showError("team-error", "Failed to create team. Please try again.");
+                    }
+                } catch (e) {
+                    console.error('Error creating team:', e);
+                    AppUtils.showError("team-error", "An error occurred. Please try again.");
+                }
+            });
+
+            // View team details
+            window.viewTeamDetails = function(registrationId) {
+                try {
+                    const registration = AppUtils.getTeamRegistrations().find(reg => reg.id === registrationId);
+                    if (!registration) {
+                        AppUtils.showError("team-error", "Team registration not found!");
+                        return;
+                    }
+
+                    const team = AppUtils.getTeams().find(t => t.id === registration.teamId);
+                    if (!team) {
+                        AppUtils.showError("team-error", "Team not found!");
+                        return;
+                    }
+
+                    // Get player details
+                    const players = team.players.map(username => {
+                        const user = AppUtils.getUsers()[username];
+                        return {
+                            username: username,
+                            name: user.fullname,
+                            email: user.email,
+                            phone: user.phone
+                        };
+                    });
+
+                    // Display team details
+                    const detailsModal = document.getElementById("team-details-modal");
+                    detailsModal.innerHTML = `
+                        <div class="modal-content">
+                            <h2>${team.name}</h2>
+                            <p><strong>Sport:</strong> ${team.sport}</p>
+                            <p><strong>Players:</strong> ${team.players.length}/${team.maxPlayers}</p>
+                            <p><strong>Status:</strong> ${team.status}</p>
+                            <h3>Team Members</h3>
+                            <div class="players-list">
+                                ${players.map(player => `
+                                    <div class="player-card">
+                                        <p><strong>Name:</strong> ${player.name}</p>
+                                        <p><strong>Email:</strong> ${player.email}</p>
+                                        <p><strong>Phone:</strong> ${player.phone}</p>
+                                        ${player.username === team.captain ? '<span class="captain-badge">Captain</span>' : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button onclick="closeTeamDetails()" class="close-btn">Close</button>
+                        </div>
+                    `;
+                    detailsModal.style.display = "block";
+                } catch (e) {
+                    console.error('Error viewing team details:', e);
+                    AppUtils.showError("team-error", "An error occurred. Please try again.");
+                }
+            };
+
+            // Close team details modal
+            window.closeTeamDetails = function() {
+                document.getElementById("team-details-modal").style.display = "none";
+            };
+        });
     </script>
     
 </body>
