@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="UTF-8">
@@ -97,8 +96,9 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            box-shadow: none;
+            z-index: 9999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .logo {
@@ -129,6 +129,22 @@
             align-items: center;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-x;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            white-space: nowrap;
+            width: 100%;
+            max-width: calc(100% - 120px);
+            background-color: #0a2342;
+        }
+
+        .main-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .main-nav li {
+            flex: 0 0 auto;
+            display: inline-block;
         }
 
         .main-nav a {
@@ -143,6 +159,7 @@
             position: relative;
             font-weight: 500;
             letter-spacing: 0.2px;
+            background-color: transparent;
         }
 
         .main-nav a:hover {
@@ -186,14 +203,11 @@
 
         @media (max-width: 900px) {
             nav {
-                flex-direction: column;
-                height: auto !important;
-                min-height: auto !important;
                 padding: 0.5rem;
-            }
-
-            .logo {
-                margin-bottom: 0.5rem;
+                background-color: #0a2342;
+                position: fixed;
+                width: 100%;
+                z-index: 9999;
             }
 
             .main-nav {
@@ -210,6 +224,9 @@
                 white-space: nowrap;
                 display: flex;
                 flex-wrap: nowrap;
+                background-color: #0a2342;
+                position: relative;
+                z-index: 10000;
             }
 
             .main-nav::-webkit-scrollbar {
@@ -227,19 +244,61 @@
                 white-space: nowrap;
                 display: inline-block;
                 background-color: transparent;
-                border-radius: 12px;
+                border-radius: 4px;
+                margin: 0 2px;
             }
 
             .main-nav a:hover, .main-nav a.active {
                 background-color: #17335c;
                 color: #e0e6ed;
             }
+
+            .logo {
+                margin: 0 auto;
+                padding: 5px 0;
+                z-index: 10000;
+            }
+
+            .logo img {
+                height: 80px;
+                width: 80px;
+            }
+
+            body {
+                padding-top: 140px;
+            }
         }
 
         @media (max-width: 480px) {
             .main-nav a {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.9rem;
+                margin: 0 1px;
+            }
+
+            .logo img {
+                height: 70px;
+                width: 70px;
+            }
+
+            body {
+                padding-top: 130px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .main-nav a {
                 padding: 0.3rem 0.5rem;
                 font-size: 0.85rem;
+            }
+
+            .logo img {
+                height: 60px;
+                width: 60px;
+            }
+
+            body {
+                padding-top: 120px;
             }
         }
 
@@ -510,6 +569,28 @@
             body {
                 padding-top: 120px;
             }
+        }
+
+        /* Add this to ensure proper scrolling behavior */
+        .main-nav {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .main-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Ensure the navigation is always visible */
+        nav {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 9999 !important;
+            background-color: #0a2342 !important;
         }
     </style>
 </head>
