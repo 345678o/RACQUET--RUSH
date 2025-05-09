@@ -98,8 +98,9 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            box-shadow: none;
+            z-index: 9999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .logo {
@@ -130,6 +131,9 @@
             align-items: center;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-x;
+            background-color: #0a2342;
+            position: relative;
+            z-index: 10000;
         }
 
         .main-nav a {
@@ -144,6 +148,7 @@
             position: relative;
             font-weight: 500;
             letter-spacing: 0.2px;
+            background-color: transparent;
         }
 
         .main-nav a:hover {
