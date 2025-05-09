@@ -121,6 +121,7 @@
                 <input type="submit" value="Login">
             </form>
             <div class="toggle-links">
+                <p>Forgot Password? <a href="#" onclick="toggleForms('forgot-password')">Click Here</a></p>
                 <p>Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></p>
             </div>
         </div>
@@ -129,20 +130,34 @@
         <div class="form-box signup">
             <h2>Sign Up</h2>
             <form id="signupForm">
-                <label for="signup-username">Username</label>
-                <input type="text" id="signup-username" required>
+                <label for="new-username">Username</label>
+                <input type="text" id="new-username" required>
 
-                <label for="signup-email">Email</label>
-                <input type="email" id="signup-email" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
 
-                <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" required>
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" pattern="[0-9]{10}" required>
 
-                <label for="signup-college">College</label>
-                <input type="text" id="signup-college" required>
+                <label for="rollno">Roll Number</label>
+                <input type="text" id="rollno" required>
 
-                <label for="signup-department">Department</label>
-                <input type="text" id="signup-department" required>
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" required>
+
+                <label for="student-type">Student Type</label>
+                <select id="student-type" required>
+                    <option value="">Select...</option>
+                    <option value="BTech">BTech</option>
+                    <option value="MBA">MBA</option>
+                    <option value="Medical">Medical</option>
+                </select>
+
+                <label for="new-password">Password</label>
+                <input type="password" id="new-password" required>
+
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" required>
 
                 <p class="error" id="signup-error"></p>
                 <p class="success" id="signup-success"></p>
@@ -153,90 +168,273 @@
                 <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
             </div>
         </div>
+
+        <!-- Forgot Password Form -->
+        <div class="form-box forgot-password">
+            <h2>Forgot Password</h2>
+            <form id="forgotPasswordForm">
+                <label for="forgot-email">Email Address</label>
+                <input type="email" id="forgot-email" required>
+                
+                <p class="error" id="forgot-error"></p>
+                <p class="success" id="forgot-success"></p>
+                
+                <input type="submit" value="Send Reset Link">
+            </form>
+            <div class="toggle-links">
+                <p>Remember your password? <a href="#" onclick="toggleForms('login')">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Reset Password Form -->
+        <div class="form-box reset-password">
+            <h2>Reset Password</h2>
+            <form id="resetPasswordForm">
+                <label for="reset-username">Username</label>
+                <input type="text" id="reset-username" required>
+                
+                <label for="reset-code">Verification Code</label>
+                <input type="text" id="reset-code" required>
+                
+                <label for="reset-new-password">New Password</label>
+                <input type="password" id="reset-new-password" required>
+                
+                <label for="reset-confirm-password">Confirm New Password</label>
+                <input type="password" id="reset-confirm-password" required>
+                
+                <p class="error" id="reset-error"></p>
+                <p class="success" id="reset-success"></p>
+                
+                <input type="submit" value="Reset Password">
+            </form>
+            <div class="toggle-links">
+                <p>Back to <a href="#" onclick="toggleForms('login')">Login</a></p>
+            </div>
+        </div>
     </div>
 
     <script>
-        function toggleForms(form) {
-            document.querySelectorAll('.form-box').forEach(box => {
-                box.classList.remove('active');
-            });
-            document.querySelector(`.${form}`).classList.add('active');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Redirect if already logged in
+            if (localStorage.getItem("loggedInUser")) {
+                window.location.href = "index.html";
+            }
+
+            // Check if we're coming from a password reset link
+            const urlParams = new URLSearchParams(window.location.search);
+            const resetToken = urlParams.get('resetToken');
+            const resetUser = urlParams.get('user');
+            
+            if (resetToken && resetUser) {
+                toggleForms('reset-password');
+                document.getElementById('reset-username').value = resetUser;
+                document.getElementById('reset-code').value = resetToken;
+            }
+        });
+
+        function toggleForms(formType) {
+            document.querySelectorAll('.form-box').forEach(box => box.classList.remove('active'));
+            document.querySelector(`.${formType}`).classList.add('active');
+            
+            // Clear all messages when switching forms
+            document.querySelectorAll('.error, .success').forEach(el => el.textContent = '');
         }
 
-        // Login form submission
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const errorElement = document.getElementById('login-error');
+        function getUsers() {
+            return JSON.parse(localStorage.getItem("users")) || {};
+        }
 
-            try {
-                const response = await fetch('http://localhost:5000/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email: username, password })
-                });
+        function saveUsers(users) {
+            localStorage.setItem("users", JSON.stringify(users));
+        }
 
-                const data = await response.json();
+        function getResetTokens() {
+            return JSON.parse(localStorage.getItem("resetTokens")) || {};
+        }
 
-                if (response.ok) {
-                    localStorage.setItem('loggedInUser', JSON.stringify(data));
-                    window.location.href = 'index.html';
-                } else {
-                    errorElement.textContent = data.message || 'Login failed';
+        function saveResetTokens(tokens) {
+            localStorage.setItem("resetTokens", JSON.stringify(tokens));
+        }
+
+        // Sign Up Form
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let username = document.getElementById("new-username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let rollno = document.getElementById("rollno").value.trim();
+            let fullname = document.getElementById("fullname").value.trim();
+            let studentType = document.getElementById("student-type").value;
+            let password = document.getElementById("new-password").value;
+            let confirmPassword = document.getElementById("confirm-password").value;
+            let users = getUsers();
+            let errorElement = document.getElementById("signup-error");
+            let successElement = document.getElementById("signup-success");
+
+            errorElement.textContent = "";
+            successElement.textContent = "";
+
+            if (!username || !email || !phone || !rollno || !fullname || !studentType || !password || !confirmPassword) {
+                errorElement.textContent = "All fields are required!";
+                return;
+            }
+
+            // Check for duplicate username, email, or phone (case-insensitive)
+            for (let user in users) {
+                if (user.toLowerCase() === username.toLowerCase()) {
+                    errorElement.textContent = "Username already exists!";
+                    return;
                 }
-            } catch (error) {
-                errorElement.textContent = 'An error occurred. Please try again.';
+                if (users[user].email.toLowerCase() === email.toLowerCase()) {
+                    errorElement.textContent = "Email already registered!";
+                    return;
+                }
+                if (users[user].phone === phone) {
+                    errorElement.textContent = "Phone number already registered!";
+                    return;
+                }
+                if (users[user].rollno === rollno) {
+                    errorElement.textContent = "Roll number already registered!";
+                    return;
+                }
+            }
+
+            if (password !== confirmPassword) {
+                errorElement.textContent = "Passwords do not match!";
+                return;
+            }
+
+            users[username] = { 
+                email, 
+                phone, 
+                rollno,
+                fullname,
+                studentType,
+                password 
+            };
+            saveUsers(users);
+            successElement.textContent = "Account created successfully! Please log in.";
+            document.getElementById("signupForm").reset();
+        });
+
+        // Login Form
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let username = document.getElementById("login-username").value.trim();
+            let password = document.getElementById("login-password").value;
+            let users = getUsers();
+            let errorElement = document.getElementById("login-error");
+
+            errorElement.textContent = "";
+
+            if (users[username] && users[username].password === password) {
+                localStorage.setItem("loggedInUser", username);
+                // Store userData for booking and details pages
+                localStorage.setItem("userData", JSON.stringify({
+                    username: username,
+                    email: users[username].email,
+                    phone: users[username].phone,
+                    rollNo: users[username].rollno,
+                    name: users[username].fullname,
+                    studentType: users[username].studentType
+                }));
+                window.location.href = "index.html";
+            } else {
+                errorElement.textContent = "Invalid username or password!";
             }
         });
 
-        // Sign up form submission
-        document.getElementById('signupForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const username = document.getElementById('signup-username').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const college = document.getElementById('signup-college').value;
-            const department = document.getElementById('signup-department').value;
-            const errorElement = document.getElementById('signup-error');
-            const successElement = document.getElementById('signup-success');
+        // Forgot Password Form
+        document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let email = document.getElementById("forgot-email").value.trim();
+            let users = getUsers();
+            let errorElement = document.getElementById("forgot-error");
+            let successElement = document.getElementById("forgot-success");
 
-            try {
-                const response = await fetch('http://localhost:5000/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username,
-                        email,
-                        password,
-                        profile: {
-                            college,
-                            department
-                        }
-                    })
-                });
+            errorElement.textContent = "";
+            successElement.textContent = "";
 
-                const data = await response.json();
-
-                if (response.ok) {
-                    successElement.textContent = 'Registration successful! Please login.';
-                    errorElement.textContent = '';
-                    setTimeout(() => {
-                        toggleForms('login');
-                    }, 2000);
-                } else {
-                    errorElement.textContent = data.message || 'Registration failed';
-                    successElement.textContent = '';
+            // Find user by email
+            let foundUser = null;
+            for (let username in users) {
+                if (users[username].email === email) {
+                    foundUser = username;
+                    break;
                 }
-            } catch (error) {
-                errorElement.textContent = 'An error occurred. Please try again.';
-                successElement.textContent = '';
             }
+
+            if (!foundUser) {
+                errorElement.textContent = "No account found with that email address!";
+                return;
+            }
+
+            // Generate a simple reset token (in real app, use a more secure method)
+            const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            
+            // Save the reset token
+            let resetTokens = getResetTokens();
+            resetTokens[foundUser] = resetToken;
+            saveResetTokens(resetTokens);
+
+            // In a real application, you would send an email with this link
+            const resetLink = `${window.location.origin}${window.location.pathname}?resetToken=${resetToken}&user=${foundUser}`;
+            
+            successElement.textContent = `Password reset link generated! In a real app, this would be sent to your email. For demo: ${resetLink}`;
+            console.log("Reset link:", resetLink); // For demo purposes
         });
+
+        // Reset Password Form
+        document.getElementById("resetPasswordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let username = document.getElementById("reset-username").value.trim();
+            let code = document.getElementById("reset-code").value.trim();
+            let newPassword = document.getElementById("reset-new-password").value;
+            let confirmPassword = document.getElementById("reset-confirm-password").value;
+            let users = getUsers();
+            let resetTokens = getResetTokens();
+            let errorElement = document.getElementById("reset-error");
+            let successElement = document.getElementById("reset-success");
+
+            errorElement.textContent = "";
+            successElement.textContent = "";
+
+            if (!users[username]) {
+                errorElement.textContent = "Invalid username!";
+                return;
+            }
+
+            if (resetTokens[username] !== code) {
+                errorElement.textContent = "Invalid verification code!";
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                errorElement.textContent = "Passwords do not match!";
+                return;
+            }
+
+            // Update password
+            users[username].password = newPassword;
+            saveUsers(users);
+
+            // Remove used token
+            delete resetTokens[username];
+            saveResetTokens(resetTokens);
+
+            successElement.textContent = "Password reset successfully! You can now login with your new password.";
+            document.getElementById("resetPasswordForm").reset();
+            
+            // Auto-redirect to login after 3 seconds
+            setTimeout(() => {
+                toggleForms('login');
+            }, 3000);
+        });
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            window.location.href = "login.html";
+        }
     </script>
 </body>
 </html>
