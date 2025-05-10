@@ -362,7 +362,7 @@
             color: #e0e6ed;
         }
 
-        /* Responsive Design for Navigation */
+        /* Mobile Navigation Styles */
         @media (max-width: 900px) {
             nav {
                 flex-direction: column;
@@ -374,15 +374,19 @@
                 left: 0;
                 right: 0;
                 z-index: 9999;
+                background-color: #0a2342;
             }
 
             .logo {
                 margin-bottom: 0.5rem;
                 height: 50px;
+                display: flex;
+                justify-content: center;
             }
 
             .logo img {
                 height: 50px;
+                width: auto;
             }
 
             .main-nav {
@@ -391,18 +395,27 @@
                 margin: 0;
                 gap: 0.2rem;
                 justify-content: flex-start;
-                overflow-x: scroll;
+                overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
                 background-color: #0a2342;
                 position: relative;
                 z-index: 10000;
+                display: flex;
+                flex-wrap: nowrap;
+                white-space: nowrap;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .main-nav::-webkit-scrollbar {
+                display: none;
             }
 
             .main-nav li {
                 flex: 0 0 auto;
                 scroll-snap-align: start;
+                display: inline-block;
             }
 
             .main-nav a {
@@ -411,10 +424,15 @@
                 background-color: transparent;
                 border-radius: 12px;
                 touch-action: pan-x;
+                display: inline-block;
+                white-space: nowrap;
             }
 
             body {
                 padding-top: 120px;
+                overflow-x: hidden;
+                position: relative;
+                width: 100%;
             }
         }
 
@@ -435,11 +453,14 @@
             .main-nav {
                 padding: 0.3rem 0;
                 gap: 0.1rem;
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
             }
 
             .main-nav a {
                 padding: 0.4rem 0.6rem;
                 font-size: 0.9rem;
+                min-width: max-content;
             }
 
             body {
@@ -447,26 +468,22 @@
             }
         }
 
-        /* Reset body styles */
-        body {
-            margin: 0;
-            padding: 0;
-            padding-top: 90px;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media (max-width: 900px) {
-            body {
-                padding-top: 120px;
+        /* Ensure proper mobile viewport */
+        @media screen and (max-width: 900px) {
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+                position: relative;
             }
-        }
 
-        @media (max-width: 480px) {
-            body {
-                padding-top: 100px;
+            .main-nav {
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .main-nav::-webkit-scrollbar {
+                display: none;
             }
         }
     </style>
@@ -610,10 +627,19 @@
                 // Set initial cursor style
                 nav.style.cursor = 'grab';
 
+                // Force horizontal scroll on mobile
+                if (window.innerWidth <= 900) {
+                    nav.style.overflowX = 'scroll';
+                    nav.style.WebkitOverflowScrolling = 'touch';
+                    nav.style.scrollbarWidth = 'none';
+                    nav.style.msOverflowStyle = 'none';
+                }
+
                 // Handle window resize
                 window.addEventListener('resize', () => {
                     if (window.innerWidth <= 900) {
                         nav.style.overflowX = 'scroll';
+                        nav.style.WebkitOverflowScrolling = 'touch';
                     } else {
                         nav.style.overflowX = 'auto';
                     }
