@@ -28,30 +28,6 @@
         }
     </script>
 
-    <!-- Script for Hamburger Menu -->
-    <script>
-        function toggleMenu(e) {
-            e.stopPropagation();
-            document.getElementById('mainNav').classList.toggle('active');
-            document.getElementById('nav-backdrop').classList.toggle('active');
-        }
-
-        function closeMenu() {
-            document.getElementById('mainNav').classList.remove('active');
-            document.getElementById('nav-backdrop').classList.remove('active');
-        }
-
-        document.querySelectorAll('.main-nav a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        window.addEventListener('resize', function() {
-            if(window.innerWidth > 900) closeMenu();
-        });
-
-        window.addEventListener('scroll', closeMenu);
-    </script>
-
     <!-- Styles -->
     <style>
         /* Reset and base styles */
@@ -348,89 +324,6 @@
             display: none;
         }
 
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            margin-left: 20px;
-            width: 44px;
-            height: 44px;
-            justify-content: center;
-            align-items: center;
-            z-index: 1100;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 32px;
-            height: 4px;
-            background: white;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-
-        .hamburger-menu {
-            display: none;
-            position: absolute;
-            top: 80px;
-            right: 20px;
-            background: #00274D;
-            width: 250px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow: hidden;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hamburger-menu.active {
-            display: block;
-        }
-
-        .hamburger-menu a {
-            display: block;
-            padding: 15px 25px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 16px;
-            letter-spacing: 0.5px;
-        }
-
-        .hamburger-menu a:hover {
-            background: #00509E;
-            padding-left: 30px;
-        }
-
-        .hamburger-menu a:last-child {
-            border-bottom: none;
-        }
-
-        #nav-backdrop {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: 1099;
-        }
-
-        #nav-backdrop.active {
-            display: block;
-        }
-
         /* Responsive Design for Navigation */
         @media (max-width: 900px) {
             nav {
@@ -499,13 +392,7 @@
             <li><a href="details.html">Details</a></li>
             <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
-        <div class="hamburger" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </nav>
-    <div id="nav-backdrop"></div>
 
     <!-- Home Section -->
     <section class="home">
