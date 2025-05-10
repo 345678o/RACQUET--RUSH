@@ -1,27 +1,28 @@
 <!-- Navigation Bar -->
-<nav class="main-nav" id="mainNav">
-    <div class="nav-container">
-        <div class="nav-left">
-            <a href="index.html" class="logo">Sports Booking System</a>
-        </div>
-        <div class="nav-right">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="booking.html">Book Slots</a>
-            <a href="team.html">Find a Team</a>
-            <a href="tournaments.html">Tournaments</a>
-            <a href="rules.html">Rules</a>
-            <a href="contact.html">Contact</a>
-            <a href="#" id="logoutNav" onclick="logout()" style="display: none;">Logout</a>
-        </div>
-        <button class="hamburger" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+<nav>
+    <div class="logo">
+        <span>College</span>
+        <span>Sports</span>
+        <span>Hub</span>
+    </div>
+    <ul class="main-nav" id="mainNav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+        <li><a href="team.html">Find a Team</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu(event)">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 </nav>
-<div id="nav-backdrop" onclick="closeMenu()"></div>
+<div id="nav-backdrop"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

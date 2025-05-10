@@ -80,225 +80,7 @@
             color: white;
             min-height: 100vh;
             overflow-y: auto;
-        }
-
-        /* Navigation styles */
-        nav {
-            background-color: #0a2342;
-            color: white;
-            padding: 0 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 90px;
-            border-bottom: 1px solid #e0e6ed;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 100%;
-        }
-
-        .logo {
-            height: 60px;
-            width: 60px;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            margin-right: 10px;
-        }
-
-        .logo img {
-            height: 60px;
-            width: 60px;
-            max-width: 100%;
-            border-radius: 0;
-            object-fit: cover;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 0.5rem;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            flex-shrink: 0;
-            align-items: center;
-            overflow-x: auto;
-            white-space: nowrap;
-            width: 100%;
-            max-width: calc(100% - 120px);
-            background-color: #0a2342;
-            position: relative;
-            z-index: 1000;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-            scroll-behavior: smooth;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        .main-nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .main-nav li {
-            flex: 0 0 auto;
-            display: inline-block;
-            position: relative;
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: #f4f6fa;
-            font-size: 1rem;
-            padding: 0.7rem 1.1rem;
-            border-radius: 0.2rem;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            display: block;
-            position: relative;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-            background-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-        }
-
-        .main-nav a:hover {
-            background-color: #17335c;
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-
-        .main-nav a.active {
-            background-color: #17335c;
-            color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            margin-left: 20px;
-            width: 44px;
-            height: 44px;
-            justify-content: center;
-            align-items: center;
-            z-index: 1100;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 32px;
-            height: 4px;
-            background: white;
-            border-radius: 2px;
-            transition: 0.3s;
-        }
-
-        @media (max-width: 900px) {
-            nav {
-                padding: 0.5rem;
-                height: auto;
-                min-height: 90px;
-                overflow: visible;
-            }
-
-            .main-nav {
-                width: 100%;
-                overflow-x: auto;
-                overflow-y: hidden;
-                padding: 0.5rem 0;
-                justify-content: flex-start;
-                gap: 0.2rem;
-                background-color: #0a2342;
-                position: relative;
-                z-index: 10000;
-                touch-action: pan-x;
-                -webkit-overflow-scrolling: touch;
-                scroll-behavior: smooth;
-                will-change: transform;
-                transform: translateZ(0);
-                -webkit-transform: translateZ(0);
-            }
-
-            .main-nav::-webkit-scrollbar {
-                display: none;
-            }
-
-            .main-nav li {
-                flex: 0 0 auto;
-                display: inline-block;
-            }
-
-            .main-nav a {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.95rem;
-                touch-action: manipulation;
-            }
-
-            .logo {
-                margin: 0 auto;
-                padding: 5px 0;
-            }
-
-            .logo img {
-                height: 60px;
-                width: 60px;
-            }
-
-            body {
-                padding-top: 90px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-nav a {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.9rem;
-            }
-
-            .logo img {
-                height: 50px;
-                width: 50px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .main-nav a {
-                padding: 0.3rem 0.5rem;
-                font-size: 0.85rem;
-            }
-
-            .logo img {
-                height: 60px;
-                width: 60px;
-            }
-
-            body {
-                padding-top: 120px;
-            }
-        }
-
-        #nav-backdrop {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: 1099;
-        }
-
-        #nav-backdrop.active {
-            display: block;
+            padding-top: 55px;
         }
 
         /* Section Styling */
@@ -394,18 +176,6 @@
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 10px 15px;
-            }
-
-            .logo {
-                height: 50px;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
             .section-container {
                 width: 98%;
                 padding: 14px;
@@ -436,18 +206,6 @@
         }
 
         @media (max-width: 576px) {
-            nav {
-                padding: 8px 12px;
-            }
-
-            .logo {
-                height: 40px;
-            }
-
-            .logo img {
-                height: 40px;
-            }
-
             .section-container {
                 padding: 12px;
                 margin: 12px auto;
@@ -482,18 +240,6 @@
         }
 
         @media (max-width: 400px) {
-            nav {
-                padding: 6px 10px;
-            }
-
-            .logo {
-                height: 35px;
-            }
-
-            .logo img {
-                height: 35px;
-            }
-
             .section-container {
                 padding: 10px;
                 margin: 10px auto;
@@ -527,97 +273,218 @@
             }
         }
 
-        nav .logo, .logo img {
-            height: 120px !important;
-            max-height: 120px !important;
-            width: auto;
-        }
-
-        @media (max-width: 900px) {
-            nav .logo, .logo img {
-                height: 100px !important;
-                max-height: 100px !important;
-            }
-        }
-
-        @media (max-width: 600px) {
-            nav .logo, .logo img {
-                height: 80px !important;
-                max-height: 80px !important;
-            }
-        }
-
-        /* Add padding to body to account for fixed navigation */
-        body {
-            padding-top: 90px;
-        }
-
-        @media (max-width: 900px) {
-            body {
-                padding-top: 90px;
-            }
-        }
-
-        /* Add these new styles at the end of your CSS */
-        @supports (-webkit-touch-callout: none) {
-            .main-nav {
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 1px;
-                overflow-x: scroll;
-                scroll-snap-type: x mandatory;
-            }
-
-            .main-nav li {
-                scroll-snap-align: start;
-            }
-        }
-
-        /* Ensure proper scrolling behavior */
-        .main-nav {
-            scroll-snap-type: x mandatory;
-            overscroll-behavior-x: contain;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-x;
-        }
-
-        .main-nav li {
-            scroll-snap-align: start;
-        }
-
-        /* Fix for iOS momentum scrolling */
-        @supports (-webkit-touch-callout: none) {
-            .main-nav {
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 1px;
-                overflow-x: scroll;
-                scroll-snap-type: x mandatory;
-            }
-        }
-
-        /* Ensure the navigation is always visible and scrollable */
+        /* Navigation */
         nav {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            z-index: 9999 !important;
-            background-color: #0a2342 !important;
-            overflow: visible !important;
+            background-color: #0a2342;
+            color: white;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px !important;
+            min-height: 90px !important;
+            border-bottom: 1px solid #e0e6ed;
+            position: relative;
+            z-index: 1000;
+            box-shadow: none;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+            transition: none;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         .main-nav {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            scroll-behavior: smooth !important;
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-shrink: 0;
+            align-items: center;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #f4f6fa;
+            font-size: 1rem;
+            padding: 0.7rem 1.1rem;
+            border-radius: 0.2rem;
+            transition: background 0.2s, color 0.2s;
+            white-space: nowrap;
+            display: block;
+            position: relative;
+            font-weight: bold;
+            letter-spacing: 0.2px;
+        }
+
+        .main-nav a:hover {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .main-nav a.active {
+            background-color: #17335c;
+            color: #e0e6ed;
+            box-shadow: none;
+        }
+
+        .main-nav a.active::after {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            margin-left: 20px;
+            width: 44px;
+            height: 44px;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 32px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hamburger-menu {
+            display: none;
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: #00274D;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hamburger-menu.active {
+            display: block;
+        }
+
+        .hamburger-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .hamburger-menu a:hover {
+            background: #00509E;
+            padding-left: 30px;
+        }
+
+        .hamburger-menu a:last-child {
+            border-bottom: none;
+        }
+
+        #nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1099;
+        }
+
+        #nav-backdrop.active {
+            display: block;
+        }
+
+        /* Responsive Design for Navigation */
+        @media (max-width: 900px) {
+            nav {
+                flex-direction: column;
+                height: auto !important;
+                min-height: auto !important;
+                padding: 0.5rem;
+            }
+            .logo {
+                margin-bottom: 0.5rem;
+            }
+            .main-nav {
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.5rem 0;
+                justify-content: flex-start;
+                gap: 0.2rem;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .main-nav::-webkit-scrollbar {
+                display: none;
+            }
+            .main-nav li {
+                flex: 0 0 auto;
+            }
+            .main-nav a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.95rem;
+                background-color: transparent;
+                border-radius: 12px;
+            }
+            .main-nav a:hover, .main-nav a.active {
+                background-color: #17335c;
+                color: #e0e6ed;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-nav a {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 
 <body onload="checkLogin()">
-    <!-- Navigation Section -->
+    <!-- Navigation Bar -->
     <nav>
         <div class="logo">
-            <img src="logo.jpg" alt="College Sports Hub Logo">
+            <img src="logo.png" alt="College Sports Hub Logo">
         </div>
         <ul class="main-nav" id="mainNav">
             <li><a href="index.html" class="active">Home</a></li>
@@ -630,8 +497,13 @@
             <li><a href="details.html">Details</a></li>
             <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
+        <div class="hamburger" onclick="toggleMenu(event)">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
-    <div id="nav-backdrop" onclick="closeMenu()"></div>
+    <div id="nav-backdrop"></div>
 
     <!-- Home Section -->
     <section class="home">

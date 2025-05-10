@@ -166,7 +166,7 @@
 
         .logo {
             height: 60px;
-            width: 60px;
+            width: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -177,10 +177,9 @@
 
         .logo img {
             height: 60px;
-            width: 60px;
+            width: auto;
             max-width: 100%;
-            border-radius: 0;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .main-nav {
@@ -741,7 +740,7 @@
     <!-- Navigation Bar -->
     <nav>
         <div class="logo">
-            <img src="logo.jpg" alt="College Sports Hub Logo">
+            <img src="logo.png" alt="College Sports Hub Logo">
         </div>
         <ul class="main-nav" id="mainNav">
             <li><a href="index.html">Home</a></li>
@@ -754,6 +753,11 @@
             <li><a href="details.html">Details</a></li>
             <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
+        <div class="hamburger" onclick="toggleMenu(event)">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
     <div id="nav-backdrop"></div>
 

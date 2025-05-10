@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
     <script src="nav.js"></script>
     <script>
         function checkLogin() {
@@ -134,7 +135,7 @@
 
         .logo {
             height: 60px;
-            width: 60px;
+            width: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -145,10 +146,9 @@
 
         .logo img {
             height: 60px;
-            width: 60px;
+            width: auto;
             max-width: 100%;
-            border-radius: 0;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         /* Main Navigation Links */
@@ -200,6 +200,7 @@
                 height: auto !important;
                 min-height: auto !important;
                 padding: 0.5rem;
+                position: relative;
             }
             .logo {
                 margin-bottom: 0.5rem;
@@ -214,18 +215,23 @@
                 gap: 0.2rem;
                 scrollbar-width: none; /* Firefox */
                 -ms-overflow-style: none; /* IE and Edge */
+                display: flex;
+                flex-wrap: nowrap;
+                white-space: nowrap;
             }
             .main-nav::-webkit-scrollbar {
                 display: none; /* Chrome, Safari, Opera */
             }
             .main-nav li {
                 flex: 0 0 auto;
+                display: inline-block;
             }
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
                 background-color: transparent;
                 border-radius: 12px;
+                display: inline-block;
             }
             .main-nav a:hover, .main-nav a.active {
                 background-color: #17335c;
@@ -447,67 +453,70 @@
     </style>
 </head>
 <body onload="checkLogin()">
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="College Sports Hub Logo">
+        </div>
+        <ul class="main-nav" id="mainNav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="booking.html">Slot Booking</a></li>
+            <li><a href="team.html">Find a Team</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="details.html">Details</a></li>
+            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu(event)">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <div id="nav-backdrop"></div>
 
-<!-- Navigation Bar -->
-<nav>
-    <div class="logo">
-        <img src="logo.jpg" alt="College Sports Hub Logo">
+    <!-- About Us Section -->
+    <div class="section-container">
+        <h2>About College Sports Hub</h2>
+        <p>
+            MLRIT college is founded in 2005, since the inception college has been actively involved in sports and has been undisputed champions in games like Volleyball, Badminton, Kabaddi, Basketball and cricket.
+            MLR Institute of Technology is known for its integrated curriculum with equal importance to academics, employable skills & sports. MLR Institute of Technology (MLRIT) is located at Dundigal, Hyderabad, Telangana, India. The institution was started in 2005 by the KMR Education Trust, headed by Mr. Marri Laxman Reddy. The Institute has Nine UG courses along with Five PG Courses. The Institute is affiliated with Jawaharlal Nehru Technological University, Hyderabad (JNTUH). It was granted Autonomous status by University Grants Commission (India) in the year 2015.
+            Sports play an important role in shaping up the personality and fitness of a person and to give a truly global experience to all the students of MLRIT.
+             Sports environments matching global standards are provided at the college.
+             <img src="indoor stadium.jpg" alt="College Indoor Stadium">
+            College has a World class Indoor Stadium built up in an area of more than 26000 sqft with 2 floors both the sides with a beautiful gallery & stadium can accommodate a seating capacity of 1000 people, and equipped with 10 Badminton Courts and Table Tennis Hall which accommodates 20 TT tables.
+            <img src="tt.jpg" alt="tt & badminton stadium">
+            <img src="badminton court.jpg" alt="tt & badminton stadium">
+           
+             Indoor stadium also has a Gym with latest updated and world class Gym equipment's.
+             <img src="gym.jpg" alt="gym">
+
+            This stadium has a vast hall which not only accommodates 4 Snooker Tables but also it can accommodate a space of more than 6 carom Boards. This stadium has a space even for squash court. At 2nd floor a massive hall which is dedicated to the sport fencing where champions are made.
+            <img src="pool.jpg" alt="snooker table">
+            
+            Indoor stadium also has a space for Zumba hall and a Meditation hall.
+            
+            The best part of the stadium is that it can also provide accommodation with 32 rooms.
+            
+            College has a outdoor games facility with games like, Volley ball (2 courts) , Throwball (1 court) , Basketball (1 court) Kabaddi 2 (Courts) Kho kho field, Football field, Athletic Track.
+            <img src="t,v,b.png" alt="outdoor">
+            
+            MLRIT College also has a Cricket Ground with world class facilities; This ground is equipped with 4 Flood lights which provides a wonderful lighting capacity of 77 Thousand watts to play a Night match also.
+            <img src="cricket-img.jpg" alt="cricket">
+            
+        </p>
+
+        <p>
+            Our platform provides students with a seamless system to book sports equipment 
+            and reserve college sports areas. We aim to make sports more accessible and organized for everyone.
+        </p>
     </div>
-    <ul class="main-nav" id="mainNav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="booking.html">Slot Booking</a></li>
-        <li><a href="team.html">Find a Team</a></li>
-        <li><a href="tournaments.html">Tournaments</a></li>
-        <li><a href="rules.html">Rules</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="details.html">Details</a></li>
-        <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
-    </ul>
-</nav>
-<div id="nav-backdrop"></div>
 
-<!-- About Us Section -->
-<div class="section-container">
-    <h2>About College Sports Hub</h2>
-    <p>
-        MLRIT college is founded in 2005, since the inception college has been actively involved in sports and has been undisputed champions in games like Volleyball, Badminton, Kabaddi, Basketball and cricket.
-        MLR Institute of Technology is known for its integrated curriculum with equal importance to academics, employable skills & sports. MLR Institute of Technology (MLRIT) is located at Dundigal, Hyderabad, Telangana, India. The institution was started in 2005 by the KMR Education Trust, headed by Mr. Marri Laxman Reddy. The Institute has Nine UG courses along with Five PG Courses. The Institute is affiliated with Jawaharlal Nehru Technological University, Hyderabad (JNTUH). It was granted Autonomous status by University Grants Commission (India) in the year 2015.
-        Sports play an important role in shaping up the personality and fitness of a person and to give a truly global experience to all the students of MLRIT.
-         Sports environments matching global standards are provided at the college.
-         <img src="indoor stadium.jpg" alt="College Indoor Stadium">
-        College has a World class Indoor Stadium built up in an area of more than 26000 sqft with 2 floors both the sides with a beautiful gallery & stadium can accommodate a seating capacity of 1000 people, and equipped with 10 Badminton Courts and Table Tennis Hall which accommodates 20 TT tables.
-        <img src="tt.jpg" alt="tt & badminton stadium">
-        <img src="badminton court.jpg" alt="tt & badminton stadium">
-       
-         Indoor stadium also has a Gym with latest updated and world class Gym equipment's.
-         <img src="gym.jpg" alt="gym">
-
-        This stadium has a vast hall which not only accommodates 4 Snooker Tables but also it can accommodate a space of more than 6 carom Boards. This stadium has a space even for squash court. At 2nd floor a massive hall which is dedicated to the sport fencing where champions are made.
-        <img src="pool.jpg" alt="snooker table">
-        
-        Indoor stadium also has a space for Zumba hall and a Meditation hall.
-        
-        The best part of the stadium is that it can also provide accommodation with 32 rooms.
-        
-        College has a outdoor games facility with games like, Volley ball (2 courts) , Throwball (1 court) , Basketball (1 court) Kabaddi 2 (Courts) Kho kho field, Football field, Athletic Track.
-        <img src="t,v,b.png" alt="outdoor">
-        
-        MLRIT College also has a Cricket Ground with world class facilities; This ground is equipped with 4 Flood lights which provides a wonderful lighting capacity of 77 Thousand watts to play a Night match also.
-        <img src="cricket-img.jpg" alt="cricket">
-        
-    </p>
-
-    <p>
-        Our platform provides students with a seamless system to book sports equipment 
-        and reserve college sports areas. We aim to make sports more accessible and organized for everyone.
-    </p>
-</div>
-
-<footer>
-    <p>&copy; 2025 College Sports Hub. All rights reserved.</p>
-</footer>
-
+    <footer>
+        <p>&copy; 2025 College Sports Hub. All rights reserved.</p>
+    </footer>
 </body>
 </html>
 

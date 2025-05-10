@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Management - College Sports Hub</title>
+    <title>Find a Team - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="common.js"></script>
+    <link rel="stylesheet" href="nav.css">
     <script src="nav.js"></script>
+    <script src="common.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -36,7 +37,7 @@
         }
         .logo {
             height: 60px;
-            width: 60px;
+            width: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -46,10 +47,9 @@
         }
         .logo img {
             height: 60px;
-            width: 60px;
+            width: auto;
             max-width: 100%;
-            border-radius: 0;
-            object-fit: cover;
+            object-fit: contain;
         }
         .main-nav {
             display: flex;
@@ -512,30 +512,29 @@
     </style>
 </head>
 <body onload="checkLogin()">
-
-<!-- Navigation Bar -->
-<nav>
-    <div class="logo">
-        <img src="logo.jpg" alt="College Sports Hub Logo">
-    </div>
-    <ul class="main-nav" id="mainNav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="booking.html">Slot Booking</a></li>
-        <li><a href="team.html" class="active">Find a Team</a></li>
-        <li><a href="tournaments.html">Tournaments</a></li>
-        <li><a href="rules.html">Rules</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="details.html">Details</a></li>
-        <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
-    </ul>
-    <div class="hamburger" onclick="toggleMenu(event)">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</nav>
-<div id="nav-backdrop"></div>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="logo.png" alt="College Sports Hub Logo">
+        </div>
+        <ul class="main-nav" id="mainNav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="booking.html">Slot Booking</a></li>
+            <li><a href="team.html" class="active">Find a Team</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
+            <li><a href="rules.html">Rules</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="details.html">Details</a></li>
+            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu(event)">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <div id="nav-backdrop"></div>
 
     <!-- Main Content -->
     <div class="container">
