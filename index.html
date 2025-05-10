@@ -263,6 +263,7 @@
             position: relative;
             z-index: 1000;
             box-shadow: none;
+            width: 100%;
         }
 
         .logo {
@@ -331,6 +332,8 @@
                 height: auto !important;
                 min-height: auto !important;
                 padding: 0.5rem;
+                position: sticky;
+                top: 0;
             }
             .logo {
                 margin-bottom: 0.5rem;
@@ -339,27 +342,34 @@
                 width: 100%;
                 display: flex;
                 flex-wrap: nowrap;
-                overflow-x: auto;
+                overflow-x: scroll;
                 -webkit-overflow-scrolling: touch;
                 padding: 0.5rem 0;
                 margin: 0;
                 gap: 0.2rem;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
             .main-nav::-webkit-scrollbar {
                 display: none;
             }
             .main-nav li {
                 flex: 0 0 auto;
+                display: inline-block;
             }
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
                 background-color: transparent;
                 border-radius: 12px;
+                display: inline-block;
             }
             .main-nav a:hover, .main-nav a.active {
                 background-color: #17335c;
                 color: #e0e6ed;
+            }
+            body {
+                padding-top: 0;
             }
         }
 
@@ -503,6 +513,12 @@
                 const walk = (x - startX) * 2;
                 nav.scrollLeft = scrollLeft - walk;
             });
+
+            // Force horizontal scroll on mobile
+            if (window.innerWidth <= 900) {
+                nav.style.overflowX = 'scroll';
+                nav.style.WebkitOverflowScrolling = 'touch';
+            }
         });
     </script>
 </body>
