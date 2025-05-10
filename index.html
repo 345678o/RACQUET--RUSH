@@ -136,6 +136,8 @@
             width: 100%;
             max-width: calc(100% - 120px);
             background-color: #0a2342;
+            position: relative;
+            z-index: 1000;
         }
 
         .main-nav::-webkit-scrollbar {
@@ -145,6 +147,7 @@
         .main-nav li {
             flex: 0 0 auto;
             display: inline-block;
+            position: relative;
         }
 
         .main-nav a {
@@ -160,6 +163,8 @@
             font-weight: 500;
             letter-spacing: 0.2px;
             background-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .main-nav a:hover {
@@ -208,6 +213,7 @@
                 position: fixed;
                 width: 100%;
                 z-index: 9999;
+                overflow: hidden;
             }
 
             .main-nav {
@@ -227,6 +233,8 @@
                 background-color: #0a2342;
                 position: relative;
                 z-index: 10000;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .main-nav::-webkit-scrollbar {
@@ -573,14 +581,25 @@
 
         /* Add this to ensure proper scrolling behavior */
         .main-nav {
-            -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-x: contain;
             -ms-overflow-style: none;
             scrollbar-width: none;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .main-nav::-webkit-scrollbar {
             display: none;
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            .main-nav {
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 1px;
+            }
         }
 
         /* Ensure the navigation is always visible */
