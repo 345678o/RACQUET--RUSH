@@ -438,6 +438,11 @@
                 height: auto !important;
                 min-height: auto !important;
                 padding: 0.5rem;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: #0a2342;
             }
             .logo {
                 margin-bottom: 0.5rem;
@@ -452,22 +457,30 @@
                 gap: 0.2rem;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
+                white-space: nowrap;
+                display: flex;
+                flex-wrap: nowrap;
             }
             .main-nav::-webkit-scrollbar {
                 display: none;
             }
             .main-nav li {
                 flex: 0 0 auto;
+                display: inline-block;
             }
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
                 background-color: transparent;
                 border-radius: 12px;
+                display: inline-block;
             }
             .main-nav a:hover, .main-nav a.active {
                 background-color: #17335c;
                 color: #e0e6ed;
+            }
+            body {
+                padding-top: 120px; /* Increased padding to account for fixed nav */
             }
         }
 
@@ -574,6 +587,7 @@
             let startX;
             let scrollLeft;
 
+            // Mouse events
             nav.addEventListener('mousedown', (e) => {
                 isDown = true;
                 nav.style.cursor = 'grabbing';
@@ -604,10 +618,12 @@
                 isDown = true;
                 startX = e.touches[0].pageX - nav.offsetLeft;
                 scrollLeft = nav.scrollLeft;
+                nav.style.cursor = 'grabbing';
             });
 
             nav.addEventListener('touchend', () => {
                 isDown = false;
+                nav.style.cursor = 'grab';
             });
 
             nav.addEventListener('touchmove', (e) => {
@@ -617,11 +633,14 @@
                 const walk = (x - startX) * 2;
                 nav.scrollLeft = scrollLeft - walk;
             });
+
+            // Add touch-action CSS property
+            nav.style.touchAction = 'pan-x';
+            nav.style.cursor = 'grab';
         });
     </script>
 </body>
 </html>
-
 
 
 
