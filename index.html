@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sports Booking System</title>
 
     
@@ -75,7 +75,7 @@
             color: white;
             min-height: 100vh;
             overflow-y: auto;
-            padding-top: 55px;
+            padding-top: 90px;
         }
 
         /* Section Styling */
@@ -290,7 +290,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 100%;
         }
 
@@ -302,7 +302,6 @@
             justify-content: center;
             flex-shrink: 0;
             margin-right: 10px;
-            transition: none;
         }
 
         .logo img {
@@ -327,6 +326,7 @@
             white-space: nowrap;
             max-width: calc(100vw - 200px);
             touch-action: pan-x;
+            background-color: #0a2342;
         }
 
         .main-nav::-webkit-scrollbar {
@@ -355,18 +355,11 @@
         .main-nav a:hover {
             background-color: #17335c;
             color: #e0e6ed;
-            box-shadow: none;
-            transform: none;
         }
 
         .main-nav a.active {
             background-color: #17335c;
             color: #e0e6ed;
-            box-shadow: none;
-        }
-
-        .main-nav a.active::after {
-            display: none;
         }
 
         /* Responsive Design for Navigation */
@@ -376,10 +369,22 @@
                 height: auto !important;
                 min-height: auto !important;
                 padding: 0.5rem;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
             }
+
             .logo {
                 margin-bottom: 0.5rem;
+                height: 50px;
             }
+
+            .logo img {
+                height: 50px;
+            }
+
             .main-nav {
                 width: 100%;
                 padding: 0.5rem 0;
@@ -390,11 +395,16 @@
                 -webkit-overflow-scrolling: touch;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
+                background-color: #0a2342;
+                position: relative;
+                z-index: 1001;
             }
+
             .main-nav li {
                 flex: 0 0 auto;
                 scroll-snap-align: start;
             }
+
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
@@ -402,20 +412,53 @@
                 border-radius: 12px;
                 touch-action: pan-x;
             }
+
             body {
                 padding-top: 120px;
             }
         }
 
         @media (max-width: 480px) {
+            nav {
+                padding: 0.3rem;
+            }
+
+            .logo {
+                height: 40px;
+                margin-bottom: 0.3rem;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
             .main-nav {
                 padding: 0.3rem 0;
                 gap: 0.1rem;
             }
+
             .main-nav a {
                 padding: 0.4rem 0.6rem;
                 font-size: 0.9rem;
             }
+
+            body {
+                padding-top: 100px;
+            }
+        }
+
+        /* Ensure content doesn't overlap with fixed nav */
+        body {
+            padding-top: 90px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding-top: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
             body {
                 padding-top: 100px;
             }
