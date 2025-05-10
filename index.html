@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a2342">
     <title>Sports Booking System</title>
 
     
@@ -289,7 +289,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 9999;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 100%;
         }
@@ -373,7 +373,7 @@
                 top: 0;
                 left: 0;
                 right: 0;
-                z-index: 1000;
+                z-index: 9999;
             }
 
             .logo {
@@ -397,7 +397,7 @@
                 scroll-behavior: smooth;
                 background-color: #0a2342;
                 position: relative;
-                z-index: 1001;
+                z-index: 10000;
             }
 
             .main-nav li {
@@ -447,9 +447,15 @@
             }
         }
 
-        /* Ensure content doesn't overlap with fixed nav */
+        /* Reset body styles */
         body {
+            margin: 0;
+            padding: 0;
             padding-top: 90px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
         }
 
         @media (max-width: 900px) {
