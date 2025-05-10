@@ -11,20 +11,37 @@
 
     <!-- Scripts for login and logout -->
     <script>
+        // Add error handling for script loading
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+            return false;
+        };
+
         function checkLogin() {
-            let user = localStorage.getItem("loggedInUser");
-            if (!user) {
-                alert("You are not logged in. Redirecting to login page.");
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("logoutNav").style.display = "inline";
+            try {
+                let user = localStorage.getItem("loggedInUser");
+                if (!user) {
+                    alert("You are not logged in. Redirecting to login page.");
+                    window.location.href = "login.html";
+                } else {
+                    const logoutNav = document.getElementById("logoutNav");
+                    if (logoutNav) {
+                        logoutNav.style.display = "inline";
+                    }
+                }
+            } catch (error) {
+                console.error("Error in checkLogin:", error);
             }
         }
 
         function logout() {
-            localStorage.removeItem("loggedInUser");
-            alert("You have successfully logged out.");
-            window.location.href = "login.html";
+            try {
+                localStorage.removeItem("loggedInUser");
+                alert("You have successfully logged out.");
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error("Error in logout:", error);
+            }
         }
     </script>
 
@@ -68,6 +85,9 @@
             border-radius: 10px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
             color: #333;
+            position: relative;
+            z-index: 1;
+            pointer-events: auto;
         }
 
         .section-container img {
@@ -92,6 +112,9 @@
             text-decoration: none;
             display: inline-block;
             margin-top: 10px;
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
         }
 
         .section-container .btn:hover {
@@ -260,10 +283,14 @@
             height: 90px !important;
             min-height: 90px !important;
             border-bottom: 1px solid #e0e6ed;
-            position: relative;
-            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
             box-shadow: none;
             width: 100%;
+            pointer-events: auto;
         }
 
         .logo {
@@ -332,8 +359,6 @@
                 height: auto !important;
                 min-height: auto !important;
                 padding: 0.5rem;
-                position: sticky;
-                top: 0;
             }
             .logo {
                 margin-bottom: 0.5rem;
@@ -369,7 +394,7 @@
                 color: #e0e6ed;
             }
             body {
-                padding-top: 0;
+                padding-top: 120px; /* Increased padding to account for fixed nav */
             }
         }
 
@@ -380,6 +405,9 @@
             .main-nav a {
                 padding: 0.4rem 0.6rem;
                 font-size: 0.9rem;
+            }
+            body {
+                padding-top: 100px; /* Adjusted padding for smaller screens */
             }
         }
     </style>
@@ -458,66 +486,76 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Add active class to current page link
-            const currentPage = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.main-nav a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
+            try {
+                // Add active class to current page link
+                const currentPage = window.location.pathname.split('/').pop();
+                const navLinks = document.querySelectorAll('.main-nav a');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Simple touch scrolling for mobile
+                const nav = document.querySelector('.main-nav');
+                if (!nav) return;
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                // Remove any existing event listeners
+                const oldNav = nav.cloneNode(true);
+                nav.parentNode.replaceChild(oldNav, nav);
+
+                oldNav.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - oldNav.offsetLeft;
+                    scrollLeft = oldNav.scrollLeft;
+                });
+
+                oldNav.addEventListener('mouseleave', () => {
+                    isDown = false;
+                });
+
+                oldNav.addEventListener('mouseup', () => {
+                    isDown = false;
+                });
+
+                oldNav.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - oldNav.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    oldNav.scrollLeft = scrollLeft - walk;
+                });
+
+                // Touch events
+                oldNav.addEventListener('touchstart', (e) => {
+                    isDown = true;
+                    startX = e.touches[0].pageX - oldNav.offsetLeft;
+                    scrollLeft = oldNav.scrollLeft;
+                });
+
+                oldNav.addEventListener('touchend', () => {
+                    isDown = false;
+                });
+
+                oldNav.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - oldNav.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    oldNav.scrollLeft = scrollLeft - walk;
+                });
+
+                // Force horizontal scroll on mobile
+                if (window.innerWidth <= 900) {
+                    oldNav.style.overflowX = 'scroll';
+                    oldNav.style.WebkitOverflowScrolling = 'touch';
                 }
-            });
-
-            // Simple touch scrolling for mobile
-            const nav = document.querySelector('.main-nav');
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            nav.addEventListener('mousedown', (e) => {
-                isDown = true;
-                startX = e.pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
-
-            nav.addEventListener('mouseleave', () => {
-                isDown = false;
-            });
-
-            nav.addEventListener('mouseup', () => {
-                isDown = false;
-            });
-
-            nav.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
-
-            // Touch events
-            nav.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
-
-            nav.addEventListener('touchend', () => {
-                isDown = false;
-            });
-
-            nav.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
-
-            // Force horizontal scroll on mobile
-            if (window.innerWidth <= 900) {
-                nav.style.overflowX = 'scroll';
-                nav.style.WebkitOverflowScrolling = 'touch';
+            } catch (error) {
+                console.error("Error in navigation setup:", error);
             }
         });
     </script>
