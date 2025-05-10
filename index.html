@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sports Booking System</title>
+
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="nav.css">
     <script src="nav.js"></script>
@@ -287,10 +289,9 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: none;
             width: 100%;
-            pointer-events: auto;
         }
 
         .logo {
@@ -319,6 +320,20 @@
             padding: 0;
             flex-shrink: 0;
             align-items: center;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            white-space: nowrap;
+            max-width: calc(100vw - 200px); /* Adjust based on logo width */
+        }
+
+        .main-nav::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .main-nav li {
+            flex: 0 0 auto;
         }
 
         .main-nav a {
@@ -365,36 +380,22 @@
             }
             .main-nav {
                 width: 100%;
-                display: flex;
-                flex-wrap: nowrap;
-                overflow-x: scroll;
-                -webkit-overflow-scrolling: touch;
                 padding: 0.5rem 0;
                 margin: 0;
                 gap: 0.2rem;
-                scrollbar-width: none;
-                -ms-overflow-style: none;
-            }
-            .main-nav::-webkit-scrollbar {
-                display: none;
+                justify-content: flex-start;
             }
             .main-nav li {
                 flex: 0 0 auto;
-                display: inline-block;
             }
             .main-nav a {
                 padding: 0.5rem 0.8rem;
                 font-size: 0.95rem;
                 background-color: transparent;
                 border-radius: 12px;
-                display: inline-block;
-            }
-            .main-nav a:hover, .main-nav a.active {
-                background-color: #17335c;
-                color: #e0e6ed;
             }
             body {
-                padding-top: 120px; /* Increased padding to account for fixed nav */
+                padding-top: 120px;
             }
         }
 
@@ -407,7 +408,7 @@
                 font-size: 0.9rem;
             }
             body {
-                padding-top: 100px; /* Adjusted padding for smaller screens */
+                padding-top: 100px;
             }
         }
     </style>
@@ -496,7 +497,7 @@
                     }
                 });
 
-                // Simple touch scrolling for mobile
+                // Touch scrolling for mobile
                 const nav = document.querySelector('.main-nav');
                 if (!nav) return;
 
@@ -504,56 +505,53 @@
                 let startX;
                 let scrollLeft;
 
-                // Remove any existing event listeners
-                const oldNav = nav.cloneNode(true);
-                nav.parentNode.replaceChild(oldNav, nav);
-
-                oldNav.addEventListener('mousedown', (e) => {
+                // Mouse events
+                nav.addEventListener('mousedown', (e) => {
                     isDown = true;
-                    startX = e.pageX - oldNav.offsetLeft;
-                    scrollLeft = oldNav.scrollLeft;
+                    nav.style.cursor = 'grabbing';
+                    startX = e.pageX - nav.offsetLeft;
+                    scrollLeft = nav.scrollLeft;
                 });
 
-                oldNav.addEventListener('mouseleave', () => {
+                nav.addEventListener('mouseleave', () => {
                     isDown = false;
+                    nav.style.cursor = 'grab';
                 });
 
-                oldNav.addEventListener('mouseup', () => {
+                nav.addEventListener('mouseup', () => {
                     isDown = false;
+                    nav.style.cursor = 'grab';
                 });
 
-                oldNav.addEventListener('mousemove', (e) => {
+                nav.addEventListener('mousemove', (e) => {
                     if (!isDown) return;
                     e.preventDefault();
-                    const x = e.pageX - oldNav.offsetLeft;
+                    const x = e.pageX - nav.offsetLeft;
                     const walk = (x - startX) * 2;
-                    oldNav.scrollLeft = scrollLeft - walk;
+                    nav.scrollLeft = scrollLeft - walk;
                 });
 
                 // Touch events
-                oldNav.addEventListener('touchstart', (e) => {
+                nav.addEventListener('touchstart', (e) => {
                     isDown = true;
-                    startX = e.touches[0].pageX - oldNav.offsetLeft;
-                    scrollLeft = oldNav.scrollLeft;
+                    startX = e.touches[0].pageX - nav.offsetLeft;
+                    scrollLeft = nav.scrollLeft;
                 });
 
-                oldNav.addEventListener('touchend', () => {
+                nav.addEventListener('touchend', () => {
                     isDown = false;
                 });
 
-                oldNav.addEventListener('touchmove', (e) => {
+                nav.addEventListener('touchmove', (e) => {
                     if (!isDown) return;
                     e.preventDefault();
-                    const x = e.touches[0].pageX - oldNav.offsetLeft;
+                    const x = e.touches[0].pageX - nav.offsetLeft;
                     const walk = (x - startX) * 2;
-                    oldNav.scrollLeft = scrollLeft - walk;
+                    nav.scrollLeft = scrollLeft - walk;
                 });
 
-                // Force horizontal scroll on mobile
-                if (window.innerWidth <= 900) {
-                    oldNav.style.overflowX = 'scroll';
-                    oldNav.style.WebkitOverflowScrolling = 'touch';
-                }
+                // Set initial cursor style
+                nav.style.cursor = 'grab';
             } catch (error) {
                 console.error("Error in navigation setup:", error);
             }
@@ -561,3 +559,9 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
