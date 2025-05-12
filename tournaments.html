@@ -148,136 +148,6 @@
             line-height: 1.6;
         }
 
-        /* Navigation Bar */
-        nav {
-            background-color: #0a2342;
-            color: white;
-            padding: 0 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 90px !important;
-            min-height: 90px !important;
-            border-bottom: 1px solid #e0e6ed;
-            position: relative;
-            z-index: 1000;
-            box-shadow: none;
-        }
-
-        .logo {
-            height: 60px;
-            width: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-right: 10px;
-            transition: none;
-        }
-
-        .logo img {
-            height: 60px;
-            width: auto;
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 0.5rem;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            flex-shrink: 0;
-            align-items: center;
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: #f4f6fa;
-            font-size: 1rem;
-            padding: 0.7rem 1.1rem;
-            border-radius: 0.2rem;
-            transition: background 0.2s, color 0.2s;
-            white-space: nowrap;
-            display: block;
-            position: relative;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-        }
-
-        .main-nav a:hover {
-            background-color: #17335c;
-            color: #e0e6ed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .main-nav a.active {
-            background-color: #17335c;
-            color: #e0e6ed;
-            box-shadow: none;
-        }
-
-        .main-nav a.active::after {
-            display: none;
-        }
-
-        @media (max-width: 900px) {
-            nav {
-                flex-direction: column;
-                height: auto !important;
-                min-height: auto !important;
-                padding: 0.5rem;
-            }
-            .logo {
-                margin-bottom: 0.5rem;
-            }
-            .main-nav {
-                width: 100%;
-                overflow-x: auto;
-                overflow-y: hidden;
-                -webkit-overflow-scrolling: touch;
-                padding: 0.5rem 0;
-                justify-content: flex-start;
-                gap: 0.2rem;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE and Edge */
-            }
-            .main-nav::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera */
-            }
-            .main-nav li {
-                flex: 0 0 auto;
-            }
-            .main-nav a {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.95rem;
-                background-color: transparent;
-                border-radius: 12px;
-            }
-            .main-nav a:hover, .main-nav a.active {
-                background-color: #17335c;
-                color: #e0e6ed;
-            }
-        }
-        @media (max-width: 480px) {
-            .main-nav a {
-                padding: 0.3rem 0.5rem;
-                font-size: 0.85rem;
-            }
-        }
-        #nav-backdrop {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: 1099;
-        }
-        #nav-backdrop.active {
-            display: block;
-        }
-
         /* Main Content */
         .container {
             max-width: 1200px;
@@ -425,10 +295,6 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .main-nav {
-                display: none;
-            }
-
             .container {
                 margin: 20px;
                 padding: 20px;
@@ -524,18 +390,6 @@
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 10px 15px;
-            }
-
-            .logo {
-                height: 70px;
-            }
-
-            .logo img {
-                height: 70px;
-            }
-
             .container {
                 margin: 25px auto;
                 padding: 20px;
@@ -582,18 +436,6 @@
         }
 
         @media (max-width: 576px) {
-            nav {
-                padding: 8px 12px;
-            }
-
-            .logo {
-                height: 60px;
-            }
-
-            .logo img {
-                height: 60px;
-            }
-
             .container {
                 margin: 20px auto;
                 padding: 15px;
@@ -659,18 +501,6 @@
         }
 
         @media (max-width: 400px) {
-            nav {
-                padding: 6px 10px;
-            }
-
-            .logo {
-                height: 50px;
-            }
-
-            .logo img {
-                height: 50px;
-            }
-
             .container {
                 margin: 15px auto;
                 padding: 12px;
@@ -740,26 +570,26 @@
     <!-- Navigation Bar -->
     <nav>
         <div class="logo">
-            <img src="logo.jpg" alt="College Sports Hub Logo">
+            <img src="logo.png" alt="College Sports Hub Logo">
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <ul class="main-nav" id="mainNav">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="booking.html">Slot Booking</a></li>
             <li><a href="team.html">Find a Team</a></li>
-            <li><a href="tournaments.html" class="active">Tournaments</a></li>
+            <li><a href="tournaments.html">Tournaments</a></li>
             <li><a href="rules.html">Rules</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="details.html">Details</a></li>
             <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
-        <div class="hamburger" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </nav>
-    <div id="nav-backdrop"></div>
+    <div id="nav-backdrop" onclick="closeMenu()"></div>
 
     <!-- Main Content -->
     <div class="container">
@@ -975,9 +805,10 @@
         function checkLogin() {
             const user = localStorage.getItem("loggedInUser");
             if (!user) {
+                alert("You are not logged in. Redirecting to login page.");
                 window.location.href = "login.html";
             } else {
-                // document.getElementById("logoutNav").style.display = "block";
+                document.getElementById("logoutNav").style.display = "inline";
             }
         }
         
@@ -985,6 +816,7 @@
         function logout() {
             localStorage.removeItem("loggedInUser");
             localStorage.removeItem("userType");
+            alert("You have successfully logged out.");
             window.location.href = "login.html";
         }
     </script>

@@ -5,7 +5,14 @@ const AppUtils = {
         try {
             // Initialize users if not exists
             if (!localStorage.getItem('users')) {
-                localStorage.setItem('users', JSON.stringify({}));
+                const defaultUsers = [
+                    {
+                        email: 'admin@example.com',
+                        password: 'admin123',
+                        name: 'Admin User'
+                    }
+                ];
+                localStorage.setItem('users', JSON.stringify(defaultUsers));
             }
             
             // Initialize reset tokens if not exists
@@ -26,6 +33,11 @@ const AppUtils = {
             // Initialize teams if not exists
             if (!localStorage.getItem('badmintonTeams')) {
                 localStorage.setItem('badmintonTeams', JSON.stringify([]));
+            }
+
+            // Initialize loggedInUser if not exists
+            if (!localStorage.getItem("loggedInUser")) {
+                localStorage.setItem("loggedInUser", "");
             }
         } catch (e) {
             console.error('Error initializing storage:', e);
@@ -61,12 +73,8 @@ const AppUtils = {
 
     // Get all users
     getUsers: function() {
-        try {
-            return JSON.parse(localStorage.getItem('users')) || {};
-        } catch (e) {
-            console.error('Error getting users:', e);
-            return {};
-        }
+        const users = localStorage.getItem('users');
+        return users ? JSON.parse(users) : [];
     },
 
     // Save users
@@ -148,7 +156,10 @@ const AppUtils = {
         try {
             localStorage.removeItem('loggedInUser');
             localStorage.removeItem('userData');
-            window.location.href = 'login.html';
+            this.showSuccess('Logged out successfully');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
         } catch (e) {
             console.error('Error during logout:', e);
             alert('There was an error logging out. Please try again.');
@@ -156,42 +167,39 @@ const AppUtils = {
     },
 
     // Show error message
-    showError: function(elementId, message) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.textContent = message;
-            element.style.display = 'block';
-        }
+    showError: function(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message error';
+        messageDiv.textContent = message;
+        document.body.appendChild(messageDiv);
+        setTimeout(() => messageDiv.remove(), 3000);
     },
 
     // Show success message
-    showSuccess: function(elementId, message) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.textContent = message;
-            element.style.display = 'block';
-        }
+    showSuccess: function(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message success';
+        messageDiv.textContent = message;
+        document.body.appendChild(messageDiv);
+        setTimeout(() => messageDiv.remove(), 3000);
     },
 
     // Clear message
-    clearMessage: function(elementId) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.textContent = '';
-            element.style.display = 'none';
+    clearMessage: function() {
+        const message = document.querySelector('.message');
+        if (message) {
+            message.remove();
         }
     },
 
     // Validate email format
     validateEmail: function(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     },
 
     // Validate phone number format
     validatePhone: function(phone) {
-        const phoneRegex = /^\d{10}$/;
-        return phoneRegex.test(phone);
+        return /^\d{10}$/.test(phone);
     },
 
     // Format date to YYYY-MM-DD
@@ -202,10 +210,96 @@ const AppUtils = {
     // Format time to HH:MM
     formatTime: function(time) {
         return time.padStart(5, '0');
+    },
+
+    // Navigation
+    setActiveNavLink: function() {
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.main-nav a');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    },
+
+    // Mobile navigation
+    initMobileNav: function() {
+        const nav = document.querySelector('.main-nav');
+        if (!nav) return;
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // Mouse events
+        nav.addEventListener('mousedown', (e) => {
+            isDown = true;
+            nav.style.cursor = 'grabbing';
+            startX = e.pageX - nav.offsetLeft;
+            scrollLeft = nav.scrollLeft;
+        });
+
+        nav.addEventListener('mouseleave', () => {
+            isDown = false;
+            nav.style.cursor = 'grab';
+        });
+
+        nav.addEventListener('mouseup', () => {
+            isDown = false;
+            nav.style.cursor = 'grab';
+        });
+
+        nav.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - nav.offsetLeft;
+            const walk = (x - startX) * 2;
+            nav.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch events
+        nav.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - nav.offsetLeft;
+            scrollLeft = nav.scrollLeft;
+        });
+
+        nav.addEventListener('touchend', () => {
+            isDown = false;
+        });
+
+        nav.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - nav.offsetLeft;
+            const walk = (x - startX) * 2;
+            nav.scrollLeft = scrollLeft - walk;
+        });
+    },
+
+    // Check login status and handle navigation
+    checkLoginStatus: function() {
+        const user = localStorage.getItem("loggedInUser");
+        if (!user) {
+            // Don't redirect on login page
+            if (!window.location.pathname.includes('login.html')) {
+                alert("You are not logged in. Redirecting to login page.");
+                window.location.href = "login.html";
+            }
+        } else {
+            const logoutNav = document.getElementById("logoutNav");
+            if (logoutNav) {
+                logoutNav.style.display = "inline";
+            }
+        }
     }
 };
 
 // Initialize storage when the script loads
 document.addEventListener('DOMContentLoaded', function() {
     AppUtils.initializeStorage();
+    AppUtils.checkLoginStatus();
+    AppUtils.setActiveNavLink();
+    AppUtils.initMobileNav();
 }); 

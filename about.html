@@ -458,9 +458,14 @@
         <div class="logo">
             <img src="logo.jpg" alt="College Sports Hub Logo">
         </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <ul class="main-nav" id="mainNav">
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="booking.html">Slot Booking</a></li>
             <li><a href="team.html">Find a Team</a></li>
             <li><a href="tournaments.html">Tournaments</a></li>
@@ -469,11 +474,6 @@
             <li><a href="details.html">Details</a></li>
             <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
         </ul>
-        <div class="hamburger" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </nav>
     <div id="nav-backdrop"></div>
 
@@ -517,9 +517,63 @@
     <footer>
         <p>&copy; 2025 College Sports Hub. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Hamburger menu functionality
+                const hamburger = document.getElementById('hamburger');
+                const mainNav = document.getElementById('mainNav');
+                
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInsideNav = mainNav.contains(event.target);
+                    const isClickOnHamburger = hamburger.contains(event.target);
+                    
+                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+
+                // Close menu when clicking a link
+                const navLinks = document.querySelectorAll('.main-nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 900) {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                        }
+                    });
+                });
+
+                // Add active class to current page link
+                const currentPage = window.location.pathname.split('/').pop();
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 900) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+            } catch (error) {
+                console.error("Error in navigation setup:", error);
+            }
+        });
+    </script>
 </body>
 </html>
-
 
 
 

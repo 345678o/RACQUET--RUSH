@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile - MLRIT Sports Hub</title>
+    <title>Profile - College Sports Hub</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="nav.css">
+    <script src="nav.js"></script>
+    <script src="common.js"></script>
     <style>
         .profile-container {
             max-width: 1200px;
@@ -158,89 +160,161 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #00274D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1000;
+            height: 130px !important;
+            min-height: 130px !important;
+        }
+
+        .logo {
+            height: 120px !important;
+            max-height: 120px !important;
+            width: auto;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        .logo img {
+            height: 120px !important;
+            max-height: 120px !important;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .main-nav a:hover {
+            background-color: #004080;
+        }
+
+        .main-nav a.active {
+            background-color: #004080;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 0.5rem 1rem;
+                height: auto !important;
+                min-height: auto !important;
+            }
+
+            .logo, .logo img {
+                height: 100px !important;
+                max-height: 100px !important;
+            }
+
+            .hamburger {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #0a2342;
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .main-nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 0.8rem;
+                width: 100%;
+            }
+
+            /* Hamburger Animation */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .logo, .logo img {
+                height: 80px !important;
+                max-height: 80px !important;
+            }
+        }
     </style>
 </head>
 <body onload="checkLogin(); loadProfile()">
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">
-            <img src="../assets/images/sports/logo.jpg" alt="College Sports Hub Logo">
-        </div>
-        <ul class="main-nav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="booking.html">Slot Booking</a></li>
-            <li><a href="team.html">Find a Team</a></li>
-            <li><a href="tournaments.html">Tournaments</a></li>
-            <li><a href="rules.html">Rules</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="details.html">Details</a></li>
-            <li><a href="profile.html" class="active">My Profile</a></li>
-            <li><a href="#" onclick="logout()">Logout</a></li>
-        </ul>
-    </nav>
-
+    <!-- Include the standardized navigation -->
+    <div id="nav-placeholder"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add active class to current page link
-            const currentPage = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.main-nav a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
+        // Load the navigation
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
             });
-
-            // Add smooth scrolling to navigation
-            const nav = document.querySelector('.main-nav');
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            nav.addEventListener('mousedown', (e) => {
-                isDown = true;
-                nav.style.cursor = 'grabbing';
-                startX = e.pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
-
-            nav.addEventListener('mouseleave', () => {
-                isDown = false;
-                nav.style.cursor = 'grab';
-            });
-
-            nav.addEventListener('mouseup', () => {
-                isDown = false;
-                nav.style.cursor = 'grab';
-            });
-
-            nav.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
-
-            // Touch events for mobile
-            nav.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
-
-            nav.addEventListener('touchend', () => {
-                isDown = false;
-            });
-
-            nav.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
-        });
     </script>
 
     <div class="profile-container">
@@ -390,6 +464,61 @@
             // TODO: Implement profile editing functionality
             alert('Profile editing feature coming soon!');
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Hamburger menu functionality
+                const hamburger = document.getElementById('hamburger');
+                const mainNav = document.getElementById('mainNav');
+                
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInsideNav = mainNav.contains(event.target);
+                    const isClickOnHamburger = hamburger.contains(event.target);
+                    
+                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+
+                // Close menu when clicking a link
+                const navLinks = document.querySelectorAll('.main-nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 900) {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                        }
+                    });
+                });
+
+                // Add active class to current page link
+                const currentPage = window.location.pathname.split('/').pop();
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 900) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+            } catch (error) {
+                console.error("Error in navigation setup:", error);
+            }
+        });
     </script>
 </body>
 </html> 
