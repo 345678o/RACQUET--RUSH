@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="booking.css">
     <script src="nav.js"></script>
+    <script src="common.js"></script>
     <style>
         :root {
             --primary: #1a237e;
@@ -839,29 +840,16 @@
     </script>
 </head>
 <body onload="checkLogin()">
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">
-            <img src="logo.jpg" alt="College Sports Hub Logo">
-        </div>
-        <ul class="main-nav" id="mainNav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="booking.html" class="active">Slot Booking</a></li>
-            <li><a href="team.html">Find a Team</a></li>
-            <li><a href="tournaments.html">Tournaments</a></li>
-            <li><a href="rules.html">Rules</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="details.html">Details</a></li>
-            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
-        </ul>
-        <div class="hamburger" onclick="toggleMenu(event)">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-    <div id="nav-backdrop"></div>
+    <!-- Include the standardized navigation -->
+    <div id="nav-placeholder"></div>
+    <script>
+        // Load the navigation
+        fetch('nav.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('nav-placeholder').innerHTML = data;
+            });
+    </script>
 
     <div class="container">
     <div class="login-section" role="status" aria-live="polite">

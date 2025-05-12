@@ -90,17 +90,19 @@
 
         /* Hamburger Menu */
         .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            display: none;
             cursor: pointer;
+            padding: 10px;
+            z-index: 10001;
         }
 
-        .hamburger div {
-            width: 30px;
-            height: 4px;
-            background: white;
-            transition: 0.3s;
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: all 0.3s ease;
         }
 
         .hamburger-menu {
@@ -207,15 +209,58 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-nav {
-                display: none;
+        @media (max-width: 900px) {
+            .hamburger {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
             }
 
-            .hamburger-menu {
-                width: 100%;
+            nav {
+                padding: 0.5rem 1rem;
+            }
+
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
                 left: 0;
-                top: 60px;
+                right: 0;
+                background-color: #0a2342;
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-nav.active {
+                display: flex;
+            }
+
+            .main-nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 0.8rem;
+                width: 100%;
+            }
+
+            /* Hamburger Animation */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
             }
         }
 
@@ -301,23 +346,22 @@
     <div class="logo">
         <img src="Screenshot 2025-03-26 222326.png" alt="College Sports Hub Logo">
     </div>
-    <div class="hamburger" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
-
-    <div class="hamburger-menu">
-        <a href="index.html" class="active">Home</a>
-        <a href="about.html">About</a>
-        <a href="booking.html">Slot Booking</a>
-        <a href="team.html">Find a Team</a>
-        <a href="tournaments.html">Upcoming Tournaments</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="rules.html">Rules & Regulations</a>
-        <a href="details.html" >Your Details</a>
-        <a href="#" id="logoutNav" onclick="logout()">Logout</a>
-    </div>
+    <ul class="main-nav" id="mainNav">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="booking.html">Slot Booking</a></li>
+        <li><a href="team.html">Find a Team</a></li>
+        <li><a href="tournaments.html">Tournaments</a></li>
+        <li><a href="rules.html">Rules</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="details.html">Details</a></li>
+        <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
+    </ul>
 </nav>
 
     <!-- Home Section -->
@@ -393,7 +437,60 @@
     <script src="script.js"></script>
     <div id="menu-bar"></div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Hamburger menu functionality
+                const hamburger = document.getElementById('hamburger');
+                const mainNav = document.getElementById('mainNav');
+                
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                });
 
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    const isClickInsideNav = mainNav.contains(event.target);
+                    const isClickOnHamburger = hamburger.contains(event.target);
+                    
+                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+
+                // Close menu when clicking a link
+                const navLinks = document.querySelectorAll('.main-nav a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 900) {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                        }
+                    });
+                });
+
+                // Add active class to current page link
+                const currentPage = window.location.pathname.split('/').pop();
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Handle window resize
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 900) {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+            } catch (error) {
+                console.error("Error in navigation setup:", error);
+            }
+        });
+    </script>
 
 </body>
 
