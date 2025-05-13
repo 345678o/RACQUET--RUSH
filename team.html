@@ -519,14 +519,57 @@
     </script>
 </head>
 <body onload="checkLogin()">
-    <!-- Include Navigation -->
     <div id="nav-placeholder"></div>
     <script>
-        fetch('nav.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
-            });
+        // Load navigation and attach event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('nav-placeholder').innerHTML = data;
+                    
+                    // Get elements after nav is loaded
+                    const hamburger = document.getElementById('hamburger');
+                    const mainNav = document.getElementById('mainNav');
+                    const backdrop = document.getElementById('nav-backdrop');
+                    
+                    if (hamburger && mainNav && backdrop) {
+                        // Toggle menu on hamburger click
+                        hamburger.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            hamburger.classList.toggle('active');
+                            mainNav.classList.toggle('active');
+                            backdrop.classList.toggle('active');
+                        });
+                        
+                        // Close menu on backdrop click
+                        backdrop.addEventListener('click', function() {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                            backdrop.classList.remove('active');
+                        });
+                        
+                        // Close menu on nav link click
+                        mainNav.querySelectorAll('a').forEach(link => {
+                            link.addEventListener('click', function() {
+                                hamburger.classList.remove('active');
+                                mainNav.classList.remove('active');
+                                backdrop.classList.remove('active');
+                            });
+                        });
+                        
+                        // Close menu on window resize
+                        window.addEventListener('resize', function() {
+                            if (window.innerWidth > 900) {
+                                hamburger.classList.remove('active');
+                                mainNav.classList.remove('active');
+                                backdrop.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading navigation:', error));
+        });
     </script>
 
     <!-- Main Content -->

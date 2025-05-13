@@ -24,90 +24,6 @@
             alert("You have successfully logged out.");
             window.location.href = "login.html";
         }
-
-        function toggleMenu(e) {
-            e.stopPropagation();
-            document.getElementById('mainNav').classList.toggle('active');
-            document.getElementById('nav-backdrop').classList.toggle('active');
-        }
-
-        function closeMenu() {
-            document.getElementById('mainNav').classList.remove('active');
-            document.getElementById('nav-backdrop').classList.remove('active');
-        }
-
-        document.querySelectorAll('.main-nav a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        window.addEventListener('resize', function() {
-            if(window.innerWidth > 900) closeMenu();
-        });
-
-        window.addEventListener('scroll', closeMenu);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add active class to current page link
-            const currentPage = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.main-nav a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Add smooth scrolling to navigation
-            const nav = document.querySelector('.main-nav');
-            if (nav) {
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                nav.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    nav.style.cursor = 'grabbing';
-                    startX = e.pageX - nav.offsetLeft;
-                    scrollLeft = nav.scrollLeft;
-                });
-
-                nav.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    nav.style.cursor = 'grab';
-                });
-
-                nav.addEventListener('mouseup', () => {
-                    isDown = false;
-                    nav.style.cursor = 'grab';
-                });
-
-                nav.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - nav.offsetLeft;
-                    const walk = (x - startX) * 2;
-                    nav.scrollLeft = scrollLeft - walk;
-                });
-
-                // Touch events for mobile
-                nav.addEventListener('touchstart', (e) => {
-                    isDown = true;
-                    startX = e.touches[0].pageX - nav.offsetLeft;
-                    scrollLeft = nav.scrollLeft;
-                });
-
-                nav.addEventListener('touchend', () => {
-                    isDown = false;
-                });
-
-                nav.addEventListener('touchmove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.touches[0].pageX - nav.offsetLeft;
-                    const walk = (x - startX) * 2;
-                    nav.scrollLeft = scrollLeft - walk;
-                });
-            }
-        });
     </script>
     <style>
         body {
@@ -447,23 +363,60 @@
                 color:white
             }
         }
-
-        nav .logo, .logo img {
-            height: 120px !important;
-            max-height: 120px !important;
-            width: auto;
-        }
     </style>
 </head>
 <body onload="checkLogin()">
-    <!-- Include Navigation -->
     <div id="nav-placeholder"></div>
     <script>
-        fetch('nav.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
-            });
+        // Load navigation and attach event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('nav-placeholder').innerHTML = data;
+                    
+                    // Get elements after nav is loaded
+                    const hamburger = document.getElementById('hamburger');
+                    const mainNav = document.getElementById('mainNav');
+                    const backdrop = document.getElementById('nav-backdrop');
+                    
+                    if (hamburger && mainNav && backdrop) {
+                        // Toggle menu on hamburger click
+                        hamburger.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            hamburger.classList.toggle('active');
+                            mainNav.classList.toggle('active');
+                            backdrop.classList.toggle('active');
+                        });
+                        
+                        // Close menu on backdrop click
+                        backdrop.addEventListener('click', function() {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                            backdrop.classList.remove('active');
+                        });
+                        
+                        // Close menu on nav link click
+                        mainNav.querySelectorAll('a').forEach(link => {
+                            link.addEventListener('click', function() {
+                                hamburger.classList.remove('active');
+                                mainNav.classList.remove('active');
+                                backdrop.classList.remove('active');
+                            });
+                        });
+                        
+                        // Close menu on window resize
+                        window.addEventListener('resize', function() {
+                            if (window.innerWidth > 900) {
+                                hamburger.classList.remove('active');
+                                mainNav.classList.remove('active');
+                                backdrop.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => console.error('Error loading navigation:', error));
+        });
     </script>
 
     <!-- About Us Section -->
@@ -506,61 +459,6 @@
     <footer>
         <p>&copy; 2025 College Sports Hub. All rights reserved.</p>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // Hamburger menu functionality
-                const hamburger = document.getElementById('hamburger');
-                const mainNav = document.getElementById('mainNav');
-                
-                hamburger.addEventListener('click', function() {
-                    hamburger.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    const isClickInsideNav = mainNav.contains(event.target);
-                    const isClickOnHamburger = hamburger.contains(event.target);
-                    
-                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-
-                // Close menu when clicking a link
-                const navLinks = document.querySelectorAll('.main-nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 900) {
-                            hamburger.classList.remove('active');
-                            mainNav.classList.remove('active');
-                        }
-                    });
-                });
-
-                // Add active class to current page link
-                const currentPage = window.location.pathname.split('/').pop();
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Handle window resize
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 900) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-            } catch (error) {
-                console.error("Error in navigation setup:", error);
-            }
-        });
-    </script>
 </body>
 </html>
 

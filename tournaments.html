@@ -473,9 +473,33 @@
     <div id="nav-placeholder"></div>
     <script>
         fetch('nav.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
+            .then(r => r.text())
+            .then(d => {
+                document.getElementById('nav-placeholder').innerHTML = d;
+                // Attach hamburger event listeners
+                const hamburger = document.getElementById('hamburger');
+                const mainNav = document.getElementById('mainNav');
+                const backdrop = document.getElementById('nav-backdrop');
+                if (hamburger && mainNav && backdrop) {
+                    hamburger.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        hamburger.classList.toggle('active');
+                        mainNav.classList.toggle('active');
+                        backdrop.classList.toggle('active');
+                    });
+                    backdrop.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        mainNav.classList.remove('active');
+                        backdrop.classList.remove('active');
+                    });
+                    mainNav.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            hamburger.classList.remove('active');
+                            mainNav.classList.remove('active');
+                            backdrop.classList.remove('active');
+                        });
+                    });
+                }
             });
     </script>
 

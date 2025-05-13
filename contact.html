@@ -694,14 +694,37 @@
     </style>
 </head>
 <body onload="checkLogin()">
-    <!-- Include Navigation -->
     <div id="nav-placeholder"></div>
     <script>
-        fetch('nav.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('nav-placeholder').innerHTML = data;
+    fetch('nav.html')
+      .then(r => r.text())
+      .then(d => {
+        document.getElementById('nav-placeholder').innerHTML = d;
+        // Attach hamburger event listeners
+        const hamburger = document.getElementById('hamburger');
+        const mainNav = document.getElementById('mainNav');
+        const backdrop = document.getElementById('nav-backdrop');
+        if (hamburger && mainNav && backdrop) {
+          hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            mainNav.classList.toggle('active');
+            backdrop.classList.toggle('active');
+          });
+          backdrop.addEventListener('click', function() {
+            hamburger.classList.remove('active');
+            mainNav.classList.remove('active');
+            backdrop.classList.remove('active');
+          });
+          mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              hamburger.classList.remove('active');
+              mainNav.classList.remove('active');
+              backdrop.classList.remove('active');
             });
+          });
+        }
+      });
     </script>
 
     <div class="container">
@@ -803,59 +826,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // Hamburger menu functionality
-                const hamburger = document.getElementById('hamburger');
-                const mainNav = document.getElementById('mainNav');
-                
-                hamburger.addEventListener('click', function() {
-                    hamburger.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    const isClickInsideNav = mainNav.contains(event.target);
-                    const isClickOnHamburger = hamburger.contains(event.target);
-                    
-                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-
-                // Close menu when clicking a link
-                const navLinks = document.querySelectorAll('.main-nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 900) {
-                            hamburger.classList.remove('active');
-                            mainNav.classList.remove('active');
-                        }
-                    });
-                });
-
-                // Add active class to current page link
-                const currentPage = window.location.pathname.split('/').pop();
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Handle window resize
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 900) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-            } catch (error) {
-                console.error("Error in navigation setup:", error);
-            }
-        });
-
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Thank you for your message. We will get back to you soon!');
