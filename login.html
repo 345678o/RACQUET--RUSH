@@ -72,7 +72,7 @@
 
         .toggle-links {
             text-align: center;
-            margin-top: 1z0px;
+            margin-top: 10px;
         }
 
         .toggle-links a {
@@ -102,550 +102,341 @@
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-
-        /* Navigation Bar */
-        nav {
-            background-color: #00274D;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 1000;
-            height: 130px !important;
-            min-height: 130px !important;
-        }
-
-        .logo {
-            height: 120px !important;
-            max-height: 120px !important;
-            width: auto;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            margin-right: 10px;
-        }
-
-        .logo img {
-            height: 120px !important;
-            max-height: 120px !important;
-            width: auto;
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .main-nav a:hover {
-            background-color: #004080;
-        }
-
-        .main-nav a.active {
-            background-color: #004080;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 10001;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 900px) {
-            nav {
-                padding: 0.5rem 1rem;
-                height: auto !important;
-                min-height: auto !important;
-            }
-
-            .logo, .logo img {
-                height: 100px !important;
-                max-height: 100px !important;
-            }
-
-            .hamburger {
-                display: block;
-                position: absolute;
-                right: 20px;
-                top: 20px;
-            }
-
-            .main-nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: #0a2342;
-                padding: 1rem;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .main-nav.active {
-                display: flex;
-            }
-
-            .main-nav li {
-                width: 100%;
-                text-align: center;
-            }
-
-            .main-nav a {
-                display: block;
-                padding: 0.8rem;
-                width: 100%;
-            }
-
-            /* Hamburger Animation */
-            .hamburger.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .logo, .logo img {
-                height: 80px !important;
-                max-height: 80px !important;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">
-            <img src="Screenshot 2025-03-26 222326.png" alt="College Sports Hub Logo">
-        </div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="main-nav" id="mainNav">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="booking.html">Slot Booking</a></li>
-            <li><a href="team.html">Find a Team</a></li>
-            <li><a href="tournaments.html">Tournaments</a></li>
-            <li><a href="rules.html">Rules</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="details.html">Details</a></li>
-            <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
-        </ul>
-    </nav>
 
-    <div class="container">
-        <!-- Login Form -->
-        <div class="form-box login active">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <label for="login-username">Username</label>
-                <input type="text" id="login-username" required>
+<div class="container">
+    <!-- Login Form -->
+    <div class="form-box login active">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="login-username">Username</label>
+            <input type="text" id="login-username" required>
 
-                <label for="login-password">Password</label>
-                <input type="password" id="login-password" required>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" required>
 
-                <p class="error" id="login-error"></p>
+            <p class="error" id="login-error"></p>
 
-                <input type="submit" value="Login">
-            </form>
-            <div class="toggle-links">
-                <p>Forgot Password? <a href="#" onclick="toggleForms('forgot-password')">Click Here</a></p>
-                <p>Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></p>
-            </div>
-        </div>
-
-        <!-- Sign Up Form -->
-        <div class="form-box signup">
-            <h2>Sign Up</h2>
-            <form id="signupForm">
-                <label for="new-username">Username</label>
-                <input type="text" id="new-username" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" required>
-
-                <label for="phone">Phone Number</label>
-                <input type="text" id="phone" pattern="[0-9]{10}" required>
-
-                <label for="rollno">Roll Number</label>
-                <input type="text" id="rollno" required>
-
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" required>
-
-                <label for="student-type">Student Type</label>
-                <select id="student-type" required>
-                    <option value="">Select...</option>
-                    <option value="BTech">BTech</option>
-                    <option value="MBA">MBA</option>
-                    <option value="Medical">Medical</option>
-                </select>
-
-                <label for="new-password">Password</label>
-                <input type="password" id="new-password" required>
-
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" required>
-
-                <p class="error" id="signup-error"></p>
-                <p class="success" id="signup-success"></p>
-
-                <input type="submit" value="Sign Up">
-            </form>
-            <div class="toggle-links">
-                <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
-            </div>
-        </div>
-
-        <!-- Forgot Password Form -->
-        <div class="form-box forgot-password">
-            <h2>Forgot Password</h2>
-            <form id="forgotPasswordForm">
-                <label for="forgot-email">Email Address</label>
-                <input type="email" id="forgot-email" required>
-                
-                <p class="error" id="forgot-error"></p>
-                <p class="success" id="forgot-success"></p>
-                
-                <input type="submit" value="Send Reset Link">
-            </form>
-            <div class="toggle-links">
-                <p>Remember your password? <a href="#" onclick="toggleForms('login')">Login</a></p>
-            </div>
-        </div>
-
-        <!-- Reset Password Form -->
-        <div class="form-box reset-password">
-            <h2>Reset Password</h2>
-            <form id="resetPasswordForm">
-                <label for="reset-username">Username</label>
-                <input type="text" id="reset-username" required>
-                
-                <label for="reset-code">Verification Code</label>
-                <input type="text" id="reset-code" required>
-                
-                <label for="reset-new-password">New Password</label>
-                <input type="password" id="reset-new-password" required>
-                
-                <label for="reset-confirm-password">Confirm New Password</label>
-                <input type="password" id="reset-confirm-password" required>
-                
-                <p class="error" id="reset-error"></p>
-                <p class="success" id="reset-success"></p>
-                
-                <input type="submit" value="Reset Password">
-            </form>
-            <div class="toggle-links">
-                <p>Back to <a href="#" onclick="toggleForms('login')">Login</a></p>
-            </div>
+            <input type="submit" value="Login">
+        </form>
+        <div class="toggle-links">
+            <p>Forgot Password? <a href="#" onclick="toggleForms('forgot-password')">Click Here</a></p>
+            <p>Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a></p>
         </div>
     </div>
 
-    <script src="common.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Redirect if already logged in
-            if (localStorage.getItem("loggedInUser")) {
-                window.location.href = "index.html";
-            }
+    <!-- Sign Up Form -->
+    <div class="form-box signup">
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <label for="new-username">Username</label>
+            <input type="text" id="new-username" required>
 
-            // Check if we're coming from a password reset link
-            const urlParams = new URLSearchParams(window.location.search);
-            const resetToken = urlParams.get('resetToken');
-            const resetUser = urlParams.get('user');
-            
-            if (resetToken && resetUser) {
-                toggleForms('reset-password');
-                document.getElementById('reset-username').value = resetUser;
-                document.getElementById('reset-code').value = resetToken;
-            }
-        });
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
 
-        function toggleForms(formType) {
-            document.querySelectorAll('.form-box').forEach(box => box.classList.remove('active'));
-            document.querySelector(`.${formType}`).classList.add('active');
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" pattern="[0-9]{10}" required>
+
+            <label for="rollno">Roll Number</label>
+            <input type="text" id="rollno" required>
+
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" required>
+
+            <label for="student-type">Student Type</label>
+            <select id="student-type" required>
+                <option value="">Select...</option>
+                <option value="BTech">BTech</option>
+                <option value="MBA">MBA</option>
+                <option value="Medical">Medical</option>
+            </select>
+
+            <label for="new-password">Password</label>
+            <input type="password" id="new-password" required>
+
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" required>
+
+            <p class="error" id="signup-error"></p>
+            <p class="success" id="signup-success"></p>
+
+            <input type="submit" value="Sign Up">
+        </form>
+        <div class="toggle-links">
+            <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div class="form-box forgot-password">
+        <h2>Forgot Password</h2>
+        <form id="forgotPasswordForm">
+            <label for="forgot-email">Email Address</label>
+            <input type="email" id="forgot-email" required>
             
-            // Clear all messages when switching forms
-            document.querySelectorAll('.error, .success').forEach(el => el.textContent = '');
+            <p class="error" id="forgot-error"></p>
+            <p class="success" id="forgot-success"></p>
+            
+            <input type="submit" value="Send Reset Link">
+        </form>
+        <div class="toggle-links">
+            <p>Remember your password? <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Reset Password Form -->
+    <div class="form-box reset-password">
+        <h2>Reset Password</h2>
+        <form id="resetPasswordForm">
+            <label for="reset-username">Username</label>
+            <input type="text" id="reset-username" required>
+            
+            <label for="reset-code">Verification Code</label>
+            <input type="text" id="reset-code" required>
+            
+            <label for="reset-new-password">New Password</label>
+            <input type="password" id="reset-new-password" required>
+            
+            <label for="reset-confirm-password">Confirm New Password</label>
+            <input type="password" id="reset-confirm-password" required>
+            
+            <p class="error" id="reset-error"></p>
+            <p class="success" id="reset-success"></p>
+            
+            <input type="submit" value="Reset Password">
+        </form>
+        <div class="toggle-links">
+            <p>Back to <a href="#" onclick="toggleForms('login')">Login</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Redirect if already logged in
+        if (localStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html";
         }
 
-        // Sign Up Form
-        document.getElementById("signupForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            try {
-                let username = document.getElementById("new-username").value.trim();
-                let email = document.getElementById("email").value.trim();
-                let phone = document.getElementById("phone").value.trim();
-                let rollno = document.getElementById("rollno").value.trim();
-                let fullname = document.getElementById("fullname").value.trim();
-                let studentType = document.getElementById("student-type").value;
-                let password = document.getElementById("new-password").value;
-                let confirmPassword = document.getElementById("confirm-password").value;
-                let users = AppUtils.getUsers();
+        // Check if we're coming from a password reset link
+        const urlParams = new URLSearchParams(window.location.search);
+        const resetToken = urlParams.get('resetToken');
+        const resetUser = urlParams.get('user');
+        
+        if (resetToken && resetUser) {
+            toggleForms('reset-password');
+            document.getElementById('reset-username').value = resetUser;
+            document.getElementById('reset-code').value = resetToken;
+        }
+    });
 
-                // Clear previous messages
-                AppUtils.clearMessage("signup-error");
-                AppUtils.clearMessage("signup-success");
+    function toggleForms(formType) {
+        document.querySelectorAll('.form-box').forEach(box => box.classList.remove('active'));
+        document.querySelector(`.${formType}`).classList.add('active');
+        
+        // Clear all messages when switching forms
+        document.querySelectorAll('.error, .success').forEach(el => el.textContent = '');
+    }
 
-                // Validate all fields are filled
-                if (!username || !email || !phone || !rollno || !fullname || !studentType || !password || !confirmPassword) {
-                    AppUtils.showError("signup-error", "All fields are required!");
-                    return;
-                }
+    function getUsers() {
+        return JSON.parse(localStorage.getItem("users")) || {};
+    }
 
-                // Validate email format
-                if (!AppUtils.validateEmail(email)) {
-                    AppUtils.showError("signup-error", "Please enter a valid email address!");
-                    return;
-                }
+    function saveUsers(users) {
+        localStorage.setItem("users", JSON.stringify(users));
+    }
 
-                // Validate phone number format
-                if (!AppUtils.validatePhone(phone)) {
-                    AppUtils.showError("signup-error", "Please enter a valid 10-digit phone number!");
-                    return;
-                }
+    function getResetTokens() {
+        return JSON.parse(localStorage.getItem("resetTokens")) || {};
+    }
 
-                // Check for duplicate username, email, phone, or roll number
-                for (let user in users) {
-                    if (user.toLowerCase() === username.toLowerCase()) {
-                        AppUtils.showError("signup-error", "Username already exists!");
-                        return;
-                    }
-                    if (users[user].email.toLowerCase() === email.toLowerCase()) {
-                        AppUtils.showError("signup-error", "Email already registered!");
-                        return;
-                    }
-                    if (users[user].phone === phone) {
-                        AppUtils.showError("signup-error", "Phone number already registered!");
-                        return;
-                    }
-                    if (users[user].rollno === rollno) {
-                        AppUtils.showError("signup-error", "Roll number already registered!");
-                        return;
-                    }
-                }
+    function saveResetTokens(tokens) {
+        localStorage.setItem("resetTokens", JSON.stringify(tokens));
+    }
 
-                // Validate password strength
-                if (password.length < 8) {
-                    AppUtils.showError("signup-error", "Password must be at least 8 characters long!");
-                    return;
-                }
+    // Sign Up Form
+    document.getElementById("signupForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("new-username").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let phone = document.getElementById("phone").value.trim();
+        let rollno = document.getElementById("rollno").value.trim();
+        let fullname = document.getElementById("fullname").value.trim();
+        let studentType = document.getElementById("student-type").value;
+        let password = document.getElementById("new-password").value;
+        let confirmPassword = document.getElementById("confirm-password").value;
+        let users = getUsers();
+        let errorElement = document.getElementById("signup-error");
+        let successElement = document.getElementById("signup-success");
 
-                if (password !== confirmPassword) {
-                    AppUtils.showError("signup-error", "Passwords do not match!");
-                    return;
-                }
+        errorElement.textContent = "";
+        successElement.textContent = "";
 
-                // Create new user
-                users[username] = { 
-                    email, 
-                    phone, 
-                    rollno,
-                    fullname,
-                    studentType,
-                    password 
-                };
+        if (!username || !email || !phone || !rollno || !fullname || !studentType || !password || !confirmPassword) {
+            errorElement.textContent = "All fields are required!";
+            return;
+        }
 
-                if (AppUtils.saveUsers(users)) {
-                    AppUtils.showSuccess("signup-success", "Account created successfully! Please log in.");
-                    document.getElementById("signupForm").reset();
-                } else {
-                    AppUtils.showError("signup-error", "Failed to create account. Please try again.");
-                }
-            } catch (e) {
-                console.error('Error in signup:', e);
-                AppUtils.showError("signup-error", "An error occurred. Please try again.");
+        // Check for duplicate username, email, or phone (case-insensitive)
+        for (let user in users) {
+            if (user.toLowerCase() === username.toLowerCase()) {
+                errorElement.textContent = "Username already exists!";
+                return;
             }
-        });
-
-        // Login Form
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            try {
-                let username = document.getElementById("login-username").value.trim();
-                let password = document.getElementById("login-password").value;
-                let users = AppUtils.getUsers();
-
-                AppUtils.clearMessage("login-error");
-
-                // Validate fields are not empty
-                if (!username || !password) {
-                    AppUtils.showError("login-error", "Username and password are required!");
-                    return;
-                }
-
-                // Check if user exists
-                if (!users[username]) {
-                    AppUtils.showError("login-error", "User not found! Please sign up first.");
-                    return;
-                }
-
-                // Verify password
-                if (users[username].password !== password) {
-                    AppUtils.showError("login-error", "Incorrect password!");
-                    return;
-                }
-
-                // Login successful
-                localStorage.setItem("loggedInUser", username);
-                localStorage.setItem("userData", JSON.stringify({
-                    username: username,
-                    email: users[username].email,
-                    phone: users[username].phone,
-                    rollNo: users[username].rollno,
-                    name: users[username].fullname,
-                    studentType: users[username].studentType
-                }));
-                window.location.href = "index.html";
-            } catch (e) {
-                console.error('Error in login:', e);
-                AppUtils.showError("login-error", "An error occurred. Please try again.");
+            if (users[user].email.toLowerCase() === email.toLowerCase()) {
+                errorElement.textContent = "Email already registered!";
+                return;
             }
-        });
-
-        // Forgot Password Form
-        document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            try {
-                let email = document.getElementById("forgot-email").value.trim();
-                let users = AppUtils.getUsers();
-
-                AppUtils.clearMessage("forgot-error");
-                AppUtils.clearMessage("forgot-success");
-
-                // Find user by email
-                let foundUser = null;
-                for (let username in users) {
-                    if (users[username].email === email) {
-                        foundUser = username;
-                        break;
-                    }
-                }
-
-                if (!foundUser) {
-                    AppUtils.showError("forgot-error", "No account found with that email address!");
-                    return;
-                }
-
-                // Generate reset token
-                const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-                
-                // Save the reset token
-                let resetTokens = JSON.parse(localStorage.getItem('resetTokens')) || {};
-                resetTokens[foundUser] = resetToken;
-                localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
-
-                // Generate reset link
-                const resetLink = `${window.location.origin}${window.location.pathname}?resetToken=${resetToken}&user=${foundUser}`;
-                
-                AppUtils.showSuccess("forgot-success", `Password reset link generated! In a real app, this would be sent to your email. For demo: ${resetLink}`);
-            } catch (e) {
-                console.error('Error in forgot password:', e);
-                AppUtils.showError("forgot-error", "An error occurred. Please try again.");
+            if (users[user].phone === phone) {
+                errorElement.textContent = "Phone number already registered!";
+                return;
             }
-        });
-
-        // Reset Password Form
-        document.getElementById("resetPasswordForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            try {
-                let username = document.getElementById("reset-username").value.trim();
-                let code = document.getElementById("reset-code").value.trim();
-                let newPassword = document.getElementById("reset-new-password").value;
-                let confirmPassword = document.getElementById("reset-confirm-password").value;
-                let users = AppUtils.getUsers();
-                let resetTokens = JSON.parse(localStorage.getItem('resetTokens')) || {};
-
-                AppUtils.clearMessage("reset-error");
-                AppUtils.clearMessage("reset-success");
-
-                if (!users[username]) {
-                    AppUtils.showError("reset-error", "Invalid username!");
-                    return;
-                }
-
-                if (resetTokens[username] !== code) {
-                    AppUtils.showError("reset-error", "Invalid verification code!");
-                    return;
-                }
-
-                if (newPassword !== confirmPassword) {
-                    AppUtils.showError("reset-error", "Passwords do not match!");
-                    return;
-                }
-
-                // Update password
-                users[username].password = newPassword;
-                if (AppUtils.saveUsers(users)) {
-                    // Remove used token
-                    delete resetTokens[username];
-                    localStorage.setItem('resetTokens', JSON.stringify(resetTokens));
-
-                    AppUtils.showSuccess("reset-success", "Password reset successfully! You can now login with your new password.");
-                    document.getElementById("resetPasswordForm").reset();
-                    
-                    // Auto-redirect to login after 3 seconds
-                    setTimeout(() => {
-                        toggleForms('login');
-                    }, 3000);
-                } else {
-                    AppUtils.showError("reset-error", "Failed to reset password. Please try again.");
-                }
-            } catch (e) {
-                console.error('Error in reset password:', e);
-                AppUtils.showError("reset-error", "An error occurred. Please try again.");
+            if (users[user].rollno === rollno) {
+                errorElement.textContent = "Roll number already registered!";
+                return;
             }
-        });
-    </script>
+        }
+
+        if (password !== confirmPassword) {
+            errorElement.textContent = "Passwords do not match!";
+            return;
+        }
+
+        users[username] = { 
+            email, 
+            phone, 
+            rollno,
+            fullname,
+            studentType,
+            password 
+        };
+        saveUsers(users);
+        successElement.textContent = "Account created successfully! Please log in.";
+        document.getElementById("signupForm").reset();
+    });
+
+    // Login Form
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("login-username").value.trim();
+        let password = document.getElementById("login-password").value;
+        let users = getUsers();
+        let errorElement = document.getElementById("login-error");
+
+        errorElement.textContent = "";
+
+        if (users[username] && users[username].password === password) {
+            localStorage.setItem("loggedInUser", username);
+            // Store userData for booking and details pages
+            localStorage.setItem("userData", JSON.stringify({
+                username: username,
+                email: users[username].email,
+                phone: users[username].phone,
+                rollNo: users[username].rollno,
+                name: users[username].fullname,
+                studentType: users[username].studentType
+            }));
+            window.location.href = "index.html";
+        } else {
+            errorElement.textContent = "Invalid username or password!";
+        }
+    });
+
+    // Forgot Password Form
+    document.getElementById("forgotPasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let email = document.getElementById("forgot-email").value.trim();
+        let users = getUsers();
+        let errorElement = document.getElementById("forgot-error");
+        let successElement = document.getElementById("forgot-success");
+
+        errorElement.textContent = "";
+        successElement.textContent = "";
+
+        // Find user by email
+        let foundUser = null;
+        for (let username in users) {
+            if (users[username].email === email) {
+                foundUser = username;
+                break;
+            }
+        }
+
+        if (!foundUser) {
+            errorElement.textContent = "No account found with that email address!";
+            return;
+        }
+
+        // Generate a simple reset token (in real app, use a more secure method)
+        const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        
+        // Save the reset token
+        let resetTokens = getResetTokens();
+        resetTokens[foundUser] = resetToken;
+        saveResetTokens(resetTokens);
+
+        // In a real application, you would send an email with this link
+        const resetLink = `${window.location.origin}${window.location.pathname}?resetToken=${resetToken}&user=${foundUser}`;
+        
+        successElement.textContent = `Password reset link generated! In a real app, this would be sent to your email. For demo: ${resetLink}`;
+        console.log("Reset link:", resetLink); // For demo purposes
+    });
+
+    // Reset Password Form
+    document.getElementById("resetPasswordForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let username = document.getElementById("reset-username").value.trim();
+        let code = document.getElementById("reset-code").value.trim();
+        let newPassword = document.getElementById("reset-new-password").value;
+        let confirmPassword = document.getElementById("reset-confirm-password").value;
+        let users = getUsers();
+        let resetTokens = getResetTokens();
+        let errorElement = document.getElementById("reset-error");
+        let successElement = document.getElementById("reset-success");
+
+        errorElement.textContent = "";
+        successElement.textContent = "";
+
+        if (!users[username]) {
+            errorElement.textContent = "Invalid username!";
+            return;
+        }
+
+        if (resetTokens[username] !== code) {
+            errorElement.textContent = "Invalid verification code!";
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            errorElement.textContent = "Passwords do not match!";
+            return;
+        }
+
+        // Update password
+        users[username].password = newPassword;
+        saveUsers(users);
+
+        // Remove used token
+        delete resetTokens[username];
+        saveResetTokens(resetTokens);
+
+        successElement.textContent = "Password reset successfully! You can now login with your new password.";
+        document.getElementById("resetPasswordForm").reset();
+        
+        // Auto-redirect to login after 3 seconds
+        setTimeout(() => {
+            toggleForms('login');
+        }, 3000);
+    });
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+    }
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 

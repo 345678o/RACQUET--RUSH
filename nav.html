@@ -1,7 +1,7 @@
-<!-- Navigation Bar -->
+zz<!-- Navigation Bar -->
 <nav>
     <div class="logo">
-        <img src="Screenshot 2025-03-26 222326.png" alt="College Sports Hub Logo">
+        <img src="logo.jpg" alt="College Sports Hub Logo">
     </div>
     <div class="hamburger" id="hamburger">
         <span></span>
@@ -20,6 +20,7 @@
         <li><a href="#" onclick="logout()" id="logoutNav">Logout</a></li>
     </ul>
 </nav>
+<div id="nav-backdrop"></div>
 
 <style>
     /* Navigation Bar */
@@ -150,7 +151,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            background-color: #0a2342;
+            background-color: #00274D;
             padding: 1rem;
             flex-direction: column;
             align-items: center;
@@ -196,61 +197,36 @@
 </style>
 
 <script>
-    function toggleMenu() {
-        const menu = document.querySelector('.hamburger-menu');
-        menu.classList.toggle('active');
+function toggleMenu() {
+    const nav = document.getElementById('mainNav');
+    const backdrop = document.getElementById('nav-backdrop');
+    nav.classList.toggle('active');
+    backdrop.classList.toggle('active');
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const nav = document.getElementById('mainNav');
+    const hamburger = document.getElementById('hamburger');
+    const backdrop = document.getElementById('nav-backdrop');
+    
+    if (!nav.contains(event.target) && !hamburger.contains(event.target)) {
+        nav.classList.remove('active');
+        backdrop.classList.remove('active');
     }
+});
 
-    document.addEventListener('DOMContentLoaded', function() {
-        try {
-            // Hamburger menu functionality
-            const hamburger = document.getElementById('hamburger');
-            const mainNav = document.getElementById('mainNav');
-            
-            hamburger.addEventListener('click', function() {
-                hamburger.classList.toggle('active');
-                mainNav.classList.toggle('active');
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                const isClickInsideNav = mainNav.contains(event.target);
-                const isClickOnHamburger = hamburger.contains(event.target);
-                
-                if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
-                    hamburger.classList.remove('active');
-                    mainNav.classList.remove('active');
-                }
-            });
-
-            // Close menu when clicking a link
-            const navLinks = document.querySelectorAll('.main-nav a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 900) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-            });
-
-            // Add active class to current page link
-            const currentPage = window.location.pathname.split('/').pop();
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Handle window resize
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 900) {
-                    hamburger.classList.remove('active');
-                    mainNav.classList.remove('active');
-                }
-            });
-        } catch (error) {
-            console.error("Error in navigation setup:", error);
+// Set active link based on current page
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.main-nav a');
+    
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
         }
     });
+});
 </script> 
