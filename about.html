@@ -58,53 +58,55 @@
 
             // Add smooth scrolling to navigation
             const nav = document.querySelector('.main-nav');
-            let isDown = false;
-            let startX;
-            let scrollLeft;
+            if (nav) {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
 
-            nav.addEventListener('mousedown', (e) => {
-                isDown = true;
-                nav.style.cursor = 'grabbing';
-                startX = e.pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
+                nav.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    nav.style.cursor = 'grabbing';
+                    startX = e.pageX - nav.offsetLeft;
+                    scrollLeft = nav.scrollLeft;
+                });
 
-            nav.addEventListener('mouseleave', () => {
-                isDown = false;
-                nav.style.cursor = 'grab';
-            });
+                nav.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    nav.style.cursor = 'grab';
+                });
 
-            nav.addEventListener('mouseup', () => {
-                isDown = false;
-                nav.style.cursor = 'grab';
-            });
+                nav.addEventListener('mouseup', () => {
+                    isDown = false;
+                    nav.style.cursor = 'grab';
+                });
 
-            nav.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
+                nav.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - nav.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    nav.scrollLeft = scrollLeft - walk;
+                });
 
-            // Touch events for mobile
-            nav.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - nav.offsetLeft;
-                scrollLeft = nav.scrollLeft;
-            });
+                // Touch events for mobile
+                nav.addEventListener('touchstart', (e) => {
+                    isDown = true;
+                    startX = e.touches[0].pageX - nav.offsetLeft;
+                    scrollLeft = nav.scrollLeft;
+                });
 
-            nav.addEventListener('touchend', () => {
-                isDown = false;
-            });
+                nav.addEventListener('touchend', () => {
+                    isDown = false;
+                });
 
-            nav.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - nav.offsetLeft;
-                const walk = (x - startX) * 2;
-                nav.scrollLeft = scrollLeft - walk;
-            });
+                nav.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - nav.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    nav.scrollLeft = scrollLeft - walk;
+                });
+            }
         });
     </script>
     <style>

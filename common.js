@@ -168,11 +168,7 @@ const AppUtils = {
 
     // Show error message
     showError: function(message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message error';
-        messageDiv.textContent = message;
-        document.body.appendChild(messageDiv);
-        setTimeout(() => messageDiv.remove(), 3000);
+        console.error(message);
     },
 
     // Show success message
