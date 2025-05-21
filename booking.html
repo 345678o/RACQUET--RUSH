@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slot Booking - College Sports Hub</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="booking.css">
@@ -853,40 +853,8 @@
         }
     </script>
 </head>
-<body onload="checkLogin()">
-<div id="nav-placeholder"></div>
-<script>
-fetch('nav.html')
-  .then(r => r.text())
-  .then(d => {
-    document.getElementById('nav-placeholder').innerHTML = d;
-    // Attach hamburger event listeners
-    const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
-    const backdrop = document.getElementById('nav-backdrop');
-    if (hamburger && mainNav && backdrop) {
-      hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        hamburger.classList.toggle('active');
-        mainNav.classList.toggle('active');
-        backdrop.classList.toggle('active');
-      });
-      backdrop.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        mainNav.classList.remove('active');
-        backdrop.classList.remove('active');
-      });
-      mainNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mainNav.classList.remove('active');
-          backdrop.classList.remove('active');
-        });
-      });
-    }
-  });
-</script>
-    <!-- Add margin-top to container to account for fixed nav -->
+<body onload="checkLogin()" style="margin: 0; padding: 0;">
+    <div id="nav-placeholder"></div>
     <div class="container" style="margin-top: 90px;">
         <div class="login-section" role="status" aria-live="polite">
             <span class="login-info">Logged in as: <span id="logged-in-email" aria-label="Current user email">guest@university.edu</span></span>
@@ -1823,4 +1791,4 @@ fetch('nav.html')
     }
     </script>
 </body>
-</html
+</html>
