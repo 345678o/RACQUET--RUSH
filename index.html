@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Booking System</title>
@@ -30,18 +29,6 @@
         }
     </script>
 
-    <!-- Script for Hamburger Menu -->
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.hamburger-menu');
-            menu.classList.toggle('active');
-        }
-    
-  
-   
- 
-</script>
-
     <!-- Styles -->
     <style>
         /* General Styles */
@@ -51,92 +38,6 @@
             padding: 0;
             background-color: #f4f4f4;
             text-align: center;
-        }
-        .logo img {
-            height: 100px;
-        }
-        /* Navigation Bar */
-        nav {
-            background-color: #00274D;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 1000;
-            height: 130px !important;
-            min-height: 130px !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
-        
-
-        .logo img {
-            height: 80px;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-        }
-
-        .main-nav a {
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        .main-nav a:hover {
-            background-color: #004080;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 10001;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-menu {
-            display: none;
-            position: absolute;
-            top: 70px;
-            right: 20px;
-            background: #00274D;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            z-index: 999;
-        }
-
-        .hamburger-menu.active {
-            display: block;
-        }
-
-        .hamburger-menu a {
-            display: block;
-            padding: 15px 20px;
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .hamburger-menu a:hover {
-            background: #00509E;
         }
 
         /* Form Styling */
@@ -215,174 +116,77 @@
             font-weight: bold;
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .hamburger {
-                display: block;
-                position: absolute;
-                right: 20px;
-                top: 20px;
-            }
-
-            nav {
-                padding: 0.5rem 1rem;
-            }
-
-            .main-nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: #0a2342;
-                padding: 1rem;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
-
-            .main-nav.active {
-                display: flex;
-            }
-
-            .main-nav li {
-                width: 100%;
-                text-align: center;
-            }
-
-            .main-nav a {
-                display: block;
-                padding: 0.8rem;
-                width: 100%;
-            }
-
-            /* Hamburger Animation */
-            .hamburger.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-
-            .hamburger.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
-            }
+        /* Home Section */
+        .home {
+            padding: 40px;
         }
 
-        /* Footer */
-        footer {
-            background: #00274D;
+        .home h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Section Styling */
+        .section-container {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .section-container p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .section-container .btn {
+            background-color: navy;
             color: white;
-            padding: 15px;
-            text-align: center;
-            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .section-container .btn:hover {
+            background-color: darkblue;
+        }
+
+        @media (max-width: 600px) {
+            .section-container {
+                width: 90%;
+            }
         }
 
         /* Background Image */
         body {
-            background: url('c:\Users\shrut\OneDrive\Pictures\Screenshots\Screenshot 2025-04-04 211035.png') no-repeat center center/cover;
+            background: url('https://5.imimg.com/data5/QO/DN/MY-2658927/synthetic-badminton-court-flooring-1000x1000.jpg') no-repeat center center/cover;
         }
 
         .home h1, .home p {
             color: rgb(233, 233, 240);
         }
     </style>
-    <style>
-    /* Home Section */
-    .home {
-        padding: 40px;
-    }
-
-    .home h1 {
-        font-size: 36px;
-        margin-bottom: 10px;
-    }
-
-    /* Section Styling */
-    .section-container {
-        background: white;
-        padding: 20px;
-        margin: 20px auto;
-        width: 80%;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-container img {
-        width: 100%;
-        max-width: 600px;
-        border-radius: 10px;
-    }
-
-    .section-container p {
-        font-size: 18px;
-        margin: 15px 0;
-    }
-
-    .section-container .btn {
-        background-color: navy;
-        color: white;
-        padding: 10px 20px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-    }
-
-    .section-container .btn:hover {
-        background-color: darkblue;
-    }
-
-    @media (max-width: 600px) {
-        .section-container {
-            width: 90%;
-        }
-    }
-</style>
 </head>
 
 <body onload="checkLogin()">
-<div id="nav-placeholder"></div>
-<script>
-fetch('nav.html')
-  .then(r => r.text())
-  .then(d => {
-    document.getElementById('nav-placeholder').innerHTML = d;
-    // Attach hamburger event listeners
-    const hamburger = document.getElementById('hamburger');
-    const mainNav = document.getElementById('mainNav');
-    const backdrop = document.getElementById('nav-backdrop');
-    if (hamburger && mainNav && backdrop) {
-      hamburger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        hamburger.classList.toggle('active');
-        mainNav.classList.toggle('active');
-        backdrop.classList.toggle('active');
-      });
-      backdrop.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        mainNav.classList.remove('active');
-        backdrop.classList.remove('active');
-      });
-      mainNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mainNav.classList.remove('active');
-          backdrop.classList.remove('active');
-        });
-      });
-    }
-  });
-</script>
+    <div id="nav-placeholder"></div>
 
     <!-- Home Section -->
     <section class="home">
-        <h1>Welcome to the  badminton Booking System</h1>
+        <h1>Welcome to the Badminton Booking System</h1>
         <p>Select a feature below to learn more.</p>
     </section>
 
@@ -390,7 +194,7 @@ fetch('nav.html')
     <div class="section-container">
         <h2>About Us</h2>
         <img src="WhatsApp Image 2025-04-04 at 20.58.39_28008160.jpg" alt="About Us">
-        <p>     Learn about our mission to provide seamless sports booking experiences for students and sports enthusiasts.</p>
+        <p>Learn about our mission to provide seamless sports booking experiences for students and sports enthusiasts.</p>
         <a href="about.html" class="btn">Learn More</a>
     </div>
  
@@ -401,6 +205,7 @@ fetch('nav.html')
         <p>Reserve your badminton court in advance and secure your game time without any hassle.</p>
         <a href="booking.html" class="btn">Book Now</a>
     </div>
+
     <!-- Find a Team Section -->
     <div class="section-container">
         <h2>Find a Team</h2>
@@ -416,107 +221,18 @@ fetch('nav.html')
         <p>Stay updated on college and external badminton tournaments. Participate and showcase your skills!</p>
         <a href="tournaments.html" class="btn">View Tournaments</a>
     </div>
-      <!-- rules and regulation-->
-      <div class="section-container">
+
+    <!-- Rules and Regulation -->
+    <div class="section-container">
         <h2>Rules and Regulation</h2>
         <img src="Screenshot 2025-04-18 124310.png" alt="rules">
-        <p>Follow the Rules and Regulation of the  badminton court.Click on view rules to know the rules.</p>
+        <p>Follow the Rules and Regulation of the badminton court. Click on view rules to know the rules.</p>
         <a href="rules.html" class="btn">View Rules</a>
     </div>
 
-    <body style="background: url('https://5.imimg.com/data5/QO/DN/MY-2658927/synthetic-badminton-court-flooring-1000x1000.jpg') no-repeat center center/cover;">
-    
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background: url('c:\Users\shrut\OneDrive\Pictures\Screenshots\Screenshot 2025-04-04 211035.png') no-repeat center center/cover;
-                text-align: center;
-            }
-        </style>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: url('images/background.jpg') no-repeat center center/cover;
-        text-align: center;
-    }
-
-    /* Home Section Text Styling */
-    .home h1, .home p {
-        color: rgb(233, 233, 240); /* Makes the text white */
-    }
-</style>        
-
-    <script src="script.js"></script>
-    <div id="menu-bar"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                // Hamburger menu functionality
-                const hamburger = document.getElementById('hamburger');
-                const mainNav = document.getElementById('mainNav');
-                
-                hamburger.addEventListener('click', function() {
-                    hamburger.classList.toggle('active');
-                    mainNav.classList.toggle('active');
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    const isClickInsideNav = mainNav.contains(event.target);
-                    const isClickOnHamburger = hamburger.contains(event.target);
-                    
-                    if (!isClickInsideNav && !isClickOnHamburger && mainNav.classList.contains('active')) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-
-                // Close menu when clicking a link
-                const navLinks = document.querySelectorAll('.main-nav a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth <= 900) {
-                            hamburger.classList.remove('active');
-                            mainNav.classList.remove('active');
-                        }
-                    });
-                });
-
-                // Add active class to current page link
-                const currentPage = window.location.pathname.split('/').pop();
-                navLinks.forEach(link => {
-                    if (link.getAttribute('href') === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-
-                // Handle window resize
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 900) {
-                        hamburger.classList.remove('active');
-                        mainNav.classList.remove('active');
-                    }
-                });
-            } catch (error) {
-                console.error("Error in navigation setup:", error);
-            }
-        });
-    </script>
-
-</body>
-
-<!-- Footer -->
-<footer>
-    <p>&copy; 2025 College Sports Hub. All Rights Reserved.</p>
-</footer>
-
-<script src="script.js"></script>
-<div id="menu-bar"></div>
-
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 College Sports Hub. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>

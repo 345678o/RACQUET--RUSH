@@ -119,8 +119,8 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <p class="mt-3">Don't have an account? <a href="register.html">Register here</a></p>
+            <p class="error" id="login-error"></p>
+            <input type="submit" value="Login">
         </form>
         <div class="toggle-links">
             <p>Forgot Password? <a href="#" onclick="toggleForms('forgot-password')">Click Here</a></p>
@@ -322,23 +322,32 @@
     // Login Form
     document.getElementById("loginForm").addEventListener("submit", function(event) {
         event.preventDefault();
-        const email = document.getElementById("email").value;
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         let users = getUsers();
         let errorElement = document.getElementById("login-error");
 
         errorElement.textContent = "";
 
-        if (users[email] && users[email].password === password) {
-            localStorage.setItem("loggedInUser", email);
+        // Find user by email
+        let foundUser = null;
+        for (let username in users) {
+            if (users[username].email.toLowerCase() === email.toLowerCase()) {
+                foundUser = username;
+                break;
+            }
+        }
+
+        if (foundUser && users[foundUser].password === password) {
+            localStorage.setItem("loggedInUser", foundUser);
             // Store userData for booking and details pages
             localStorage.setItem("userData", JSON.stringify({
-                username: email,
-                email: users[email].email,
-                phone: users[email].phone,
-                rollNo: users[email].rollno,
-                name: users[email].fullname,
-                studentType: users[email].studentType
+                username: foundUser,
+                email: users[foundUser].email,
+                phone: users[foundUser].phone,
+                rollNo: users[foundUser].rollno,
+                name: users[foundUser].fullname,
+                studentType: users[foundUser].studentType
             }));
             window.location.href = "index.html";
         } else {
